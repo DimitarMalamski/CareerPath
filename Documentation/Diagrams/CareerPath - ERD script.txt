@@ -1,0 +1,153 @@
+CareerPath ERD script:
+
+erDiagram
+  USER ||--|| PROFILE : "has"
+  USER ||--o{ JOB_LISTING : "creates (recruiter)"
+  USER ||--o{ APPLICATION : "submits"
+  JOB_LISTING ||--o{ APPLICATION : "receives"
+  USER ||--o{ BOOKMARK : "saves"
+  BOOKMARK }o--|| JOB_LISTING : "targets"
+
+  %% Skills
+  USER ||--o{ USER_SKILL : "has"
+  SKILL ||--o{ USER_SKILL : "is linked to"
+  JOB_LISTING ||--o{ JOB_SKILL : "requires"
+  SKILL ||--o{ JOB_SKILL : "is required by"
+
+  %% Education & Experience (normalized)
+  USER ||--o{ EDUCATION : "has"
+  USER ||--o{ EXPERIENCE : "has"
+  EXPERIENCE ||--o{ EXPERIENCE_SKILL : "uses"
+  SKILL ||--o{ EXPERIENCE_SKILL : "tagged"
+
+  %% Applications history
+  APPLICATION ||--o{ APPLICATION_STATUS_HISTORY : "changes"
+
+  %% Recommendations
+  USER ||--o{ RECOMMENDATION : "receives"
+  RECOMMENDATION }o--|| JOB_LISTING : "recommends"
+
+  USER {
+    uuid id PK
+    string email "unique"
+    string password_hash
+    enum role "seeker|recruiter|admin"
+    datetime email_verified_at
+    datetime created_at
+    datetime updated_at
+  }
+
+  PROFILE {
+    uuid user_id PK,FK "→ USER.id"
+    string first_name
+    string last_name
+    string headline
+    string location
+    text   about
+    string cv_url
+    boolean ai_opt_in "default: true"
+    datetime created_at
+    datetime updated_at
+  }
+
+  SKILL {
+    int id PK
+    string name "unique"
+  }
+
+  USER_SKILL {
+    uuid user_id PK,FK "→ USER.id"
+    int  skill_id PK,FK "→ SKILL.id"
+    enum level "beginner|intermediate|advanced"
+  }
+
+  JOB_LISTING {
+    uuid id PK
+    uuid recruiter_id FK "→ USER.id"
+    string title
+    string company
+    string location
+    enum type "internship|full-time|part-time|contract"
+    string stack_summary
+    text   description
+    enum status "draft|pending|published|closed"
+    date   expires_at
+    datetime created_at
+    datetime updated_at
+    datetime deleted_at
+  }
+
+  JOB_SKILL {
+    uuid job_id PK,FK "→ JOB_LISTING.id"
+    int  skill_id PK,FK "→ SKILL.id"
+  }
+
+  APPLICATION {
+    uuid id PK
+    uuid job_id FK "→ JOB_LISTING.id"
+    uuid user_id FK "→ USER.id"
+    string cv_url
+    text   cover_letter
+    enum status "submitted|under_review|rejected|accepted"
+    datetime created_at
+    datetime updated_at
+    "UNIQUE(job_id, user_id)"
+}
+
+  APPLICATION_STATUS_HISTORY {
+    bigint id PK
+    uuid application_id FK "→ APPLICATION.id"
+    enum old_status "nullable"
+    enum new_status
+    uuid changed_by FK "→ USER.id"
+    datetime changed_at
+  }
+
+  BOOKMARK {
+    uuid user_id PK,FK "→ USER.id"
+    uuid job_id  PK,FK "→ JOB_LISTING.id"
+    datetime created_at
+  }
+
+  EDUCATION {
+    uuid id PK
+    uuid user_id FK "→ USER.id"
+    string institution
+    string degree
+    string field_of_study
+    date   start_date
+    date   end_date
+    string grade
+    text   description
+    datetime created_at
+    datetime updated_at
+  }
+
+  EXPERIENCE {
+    uuid id PK
+    uuid user_id FK "→ USER.id"
+    string company
+    string title
+    enum employment_type "full-time|part-time|internship|contract|freelance|volunteer"
+    string location
+    date   start_date
+    date   end_date
+    boolean is_current
+    text   description
+    datetime created_at
+    datetime updated_at
+  }
+
+  EXPERIENCE_SKILL {
+    uuid experience_id PK,FK "→ EXPERIENCE.id"
+    int  skill_id      PK,FK "→ SKILL.id"
+  }
+
+  RECOMMENDATION {
+    bigint id PK
+    uuid user_id FK "→ USER.id"
+    uuid job_id  FK "→ JOB_LISTING.id"
+    numeric score "0.000–1.000"
+    string model_version
+    datetime generated_at
+  }
