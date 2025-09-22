@@ -1,0 +1,46 @@
+# ---- OS / System files ----
+.DS_Store
+Thumbs.db
+
+# ---- IntelliJ IDEA ----
+.idea/
+*.iml
+out/
+*.ipr
+*.iws
+
+# IntelliJ project-specific files
+.idea_modules/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/httpRequests/
+.idea/caches/
+
+# ---- Java / Maven ----
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+mvnw
+mvnw.cmd
+
+# Logs
+*.log
+
+# ---- Spring Boot ----
+# Exclude generated config files
+application-*.yml
+application-*.properties
+
+# ---- Node / Angular ----
+node_modules/
+dist/
+.angular/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# ---- Misc ----
+*.class
+*.swp
+*.tmp
