@@ -1,0 +1,39 @@
+# Gradle build
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Logs
+*.log
+
+# Java class files
+*.class
+
+# Maven/Gradle output
+target/
+out/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse/STS
+*.classpath
+*.project
+*.settings/
+.apt_generated
+.factorypath
+.springBeans
+.sts4-cache
+bin/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test/report output
+test-output/
+*.swp
