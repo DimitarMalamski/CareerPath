@@ -1,0 +1,26 @@
+version: "3.9"
+services: #apps we want to run in this docker container
+  db: #PostgreSQl
+    image: postgres:16 #official PostgreSQL 16 image for Docker Hub
+    container_name: cp-db #name of the container
+    environment:
+      POSTGRES_DB: careerpath #database name
+      POSTGRES_USER: cp_user #DB username
+      POSTGRES_PASSWORD: cp_pass
+    ports:
+      - "5432:5432" #makes DB available at localhost:5432
+    volumes:
+      - cp_pg:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: cp-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80" #Accessible at http://localhost:5050
+    restart: unless-stopped
+volumes:
+  cp_pg:
