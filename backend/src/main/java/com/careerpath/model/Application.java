@@ -1,6 +1,6 @@
 package com.careerpath.model;
 
-import com.careerpath.model.enums.UserRole;
+import com.careerpath.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -10,20 +10,26 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
-@Entity @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class User {
+@Entity
+@Table(name = "applications",
+    uniqueConstraints = @UniqueConstraint(columnNames = { "job_id", "user_id" }))
+public class Application {
     @Id @GeneratedValue private UUID id;
 
-    @Column(nullable = false, unique = true) private String email;
-    @Column(name = "password_hash", nullable = false) private String passwordHash;
+    @ManyToOne @JoinColumn(name = "job_id", nullable = false)
+    private JobListing job;
+
+    @ManyToOne @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    private String cvUrl;
+
+    @Column(columnDefinition = "text")
+    private String coverLetter;
 
     @Enumerated(EnumType.STRING) @Column(nullable = false)
-    private UserRole role;
+    private ApplicationStatus status;
 
-    private OffsetDateTime emailVerifiedAt;
     @CreationTimestamp private OffsetDateTime createdAt;
     @UpdateTimestamp private OffsetDateTime updatedAt;
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, optional = true)
-    private Profile profile;
 }
