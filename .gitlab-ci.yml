@@ -1,0 +1,35 @@
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  WORK_DIR: "backend"
+
+stages:
+  - build
+  - test
+
+.default_job:
+  before_script:
+    - cd "$WORK_DIR"
+    - if [ -f gradlew ]; then chmod +x gradlew; fi
+
+build:
+  stage: build
+  extends: .default_job
+  script:
+    # Use gradlew on Unix/macOS; gradlew.bat on Windows runners
+    - if [ -f gradlew ]; then ./gradlew assemble; else powershell -File gradlew.bat assemble; fi
+  artifacts:
+    paths:
+      - backend/build/libs/
+    expire_in: 1 week
+
+test:
+  stage: test
+  extends: .default_job
+  script:
+    - if [ -f gradlew ]; then ./gradlew test; else powershell -File gradlew.bat test; fi
+  artifacts:
+    when: always
+    paths:
+      - backend/build/test-results/test/
+      - backend/build/reports/tests/test/
+    expire_in: 1 week
