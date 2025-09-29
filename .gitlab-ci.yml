@@ -10,7 +10,7 @@ stages: [build, test]
   cache:
     key: gradle-cache
     paths:
-      - .gradle/
+      - backend/.gradle/
 
 build:
   stage: build
