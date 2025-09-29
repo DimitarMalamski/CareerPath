@@ -4,10 +4,17 @@ variables:
 
 stages: [build, test]
 
-build:
-  stage: build
+.default_job:
   before_script:
     - cd $env:WORK_DIR
+  cache:
+    key: gradle-cache
+    paths:
+      - .gradle/
+
+build:
+  stage: build
+  extends: .default_job
   script:
     - .\gradlew.bat assemble
   artifacts:
@@ -17,8 +24,7 @@ build:
 
 test:
   stage: test
-  before_script:
-    - cd $env:WORK_DIR
+  extends: .default_job
   script:
     - .\gradlew.bat test
   artifacts:
