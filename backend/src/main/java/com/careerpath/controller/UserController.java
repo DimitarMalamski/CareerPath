@@ -1,5 +1,5 @@
 package com.careerpath.controller;
-// hello world! 3.0
+// Hello
 import com.careerpath.dto.UserDto;
 import com.careerpath.mapper.UserMapper;
 import com.careerpath.model.User;
