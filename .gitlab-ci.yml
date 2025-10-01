@@ -1,30 +1,51 @@
 variables:
   WORK_DIR: "backend"
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GIT_DEPTH: "20"
+  GIT_LFS_SKIP_SMUDGE: "1"
 
 stages:
-  - frontend-build
   - build
   - test
 
 .default_job:
   before_script:
     - cd $WORK_DIR
+  variables:
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
-    key: gradle-cache
+    key:
+      files:
+        - backend/gradle/wrapper/gradle-wrapper.properties
+        - backend/build.gradle
+        - backend/settings.gradle
     paths:
-      - backend/.gradle/
+      - .gradle/
+    policy: pull-push
 
 frontend-build:
-  stage: frontend-build
+  stage: build
+  rules:
+    - changes:
+        - frontend/**/*
+    - when: never
   before_script:
     - cd frontend
+  variables:
+    NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
+    NODE_OPTIONS: "--max-old-space-size=4096"
+  cache:
+    key:
+      files:
+        - frontend/package-lock.json
+    paths:
+      - frontend/.npm/
+      - frontend/.angular/cache/
+      - frontend/node_modules/.cache/
+    policy: pull-push
   script:
-    - echo $env:Path
-    - node -v
-    - npm -v
-    - npm ci
-    - npm run build
+    - npm ci --prefer-offline --cache .npm
+    - npx ng build --configuration=production --source-map=false
   artifacts:
     name: "frontend-build"
     paths:
@@ -34,8 +55,12 @@ frontend-build:
 build:
   stage: build
   extends: .default_job
+  rules:
+    - changes:
+        - backend/**/*
+    - when: never
   script:
-    - .\gradlew.bat assemble
+    - .\gradlew.bat assemble -Dorg.gradle.caching=true --configuration-cache
   artifacts:
     paths:
       - backend/build/libs/
@@ -44,10 +69,16 @@ build:
 test:
   stage: test
   extends: .default_job
+  rules:
+    - changes:
+        - backend/**/*
+    - when: never
   script:
-    - .\gradlew.bat test
+    - .\gradlew.bat test -Dorg.gradle.caching=true --no-configuration-cache
   artifacts:
     when: always
+    reports:
+      junit: backend/build/test-results/test/*.xml
     paths:
       - backend/build/test-results/test/
       - backend/build/reports/tests/test/
