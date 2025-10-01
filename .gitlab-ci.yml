@@ -49,7 +49,7 @@ build:
     - changes: [ "backend/**/*", ".gitlab-ci.yml" ]
     - when: never
   script:
-    - .\gradlew.bat -Dorg.gradle.caching=true --configuration-cache assemble
+    - .\gradlew.bat "-Dorg.gradle.caching=true" --configuration-cache assemble
   artifacts:
     paths:
       - backend/build/libs/
