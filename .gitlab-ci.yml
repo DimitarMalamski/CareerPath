@@ -2,7 +2,10 @@ variables:
   WORK_DIR: "backend"
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
-stages: [build, test]
+stages:
+  - frontend-build
+  - build
+  - test
 
 .default_job:
   before_script:
@@ -11,6 +14,19 @@ stages: [build, test]
     key: gradle-cache
     paths:
       - backend/.gradle/
+
+frontend-build:
+  stage: frontend-build
+  image: node:20
+  before_script:
+    - cd frontend
+    - npm ci
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - frontend/dist/
+    expire_in: 1 week
 
 build:
   stage: build
