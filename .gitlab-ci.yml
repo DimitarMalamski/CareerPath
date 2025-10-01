@@ -18,7 +18,6 @@ stages:
       files:
         - backend/gradle/wrapper/gradle-wrapper.properties
         - backend/build.gradle
-        - backend/settings.gradle
     paths:
       - .gradle/
     policy: pull-push
