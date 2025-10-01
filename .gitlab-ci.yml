@@ -17,10 +17,12 @@ stages:
 
 frontend-build:
   stage: frontend-build
-  image: node:20
   before_script:
     - cd frontend
   script:
+    - echo $env:Path
+    - node -v
+    - npm -v
     - npm ci
     - npm run build
   artifacts:
