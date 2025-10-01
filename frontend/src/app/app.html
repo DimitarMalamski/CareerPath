@@ -1,5 +1,12 @@
-<div class="min-h-screen grid place-items-center bg-gray-100 text-center">
-  <h1 class="text-4xl font-bold text-blue-600">
-    ✅ Tailwind CSS is working with Angular!
-  </h1>
-</div>
+<h1 class="text-2xl font-bold text-blue-600 mb-4">Users from Backend</h1>
+
+<ul *ngIf="users.length > 0; else noUsers">
+  <li *ngFor="let user of users" class="mb-2">
+    <span class="font-semibold">{{ user.email }}</span>
+    <span class="text-gray-500">({{ user.role }})</span>
+  </li>
+</ul>
+
+<ng-template #noUsers>
+  <p class="text-red-600">No users found.</p>
+</ng-template>

@@ -8,8 +8,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import java.util.List;
 
-@Component
+// @Component
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationRunner {
     private final UserRepository users;
@@ -20,37 +21,36 @@ public class DataInitializer implements ApplicationRunner {
     @Override
     @Transactional
     public void run(ApplicationArguments args) {
-        User user = users.findByEmail("recruiter@example.com")
+        User recruiter  = users.findByEmail("recruiter@example.com")
                 .orElseGet(() -> users.save(User.builder()
                         .email("recruiter@example.com")
                         .passwordHash("dev-only")
                         .role(UserRole.RECRUITER)
                         .build()));
 
-        if (!profiles.existsById(user.getId())) {
-            profiles.save(Profile.builder()
-                    .user(user)
-                    .firstName("Dimitar")
-                    .lastName("Malamski")
-                    .aiOptIn(true)
-                    .build());
-        }
+        profiles.findById(recruiter.getId()).orElseGet(() ->
+                profiles.save(Profile.builder()
+                        .user(recruiter)
+                        .firstName("Dimitar")
+                        .aiOptIn(true)
+                        .location("Eindhoven")
+                        .headline("Hiring developer")
+                        .build())
+        );
 
-        if (!skills.existsByName("Java")) {
-            skills.save(Skill.builder().name("Java").build());
-        }
-        if (!skills.existsByName("C#")) {
-            skills.save(Skill.builder().name("C#").build());
+        for (String name : List.of("Java", "C#", "Spring Boot", "Angular")) {
+            skills.findByName(name).orElseGet(() -> skills.save(Skill.builder().name(name).build()));
         }
 
         if (jobs.count() == 0) {
             jobs.save(JobListing.builder()
-                    .recruiter(user)
+                    .recruiter(recruiter)
                     .title("Junior Java Developer")
                     .company("Google")
                     .type(JobType.FULL_TIME)
                     .status(JobStatus.PUBLISHED)
                     .description("Build Web Applications using Java")
+                    .stackSummary("Java, Spring Boot, PostgresSql")
                     .build());
         }
     }
