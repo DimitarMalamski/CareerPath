@@ -1,6 +1,6 @@
 variables:
   WORK_DIR: "backend"
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
   GIT_DEPTH: "20"
   GIT_LFS_SKIP_SMUDGE: "1"
 
@@ -59,7 +59,7 @@ build:
         - backend/**/*
     - when: never
   script:
-    - .\gradlew.bat assemble -Dorg.gradle.caching=true --configuration-cache
+    - .\gradlew.bat assemble --configuration-cache
   artifacts:
     paths:
       - backend/build/libs/
@@ -73,7 +73,7 @@ test:
         - backend/**/*
     - when: never
   script:
-    - .\gradlew.bat test -Dorg.gradle.caching=true --no-configuration-cache
+    - .\gradlew.bat test --no-configuration-cache
   artifacts:
     when: always
     reports:
