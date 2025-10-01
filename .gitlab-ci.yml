@@ -12,21 +12,12 @@ stages:
   before_script:
     - cd $WORK_DIR
   variables:
-    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
-  cache:
-    key:
-      files:
-        - backend/gradle/wrapper/gradle-wrapper.properties
-        - backend/build.gradle
-    paths:
-      - .gradle/
-    policy: pull-push
+    GRADLE_USER_HOME: "C:/g"
 
 frontend-build:
   stage: build
   rules:
-    - changes:
-        - frontend/**/*
+    - changes: [ "frontend/**/*", ".gitlab-ci.yml" ]
     - when: never
   before_script:
     - cd frontend
@@ -55,11 +46,10 @@ build:
   stage: build
   extends: .default_job
   rules:
-    - changes:
-        - backend/**/*
+    - changes: [ "backend/**/*", ".gitlab-ci.yml" ]
     - when: never
   script:
-    - .\gradlew.bat assemble --configuration-cache
+    - .\gradlew.bat -Dorg.gradle.caching=true --configuration-cache assemble
   artifacts:
     paths:
       - backend/build/libs/
@@ -69,8 +59,7 @@ test:
   stage: test
   extends: .default_job
   rules:
-    - changes:
-        - backend/**/*
+    - changes: [ "backend/**/*", ".gitlab-ci.yml" ]
     - when: never
   script:
     - .\gradlew.bat test --no-configuration-cache
