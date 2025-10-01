@@ -9,7 +9,7 @@ stages:
 
 .default_job:
   before_script:
-    - cd $env:WORK_DIR
+    - cd $WORK_DIR
   cache:
     key: gradle-cache
     paths:
@@ -20,10 +20,11 @@ frontend-build:
   image: node:20
   before_script:
     - cd frontend
-    - npm ci
   script:
+    - npm ci
     - npm run build
   artifacts:
+    name: "frontend-build"
     paths:
       - frontend/dist/
     expire_in: 1 week
