@@ -1,0 +1,77 @@
+workspace {
+
+  model {
+    // People
+    student = person "Student" {
+      description "Fontys student who uses CareerPath to find jobs and internships."
+    }
+
+    recruiter = person "Recruiter" {
+      description "Posts jobs or internships to attract student applicants."
+    }
+
+    admin = person "Admin" {
+      description "Manages job offers, monitors the platform."
+    }
+
+    // Your system
+    careerPath = softwareSystem "CareerPath" {
+      description "A full-stack platform that helps students find jobs and internships, powered by AI-based filtering."
+
+      frontend = container "Frontend Web App" {
+        technology "Angular (TypeScript)"
+        description "Browser-based frontend application used by students and recruiters."
+      }
+
+      backend = container "Backend API" {
+        technology "Spring Boot (Java)"
+        description "RESTful backend that handles business logic, authentication, and integrations."
+      }
+
+      database = container "PostgreSQL Database" {
+        technology "PostgreSQL"
+        description "Relational database for storing users, jobs, profiles, bookmarks, etc."
+      }
+    }
+
+    // External systems (not containers of CareerPath)
+    aiService = softwareSystem "AI Recommendation Engine" {
+      description "Ranks/filters jobs and matches them to CVs."
+      tags "External"
+    }
+
+    jobBoardApis = softwareSystem "Job Board APIs" {
+      description "Provides external job and internship listings (e.g., Greenhouse)."
+      tags "External"
+    }
+
+    googleOAuth = softwareSystem "Google OAuth" {
+      description "Authentication via Google accounts."
+      tags "External"
+    }
+
+    // Relationships
+    student   -> frontend "Uses via web browser"
+    recruiter -> frontend "Uses to post or manage job listings"
+    admin     -> frontend "Uses admin UI to manage system"
+
+    frontend -> backend      "Sends API requests" "HTTPS/JSON"
+    backend  -> database     "Reads/writes application data" "JDBC"
+    backend  -> aiService    "Sends CV and jobs, receives ranked matches" "HTTPS"
+    backend  -> jobBoardApis "Fetches external job listings" "HTTPS"
+    backend  -> googleOAuth  "Redirects for login and token exchange" "OAuth2/OIDC"
+  }
+
+  views {
+    // Container view for CareerPath
+    container careerPath {
+      include *
+      include aiService jobBoardApis googleOAuth
+      autolayout lr
+      title "CareerPath – Container Diagram"
+      description "Internal architecture showing major containers and how they interact."
+    }
+
+    theme default
+  }
+}
