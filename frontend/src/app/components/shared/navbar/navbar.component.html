@@ -1,0 +1,32 @@
+<header class="w-full bg-white shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <!-- Logo -->
+    <a routerLink="/" class="flex items-center gap-2 font-bold text-blue-600 text-xl">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M9 20l-5.447-2.724A2 2 0 013 15.382V6.618a2 2 0 011.553-1.894L9 2m6 0l5.447 2.724A2 2 0 0121 6.618v8.764a2 2 0 01-1.553 1.894L15 20m-6 0v-8m6 8v-8m0 0V2m-6 8V2" />
+      </svg>
+      Career<span class="text-emerald-500">Path</span>
+    </a>
+
+    <!-- Nav links -->
+    <nav class="hidden md:flex gap-6 text-slate-700 text-sm font-medium">
+      <a routerLink="/jobs" routerLinkActive="text-blue-600">Jobs</a>
+      <a routerLink="/dashboard" routerLinkActive="text-blue-600">Dashboard</a>
+      <a routerLink="/profile" routerLinkActive="text-blue-600">Profile</a>
+    </nav>
+
+    <!-- Auth buttons -->
+    <div class="hidden md:flex items-center gap-4">
+      <a routerLink="/login" class="text-sm text-slate-700 hover:text-blue-600 flex items-center gap-1">
+        <span class="material-icons text-base">login</span> Login
+      </a>
+      <a
+        routerLink="/register"
+        class="text-sm px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-semibold shadow"
+      >
+        Sign Up
+      </a>
+    </div>
+  </div>
+</header>
