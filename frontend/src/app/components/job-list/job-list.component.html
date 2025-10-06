@@ -1,0 +1,28 @@
+<div class="max-w-6xl mx-auto px-4">
+  <div *ngIf="loading" class="text-center py-4 text-gray-500">
+    Loading jobs...
+  </div>
+
+  <div *ngIf="!loading && jobs.length === 0" class="text-center py-4 text-gray-600">
+    <p>No jobs available.</p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <div
+      *ngFor="let job of jobs"
+      class="bg-white shadow-md rounded-xl p-5 border border-gray-200 hover:shadow-lg transition-shadow duration-300"
+    >
+      <h2 class="text-xl font-semibold text-blue-600 mb-1">{{ job.title }}</h2>
+      <p class="text-gray-800 mb-2 font-medium">at {{ job.company }}</p>
+
+      <div class="text-sm text-gray-600 space-y-1">
+        <p><strong>📍 Location:</strong> {{ job.location || 'Remote / Not specified' }}</p>
+        <p><strong>🛠 Stack:</strong> {{ job.stackSummary }}</p>
+        <p><strong>🧠 Skills:</strong> {{ job.skills.join(', ') }}</p>
+        <p><strong>📄 Type:</strong> {{ job.type }}</p>
+        <p><strong>📌 Status:</strong> {{ job.status }}</p>
+        <p><strong>⏳ Expires:</strong> {{ job.expiresAt }}</p>
+      </div>
+    </div>
+  </div>
+</div>

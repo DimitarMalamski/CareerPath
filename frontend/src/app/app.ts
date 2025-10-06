@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
 import { User } from './models/User';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './app.html',
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: `./app.html`,
 })
 
 export class App implements OnInit {

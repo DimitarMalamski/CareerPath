@@ -1,6 +1,5 @@
 package com.careerpath.mapper;
 
-
 import com.careerpath.dto.*;
 import com.careerpath.model.*;
 import com.careerpath.model.enums.UserRole;
