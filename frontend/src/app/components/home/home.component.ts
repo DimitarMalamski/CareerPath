@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HeroSectionComponent } from './hero-section/hero-section.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
-  template: `<h1>Welcome to CareerPath 👋</h1><p>Select an option from the menu.</p>`
+  imports: [CommonModule, HeroSectionComponent],
+  templateUrl: './home.component.html'
 })
 export class HomeComponent {}

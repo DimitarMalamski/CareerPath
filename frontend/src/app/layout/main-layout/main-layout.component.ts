@@ -7,7 +7,7 @@ import { NavbarComponent } from '../../components/shared/navbar/navbar.component
   selector: 'app-layout',
   standalone: true,
   imports: [CommonModule, RouterModule, NavbarComponent],
-  templateUrl: './app-layout.component.html',
+  templateUrl: './main-layout.component.html',
 })
 
-export class AppLayoutComponent {}
+export class MainLayoutComponent {}
