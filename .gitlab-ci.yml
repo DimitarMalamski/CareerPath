@@ -35,7 +35,7 @@ frontend-build:
     policy: pull-push
   script:
     - npm ci --prefer-offline --cache .npm
-    - npx ng build --configuration=production --source-map=false
+    - npx ng build careerpath-frontend --configuration=production --no-prerender --source-map=false
   artifacts:
     name: "frontend-build"
     paths:
