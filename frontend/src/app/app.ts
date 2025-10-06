@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { UserService } from './services/user.service';
-import { User } from './models/User';
+import { UserDto } from './models/./user.dto';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { User } from './models/User';
 })
 
 export class App implements OnInit {
-  users: User[] = [];
+  users: UserDto[] = [];
 
   constructor(private userService: UserService) {}
 
