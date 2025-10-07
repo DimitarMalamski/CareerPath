@@ -14,7 +14,7 @@ stages:
   before_script:
     - cd $env:WORK_DIR
   variables:
-    GRADLE_USER_HOME: "$env:CI_PROJECT_DIR\.gradle"
+    GRADLE_USER_HOME: '$env:CI_PROJECT_DIR\.gradle'
 
 # frontend build
 
@@ -23,7 +23,7 @@ frontend-build:
   before_script:
     - cd frontend
   variables:
-    NPM_CONFIG_CACHE: "$env:CI_PROJECT_DIR\frontend\.npm"
+    NPM_CONFIG_CACHE: '$env:CI_PROJECT_DIR\frontend\.npm'
     NODE_OPTIONS: "--max-old-space-size=4096"
   cache:
     key:
