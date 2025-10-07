@@ -1,8 +1,85 @@
-check-shell:
-  stage: test
+# starter
+
+variables:
+  WORK_DIR: "backend"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
+  GIT_DEPTH: "20"
+  GIT_LFS_SKIP_SMUDGE: "1"
+
+stages:
+  - build
+  - test
+
+.default_job:
+  before_script:
+    - cd $env:WORK_DIR
+  variables:
+    GRADLE_USER_HOME: "$env:CI_PROJECT_DIR\.gradle"
+
+# frontend build
+
+frontend-build:
+  stage: build
+  before_script:
+    - cd frontend
+  variables:
+    NPM_CONFIG_CACHE: "$env:CI_PROJECT_DIR\frontend\.npm"
+    NODE_OPTIONS: "--max-old-space-size=4096"
+  cache:
+    key:
+      files:
+        - frontend/package-lock.json
+    paths:
+      - frontend/.npm/
+      - frontend/.angular/cache/
+      - frontend/node_modules/.cache/
+    policy: pull-push
   script:
-    - 'Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"'
-    - 'Write-Host "OS: $env:OS"'
-    - 'Write-Host "Username: $env:USERNAME"'
-    - 'Write-Host "ComSpec: $env:ComSpec"'
-    - 'Write-Host "Shell: $($MyInvocation.MyCommand.Path)"'
+    - npm ci --prefer-offline --cache .npm
+    - npx ng build careerpath-frontend --configuration=production --no-prerender --source-map=false
+  artifacts:
+    name: "frontend-build"
+    paths:
+      - frontend/dist/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - frontend/**/*
+        - .gitlab-ci.yml
+    - when: always
+
+# backend build
+build:
+  stage: build
+  extends: .default_job
+  script:
+    - .\gradlew.bat assemble
+  artifacts:
+    paths:
+      - backend/build/libs/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - backend/**/*
+        - .gitlab-ci.yml
+    - when: always
+
+# backend test job
+test:
+  stage: test
+  extends: .default_job
+  script:
+    - .\gradlew.bat test --no-configuration-cache
+  artifacts:
+    when: always
+    reports:
+      junit: backend/build/test-results/test/*.xml
+    paths:
+      - backend/build/test-results/test/
+      - backend/build/reports/tests/test/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - backend/**/*
+        - .gitlab-ci.yml
+    - when: always
