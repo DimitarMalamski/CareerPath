@@ -1,3 +1,5 @@
+default:
+  shell: bash
 variables:
   WORK_DIR: "backend"
   GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
@@ -49,7 +51,7 @@ build:
     - changes: [ "backend/**/*", ".gitlab-ci.yml" ]
     - when: never
   script:
-    - .\gradlew.bat "-Dorg.gradle.caching=true" --configuration-cache assemble
+    - ./gradlew.bat "-Dorg.gradle.caching=true" --configuration-cache assemble
   artifacts:
     paths:
       - backend/build/libs/
@@ -91,7 +93,7 @@ compose-build:
     - docker compose version || docker-compose version
 
   script:
-    - docker compose -f docker/docker-compose.yml up --build -d
+    - docker compose -f "$CI_PROJECT_DIR/docker/docker-compose.yml" up --build -d
     - echo "⏳ Waiting for backend to start..."
     - echo "⏳ Waiting for backend to become ready..."
     - |
@@ -118,4 +120,4 @@ compose-build:
 
   allow_failure: false
   after_script:
-    - docker compose down
+    - docker compose -f "$CI_PROJECT_DIR/docker/docker-compose.yml" down
