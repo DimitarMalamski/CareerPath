@@ -89,12 +89,7 @@ compose-build:
   before_script:
     - echo "CI_PROJECT_DIR is: $CI_PROJECT_DIR"
     - ls ".\docker"
-    - |
-      try {
-      docker compose version
-      } catch {
-      docker-compose version
-      }
+    - powershell -Command "try { docker compose version } catch { docker-compose version }"
 
   script:
     - docker compose -f ".\docker\docker-compose.yml" up --build -d
