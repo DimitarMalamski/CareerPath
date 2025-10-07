@@ -88,25 +88,37 @@ compose-build:
 
   before_script:
     - echo "CI_PROJECT_DIR is: $CI_PROJECT_DIR"
-    - ls "$CI_PROJECT_DIR/docker"
-    - try { docker compose version } catch { docker-compose version }
+    - ls ".\docker"
+    - |
+      try {
+      docker compose version
+      } catch {
+      docker-compose version
+      }
 
   script:
-    - docker compose -f "$CI_PROJECT_DIR/docker/docker-compose.yml" up --build -d
+    - docker compose -f ".\docker\docker-compose.yml" up --build -d
     - echo "⏳ Waiting for backend to start..."
-    - echo "⏳ Waiting for backend to become ready..."
     - |
       for ($i = 1; $i -le 10; $i++) {
-        if (Invoke-WebRequest -Uri "http://localhost:8080/api/jobs" -UseBasicParsing -ErrorAction SilentlyContinue) {
-          echo "✅ Backend is ready"
+        try {
+          Invoke-WebRequest -Uri "http://localhost:8080/api/jobs" -UseBasicParsing -ErrorAction Stop
+          Write-Host "✅ Backend is ready"
           break
+        } catch {
+          Write-Host "Retrying in 5s..."
+          Start-Sleep -Seconds 5
         }
-        echo "Retrying in 5s..."
-        Start-Sleep -Seconds 5
       }
-    - echo "🔎 Testing backend endpoint"
-    - curl -f http://localhost:8080/api/jobs || (echo "❌ Backend not reachable!" && exit 1)
-    - echo "✅ Backend reachable. SSR should work in production builds."
+    - Write-Host "🔎 Testing backend endpoint"
+    - |
+      try {
+      Invoke-WebRequest -Uri "http://localhost:8080/api/jobs" -UseBasicParsing -ErrorAction Stop
+      Write-Host "✅ Backend reachable. SSR should work in production builds."
+      } catch {
+      Write-Host "❌ Backend not reachable!"
+      exit 1
+      }
     - docker compose logs
 
   rules:
@@ -119,4 +131,4 @@ compose-build:
 
   allow_failure: false
   after_script:
-    - docker compose -f "$CI_PROJECT_DIR/docker/docker-compose.yml" down
+    - docker compose -f ".\docker\docker-compose.yml" down
