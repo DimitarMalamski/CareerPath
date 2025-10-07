@@ -87,9 +87,9 @@ compose-build:
     DOCKER_TLS_CERTDIR: ""
 
   before_script:
-    - echo "CI_PROJECT_DIR is: $CI_PROJECT_DIR"
-    - ls ".\docker"
-    - powershell -Command 'try { docker compose version } catch { docker-compose version }'
+    - powershell -Command "Write-Host 'CI_PROJECT_DIR is: $env:CI_PROJECT_DIR'"
+    - powershell -Command "Get-ChildItem .\docker"
+    - powershell -Command "try { docker compose version } catch { docker-compose version }"
 
   script:
     - docker compose -f ".\docker\docker-compose.yml" up --build -d
