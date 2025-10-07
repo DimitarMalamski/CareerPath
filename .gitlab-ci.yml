@@ -12,7 +12,7 @@ stages:
   before_script:
     - cd $WORK_DIR
   variables:
-    GRADLE_USER_HOME: "C:/g"
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
 
 frontend-build:
   stage: build
@@ -71,3 +71,51 @@ test:
       - backend/build/test-results/test/
       - backend/build/reports/tests/test/
     expire_in: 1 week
+
+compose-build:
+  needs:
+    - job: frontend-build
+    - job: build
+  image: docker:latest
+
+  stage: test
+  services:
+    - docker:dind
+
+  variables:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
+
+  before_script:
+    - docker info
+    - docker compose version || docker-compose version
+
+  script:
+    - docker compose -f docker/docker-compose.yml up --build -d
+    - echo "⏳ Waiting for backend to start..."
+    - echo "⏳ Waiting for backend to become ready..."
+    - |
+      for i in {1..10}; do
+        if curl -s http://localhost:8080/api/jobs; then
+          echo "✅ Backend is ready"
+          break
+        fi
+        echo "Retrying in 5s..."
+        sleep 5
+      done
+    - echo "🔎 Testing backend endpoint"
+    - curl -f http://localhost:8080/api/jobs || (echo "❌ Backend not reachable!" && exit 1)
+    - echo "✅ Backend reachable. SSR should work in production builds."
+    - docker compose logs
+
+  rules:
+    - changes:
+        - docker/**
+        - backend/**
+        - frontend/**
+        - .gitlab-ci.yml
+    - when: always
+
+  allow_failure: false
+  after_script:
+    - docker compose down
