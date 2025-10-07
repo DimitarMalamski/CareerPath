@@ -1,5 +1,3 @@
-default:
-  shell: bash
 variables:
   WORK_DIR: "backend"
   GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
@@ -51,7 +49,7 @@ build:
     - changes: [ "backend/**/*", ".gitlab-ci.yml" ]
     - when: never
   script:
-    - ./gradlew.bat "-Dorg.gradle.caching=true" --configuration-cache assemble
+    - .\gradlew.bat "-Dorg.gradle.caching=true" --configuration-cache assemble
   artifacts:
     paths:
       - backend/build/libs/
