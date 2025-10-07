@@ -1,8 +1,8 @@
 check-shell:
   stage: test
   script:
-    - echo "Shell: $SHELL"
-    - echo "ComSpec: $ComSpec"
-    - echo "OS: $OS"
-    - echo "Username: $USERNAME"
-    - echo "Shell Environment: $0"
+    - 'Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)"'
+    - 'Write-Host "OS: $env:OS"'
+    - 'Write-Host "Username: $env:USERNAME"'
+    - 'Write-Host "ComSpec: $env:ComSpec"'
+    - 'Write-Host "Shell: $($MyInvocation.MyCommand.Path)"'
