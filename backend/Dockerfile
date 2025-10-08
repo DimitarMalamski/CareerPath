@@ -1,5 +1,5 @@
 # Stage 1: Build the Spring Boot JAR
-FROM eclipse-temurin:17-jdk AS builder
+FROM gradle:8.4.0-jdk17 AS builder
 WORKDIR /app
 
 COPY . .
