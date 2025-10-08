@@ -22,7 +22,7 @@ frontend-build:
   stage: build
   tags:
     - docker
-  image: node:20
+  image: docker:20.10.24-dind-node
   services:
     - docker:dind
   variables:
