@@ -22,3 +22,7 @@ Thumbs.db
 # Docker
 **/pgdata/
 **/volumes/
+
+# Ignore environment variable files
+.env
+**/.env
