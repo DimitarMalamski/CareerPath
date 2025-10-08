@@ -12,9 +12,9 @@ stages:
 
 .default_job:
   before_script:
-    - cd $env:WORK_DIR
+    - cd backend
   variables:
-    GRADLE_USER_HOME: '$env:CI_PROJECT_DIR\.gradle'
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
 
 # frontend build
 
@@ -53,7 +53,8 @@ build:
   stage: build
   extends: .default_job
   script:
-    - .\gradlew.bat assemble
+    - mkdir "$CI_PROJECT_DIR/.gradle" -Force
+    - .\gradlew.bat assemble --gradle-user-home "$CI_PROJECT_DIR/.gradle"
   artifacts:
     paths:
       - backend/build/libs/
