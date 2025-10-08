@@ -32,13 +32,16 @@ frontend-build:
     - docker compose --env-file .env -f ./docker/docker-compose.yml up -d db backend
     - echo "Waiting for backend..."
     - for ($i = 1; $i -le 10; $i++) {
-        if ((Invoke-WebRequest -Uri "http://localhost:8080/actuator/health" -UseBasicParsing).Content -match '"status":"UP"') {
-          Write-Output "✅ Backend is up!"
-          break
-        } else {
-          Write-Output "⏳ Still waiting..."
-          Start-Sleep -Seconds 5
+        try {
+          $response = Invoke-WebRequest -Uri "http://localhost:8080/actuator/health" -UseBasicParsing
+          if ($response.Content -match '"status":"UP"') {
+            Write-Host "✅ Backend is up!"
+            break
+          }
+        } catch {
+          Write-Host "⏳ Still waiting for backend to be up..."
         }
+        Start-Sleep -Seconds 5
       }
     - if (!(Test-Path -Path "frontend")) { Write-Error "❌ Frontend directory not found"; exit 1 }
     - cd frontend
