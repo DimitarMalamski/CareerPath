@@ -31,7 +31,7 @@ frontend-build:
     - cd frontend
   script:
     - npm install --prefer-offline --cache .npm
-    - npx ng build --configuration=production --browser
+    - npx ng build --configuration=production --prerender false
   artifacts:
     name: "frontend-build"
     paths:
