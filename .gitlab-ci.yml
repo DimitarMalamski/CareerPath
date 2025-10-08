@@ -20,6 +20,8 @@ stages:
 
 frontend-build:
   stage: build
+  tags:
+    - docker
   image: docker:latest
   services:
     - docker:dind
@@ -29,7 +31,7 @@ frontend-build:
     NODE_OPTIONS: "--max-old-space-size=4096"
   before_script:
     # - Invoke-WebRequest -Uri http://localhost:8080/actuator/health -UseBasicParsing
-    - docker compose --env-file .env -f ./docker/docker-compose.yml up -d db backend
+    - docker compose -f ./docker/docker-compose.yml up -d db backend
     - echo "Waiting for backend..."
     - for ($i = 1; $i -le 10; $i++) {
         try {
@@ -64,6 +66,8 @@ frontend-build:
 # backend build
 build:
   stage: build
+  tags:
+    - docker
   extends: .default_job
   script:
     - mkdir "$CI_PROJECT_DIR/.gradle" -Force
@@ -83,6 +87,8 @@ test:
   dependencies:
     - build
   stage: test
+  tags:
+    - docker
   extends: .default_job
   script:
     - mkdir "$CI_PROJECT_DIR/.gradle" -Force
