@@ -26,11 +26,17 @@ frontend-build:
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
     NODE_OPTIONS: "--max-old-space-size=4096"
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - frontend/.npm/
+      - frontend/node_modules/
   before_script:
     - test -d frontend || { echo "❌ Frontend directory not found"; exit 1; }
     - cd frontend
   script:
     - npm install --prefer-offline --cache .npm
+    - rm -rf .angular
     - npx ng build --configuration=production
   artifacts:
     name: "frontend-build"
