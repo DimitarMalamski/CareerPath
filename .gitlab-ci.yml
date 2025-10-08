@@ -34,7 +34,9 @@ frontend-build:
     # - Invoke-WebRequest -Uri http://localhost:8080/actuator/health -UseBasicParsing
     - docker compose -f ./docker/docker-compose.yml up -d db backend
     - echo "Waiting for backend..."
-    - for i in {1..10}; do
+    - |
+      i=0
+      while [ $i -lt 10 ]; do
         if curl -s http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
           echo "✅ Backend is up!"
           break
@@ -42,6 +44,7 @@ frontend-build:
           echo "⏳ Still waiting for backend to be up..."
           sleep 5
         fi
+        i=$((i + 1))
       done
     - test -d frontend || { echo "❌ Frontend directory not found"; exit 1; }
     - cd frontend
