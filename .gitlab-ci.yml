@@ -29,23 +29,24 @@ frontend-build:
     NODE_OPTIONS: "--max-old-space-size=4096"
   before_script:
     - apk add --no-cache curl
-    - docker compose --env-file .env -f docker-compose.yml up -d db backend
+    - docker compose --env-file .env -f ./docker/docker-compose.yml up -d db backend
     - echo "Waiting for backend..."
-    - for i in $(seq 1 10); do
-      if curl -s http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
-      echo "✅ Backend is up!";
-      break;
-      else
-      echo "⏳ Still waiting...";
-      sleep 5;
-      fi;
-      done
+    - for ($i = 1; $i -le 10; $i++) {
+        if ((Invoke-WebRequest -Uri "http://localhost:8080/actuator/health" -UseBasicParsing).Content -match '"status":"UP"') {
+          Write-Output "✅ Backend is up!"
+          break
+        } else {
+          Write-Output "⏳ Still waiting..."
+          Start-Sleep -Seconds 5
+        }
+      }
+    - if (!(Test-Path -Path "frontend")) { Write-Error "❌ Frontend directory not found"; exit 1 }
     - cd frontend
   script:
     - npm ci --prefer-offline --cache .npm
     - npx ng build careerpath-frontend --configuration=production --source-map=false
   after_script:
-    - docker compose -f docker-compose.yml down
+    - docker compose -f ./docker/docker-compose.yml down
   artifacts:
     name: "frontend-build"
     paths:
