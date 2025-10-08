@@ -26,26 +26,24 @@ frontend-build:
   services:
     - docker:dind
   variables:
-    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
     NODE_OPTIONS: "--max-old-space-size=4096"
   before_script:
     # - Invoke-WebRequest -Uri http://localhost:8080/actuator/health -UseBasicParsing
     - docker compose -f ./docker/docker-compose.yml up -d db backend
     - echo "Waiting for backend..."
-    - for ($i = 1; $i -le 10; $i++) {
-        try {
-          $response = Invoke-WebRequest -Uri "http://localhost:8080/actuator/health" -UseBasicParsing
-          if ($response.Content -match '"status":"UP"') {
-            Write-Host "✅ Backend is up!"
-            break
-          }
-        } catch {
-          Write-Host "⏳ Still waiting for backend to be up..."
-        }
-        Start-Sleep -Seconds 5
-      }
-    - if (!(Test-Path -Path "frontend")) { Write-Error "❌ Frontend directory not found"; exit 1 }
+    - for i in {1..10}; do
+        if curl -s http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
+          echo "✅ Backend is up!"
+          break
+        else
+          echo "⏳ Still waiting for backend to be up..."
+          sleep 5
+        fi
+      done
+    - test -d frontend || { echo "❌ Frontend directory not found"; exit 1; }
     - cd frontend
   script:
     - npm ci --prefer-offline --cache .npm
@@ -70,8 +68,8 @@ build:
     - docker
   extends: .default_job
   script:
-    - mkdir "$CI_PROJECT_DIR/.gradle" -Force
-    - .\gradlew.bat assemble --gradle-user-home "$CI_PROJECT_DIR/.gradle"
+    - mkdir -p "$CI_PROJECT_DIR/.gradle"
+    - ./gradlew assemble --no-daemon --gradle-user-home "$CI_PROJECT_DIR/.gradle"
   artifacts:
     paths:
       - backend/build/libs/
@@ -91,8 +89,8 @@ test:
     - docker
   extends: .default_job
   script:
-    - mkdir "$CI_PROJECT_DIR/.gradle" -Force
-    - .\gradlew.bat test --gradle-user-home "$CI_PROJECT_DIR/.gradle" --no-configuration-cache
+    - mkdir -p "$CI_PROJECT_DIR/.gradle"
+    - ./gradlew test --no-daemon --gradle-user-home "$CI_PROJECT_DIR/.gradle" --no-configuration-cache
   artifacts:
     when: always
     reports:
