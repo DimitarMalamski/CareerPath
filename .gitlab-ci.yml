@@ -22,7 +22,7 @@ frontend-build:
   stage: build
   tags:
     - docker
-  image: cimg/node:20.5.1
+  image: docker:20.10.24-cli
   services:
     - docker:dind
   variables:
@@ -33,7 +33,7 @@ frontend-build:
   before_script:
     # - Invoke-WebRequest -Uri http://localhost:8080/actuator/health -UseBasicParsing
     - sudo apt-get update
-    - sudo apt-get install -y docker.io
+    - apk add --no-cache nodejs npm
     - docker compose -f ./docker/docker-compose.yml up -d db backend
     - echo "Waiting for backend..."
     - |
