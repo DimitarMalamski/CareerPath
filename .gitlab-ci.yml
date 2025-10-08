@@ -23,7 +23,7 @@ frontend-build:
   before_script:
     - cd frontend
   variables:
-    NPM_CONFIG_CACHE: '$env:CI_PROJECT_DIR\frontend\.npm'
+    NPM_CONFIG_CACHE: '$CI_PROJECT_DIR/frontend/.npm'
     NODE_OPTIONS: "--max-old-space-size=4096"
   cache:
     key:
@@ -67,10 +67,13 @@ build:
 
 # backend test job
 test:
+  dependencies:
+    - build
   stage: test
   extends: .default_job
   script:
-    - .\gradlew.bat test --no-configuration-cache
+    - mkdir "$CI_PROJECT_DIR/.gradle" -Force
+    - .\gradlew.bat test --gradle-user-home "$CI_PROJECT_DIR/.gradle" --no-configuration-cache
   artifacts:
     when: always
     reports:
