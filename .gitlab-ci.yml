@@ -30,7 +30,7 @@ frontend-build:
     - test -d frontend || { echo "❌ Frontend directory not found"; exit 1; }
     - cd frontend
   script:
-    npm install --prefer-offline --cache .npm
+    - npm install --prefer-offline --cache .npm
     - npx ng build --configuration=production --source-map=false
   artifacts:
     name: "frontend-build"
