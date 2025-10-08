@@ -22,39 +22,16 @@ frontend-build:
   stage: build
   tags:
     - docker
-  image: docker:20.10.24-cli
-  services:
-    - docker:dind
+  image: node:20
   variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
     NODE_OPTIONS: "--max-old-space-size=4096"
   before_script:
-    # - Invoke-WebRequest -Uri http://localhost:8080/actuator/health -UseBasicParsing
-    - sudo apt-get update
-    - apk add --no-cache nodejs npm
-    - docker compose -f ./docker/docker-compose.yml up -d db backend
-    - echo "Waiting for backend..."
-    - |
-      i=0
-      while [ $i -lt 10 ]; do
-        if curl -s http://localhost:8080/actuator/health | grep -q '"status":"UP"'; then
-          echo "✅ Backend is up!"
-          break
-        else
-          echo "⏳ Still waiting for backend to be up..."
-          sleep 5
-        fi
-        i=$((i + 1))
-      done
     - test -d frontend || { echo "❌ Frontend directory not found"; exit 1; }
     - cd frontend
   script:
     - npm ci --prefer-offline --cache .npm
     - npx ng build careerpath-frontend --configuration=production --source-map=false
-  after_script:
-    - docker compose -f ./docker/docker-compose.yml down
   artifacts:
     name: "frontend-build"
     paths:
