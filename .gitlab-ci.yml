@@ -31,7 +31,7 @@ frontend-build:
     - cd frontend
   script:
     - npm ci --prefer-offline --cache .npm
-    - npx ng build careerpath-frontend --configuration=production --source-map=false
+    - npx ng build --configuration=production --source-map=false
   artifacts:
     name: "frontend-build"
     paths:
@@ -48,6 +48,7 @@ build:
   stage: build
   tags:
     - docker
+  image: gradle:8.4.0-jdk17
   extends: .default_job
   script:
     - mkdir -p "$CI_PROJECT_DIR/.gradle"
@@ -69,6 +70,7 @@ test:
   stage: test
   tags:
     - docker
+  image: gradle:8.4.0-jdk17
   extends: .default_job
   script:
     - mkdir -p "$CI_PROJECT_DIR/.gradle"
