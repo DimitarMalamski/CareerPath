@@ -132,7 +132,7 @@ frontend-sonarqube:
     - npm ci
     - npm run test -- --code-coverage --watch=false
     - npm install -g sonar-scanner
-    - cd frontend
+    - cd frontends
   script:
     - sonar-scanner "-Dsonar.projectBaseDir=." "-Dsonar.token=$SONAR_TOKEN_FRONTEND" "-Dsonar.host.url=$SONAR_HOST_URL"
   rules:
