@@ -102,13 +102,35 @@ backend-sonarqube:
   extends: .default_job
   variables:
     SONAR_HOST_URL: $SONAR_HOST_URL
-    SONAR_TOKEN: $SONAR_TOKEN_BACKEND
+    SONAR_TOKEN_BACKEND: $SONAR_TOKEN_BACKEND
+  before_script:
+    - git fetch --unshallow || true
+    - cd backend
   script:
     - ./gradlew test jacocoTestReport
-    - ./gradlew sonar "-Dsonar.host.url=$SONAR_HOST_URL" "-Dsonar.token=$SONAR_TOKEN" "-Dsonar.qualitygate.wait=true" "-Dsonar.qualitygate.timeout=600"
+    - ./gradlew sonar "-Dsonar.host.url=$SONAR_HOST_URL" "-Dsonar.token=$SONAR_TOKEN_BACKEND" "-Dsonar.qualitygate.wait=true" "-Dsonar.qualitygate.timeout=600"
   allow_failure: false
   rules:
     - changes:
         - backend/**/*
+        - .gitlab-ci.yml
+    - when: always
+
+#frontend sonerqube
+frontend-sonarqube:
+  stage: test
+  tags:
+    - docker
+  image: node:20
+  variables:
+    SONAR_HOST_URL: $SONAR_HOST_URL
+  before_script:
+    - cd frontend
+    - npm install -g sonar-scanner
+  script:
+    - sonar-scanner "-Dsonar.projectBaseDir=." "-Dsonar.token=$SONAR_TOKEN_FRONTEND" "-Dsonar.host.url=$SONAR_HOST_URL"
+  rules:
+    - changes:
+        - frontend/**/*
         - .gitlab-ci.yml
     - when: always
