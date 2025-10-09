@@ -94,3 +94,25 @@ test:
         - backend/**/*
         - .gitlab-ci.yml
     - when: always
+
+# backend sonarqube
+backend-sonarqube:
+  stage: test
+  image: gradle:8.4.0-jdk17
+  extends: .default_job
+  variables:
+    SONAR_HOST_URL: $SONAR_HOST_URL
+    SONAR_TOKEN: $SONAR_TOKEN
+  script:
+    - ./gradlew test jacocoTestReport
+    - ./gradlew sonar \
+      "-Dsonar.host.url=$SONAR_HOST_URL" \
+      "-Dsonar.token=$SONAR_TOKEN" \
+      "-Dsonar.qualitygate.wait=true" \
+      "-Dsonar.qualitygate.timeout=600"
+  allow_failure: false
+  rules:
+    - changes:
+        - backend/**/*
+        - .gitlab-ci.yml
+    - when: always
