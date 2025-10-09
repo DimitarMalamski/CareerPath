@@ -123,12 +123,14 @@ frontend-sonarqube:
   stage: test
   tags:
     - docker
-  image: node:20
+  image: sonarsource/sonar-scanner-cli:latest
   variables:
+    SONAR_TOKEN_FRONTEND: $SONAR_TOKEN_FRONTEND
     SONAR_HOST_URL: $SONAR_HOST_URL
   before_script:
     - cd frontend
-    - npm install -g sonar-scanner
+    - npm ci
+    - npm run test -- --code-coverage --watch=false
   script:
     - sonar-scanner "-Dsonar.projectBaseDir=." "-Dsonar.token=$SONAR_TOKEN_FRONTEND" "-Dsonar.host.url=$SONAR_HOST_URL"
   rules:
