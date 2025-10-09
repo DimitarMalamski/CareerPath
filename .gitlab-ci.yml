@@ -105,11 +105,7 @@ backend-sonarqube:
     SONAR_TOKEN: $SONAR_TOKEN
   script:
     - ./gradlew test jacocoTestReport
-    - ./gradlew sonar \
-      "-Dsonar.host.url=$SONAR_HOST_URL" \
-      "-Dsonar.token=$SONAR_TOKEN" \
-      "-Dsonar.qualitygate.wait=true" \
-      "-Dsonar.qualitygate.timeout=600"
+    - ./gradlew sonar "-Dsonar.host.url=$SONAR_HOST_URL" "-Dsonar.token=$SONAR_TOKEN" "-Dsonar.qualitygate.wait=true" "-Dsonar.qualitygate.timeout=600"
   allow_failure: false
   rules:
     - changes:
