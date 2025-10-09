@@ -1,6 +1,8 @@
 services: #apps we want to run in this docker container
   db: #PostgreSQl
     image: postgres:16 #official PostgreSQL 16 image for Docker Hub
+    networks:
+      - cp-net
     container_name: cp-db #name of the container
     environment:
       POSTGRES_DB: careerpath #database name
@@ -14,6 +16,8 @@ services: #apps we want to run in this docker container
 
   pgadmin:
     image: dpage/pgadmin4
+    networks:
+      - cp-net
     container_name: cp-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
@@ -25,23 +29,30 @@ services: #apps we want to run in this docker container
   backend:
     build:
       context: ../backend
+    networks:
+      - cp-net
     container_name: cp-backend
     ports:
       - "8080:8080"
-    environment:
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
-      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
-      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    env_file:
+      - .env
     depends_on:
       - db
 
   frontend:
     build:
       context: ../frontend
+    networks:
+      - cp-net
     container_name: cp-frontend
     ports:
       - "4200:80"
     depends_on:
       - backend
+
+networks:
+  cp-net:
+    driver: bridge
+
 volumes:
   cp_pg:
