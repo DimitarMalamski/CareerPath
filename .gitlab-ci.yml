@@ -136,9 +136,9 @@ frontend-sonarqube:
     - export CHROME_BIN="/usr/bin/google-chrome"
     - npm ci
     - npm run test -- --code-coverage --watch=false
-    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip
-    - unzip sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip
-    - mv sonar-scanner-${SONAR_SCANNER_VERSION}-linux sonar-scanner
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+    - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+    - mv sonar-scanner-5.0.1.3006-linux sonar-scanner
     - export PATH="$PWD/sonar-scanner/bin:$PATH"
   script:
     - sonar-scanner \
