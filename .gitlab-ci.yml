@@ -128,13 +128,13 @@ frontend-sonarqube:
     SONAR_TOKEN_FRONTEND: $SONAR_TOKEN_FRONTEND
     SONAR_HOST_URL: $SONAR_HOST_URL
   before_script:
+    - cd frontend
     - apt-get update && apt-get install -y wget gnupg ca-certificates curl
     - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - apt install -y ./google-chrome-stable_current_amd64.deb || apt -f install -y
     - npm ci
     - npm run test -- --code-coverage --watch=false
     - npm install -g sonar-scanner
-    - cd frontend
   script:
     - sonar-scanner -Dsonar.token=$SONAR_TOKEN_FRONTEND
   rules:
