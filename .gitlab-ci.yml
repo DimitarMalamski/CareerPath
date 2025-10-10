@@ -130,10 +130,10 @@ frontend-sonarqube:
   before_script:
     - cd frontend
     - apt-get update && apt-get install -y wget unzip curl gnupg ca-certificates
-    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-    - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-    - export PATH="$PATH:$(pwd)/sonar-scanner-5.0.1.3006-linux/bin"
-    - export CHROME_BIN=$(which google-chrome)
+    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    - apt install -y ./google-chrome-stable_current_amd64.deb || apt -f install -y
+    - export CHROME_BIN=/usr/bin/google-chrome
+    - echo "CHROME_BIN is set to $CHROME_BIN"
     - npm ci
     - npm run test -- --code-coverage --watch=false
   script:
