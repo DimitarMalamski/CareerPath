@@ -134,9 +134,18 @@ frontend-sonarqube:
     - apt install -y ./google-chrome-stable_current_amd64.deb || apt -f install -y
     - npm ci
     - npm run test -- --code-coverage --watch=false
-    - npm install -g sonar-scanner
   script:
-    - sonar-scanner -Dsonar.token=$SONAR_TOKEN_FRONTEND
+    - |
+      docker run --rm \
+        -e SONAR_TOKEN=$SONAR_TOKEN_FRONTEND \
+        -e SONAR_HOST_URL=$SONAR_HOST_URL \
+        -v "$(pwd):/usr/src" \
+        sonarsource/sonar-scanner-cli \
+        -Dsonar.projectBaseDir=/usr/src \
+        -Dsonar.sources=src \
+        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+        -Dsonar.projectKey=careerpath-frontend \
+        -Dsonar.projectName="CareerPath Frontend"
   rules:
     - changes:
         - frontend/**/*
