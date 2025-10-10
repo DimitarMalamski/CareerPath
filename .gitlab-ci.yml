@@ -141,13 +141,13 @@ frontend-sonarqube:
     - mv sonar-scanner-5.0.1.3006-linux sonar-scanner
     - export PATH="$PWD/sonar-scanner/bin:$PATH"
   script:
-    - sonar-scanner \
-      -Dsonar.projectBaseDir=. \
-      -Dsonar.sources=src \
-      -Dsonar.javascript.lcov.reportPaths=coverage.careerpath-frontend/lcov.info \
-      -Dsonar.projectKey=careerpath-frontend \
-      -Dsonar.projectName="CareerPath Frontend" \
-      -Dsonar.token=$SONAR_TOKEN_FRONTEND \
+    - sonar-scanner
+      -Dsonar.projectBaseDir=.
+      -Dsonar.sources=src
+      -Dsonar.javascript.lcov.reportPaths=coverage.careerpath-frontend/lcov.info
+      -Dsonar.projectKey=careerpath-frontend
+      -Dsonar.projectName="CareerPath Frontend"
+      -Dsonar.token=$SONAR_TOKEN_FRONTEND
       -Dsonar.host.url=$SONAR_HOST_URL
   rules:
     - changes:
