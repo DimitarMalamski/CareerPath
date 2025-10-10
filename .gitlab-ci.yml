@@ -129,11 +129,7 @@ frontend-sonarqube:
     SONAR_HOST_URL: $SONAR_HOST_URL
   before_script:
     - cd frontend
-    - apt-get update && apt-get install -y wget unzip curl gnupg ca-certificates
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt install -y ./google-chrome-stable_current_amd64.deb || apt -f install -y
-    - export CHROME_BIN=/usr/bin/google-chrome
-    - echo "CHROME_BIN is set to $CHROME_BIN"
+    - apt-get update && apt-get install -y gnupg ca-certificates
     - npm ci
     - npm run test -- --code-coverage --watch=false
   script:
