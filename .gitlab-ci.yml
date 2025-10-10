@@ -129,12 +129,12 @@ frontend-sonarqube:
     SONAR_HOST_URL: $SONAR_HOST_URL
   before_script:
     - apt-get update && apt-get install -y openjdk-17-jre
+    - cd frontend
     - npm ci
     - npm run test -- --code-coverage --watch=false
     - npm install -g sonar-scanner
-    - cd frontends
   script:
-    - sonar-scanner "-Dsonar.projectBaseDir=." "-Dsonar.token=$SONAR_TOKEN_FRONTEND" "-Dsonar.host.url=$SONAR_HOST_URL"
+    - sonar-scanner -Dsonar.token=$SONAR_TOKEN_FRONTEND
   rules:
     - changes:
         - frontend/**/*

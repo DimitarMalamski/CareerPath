@@ -1,15 +1,17 @@
-services: #apps we want to run in this docker container
-  db: #PostgreSQl
-    image: postgres:16 #official PostgreSQL 16 image for Docker Hub
+version: "3.8"
+
+services:
+  db:  # Main app database
+    image: postgres:16
     networks:
       - cp-net
-    container_name: cp-db #name of the container
+    container_name: cp-db
     environment:
-      POSTGRES_DB: careerpath #database name
-      POSTGRES_USER: cp_user #DB username
+      POSTGRES_DB: careerpath
+      POSTGRES_USER: cp_user
       POSTGRES_PASSWORD: cp_pass
     ports:
-      - "5432:5432" #makes DB available at localhost:5432
+      - "5432:5432"
     volumes:
       - cp_pg:/var/lib/postgresql/data
     restart: unless-stopped
@@ -23,7 +25,7 @@ services: #apps we want to run in this docker container
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "5050:80" #Accessible at http://localhost:5050
+      - "5050:80"
     restart: unless-stopped
 
   backend:
@@ -50,9 +52,42 @@ services: #apps we want to run in this docker container
     depends_on:
       - backend
 
+  sonarqube-db:
+    image: postgres:16
+    networks:
+      - cp-net
+    container_name: cp-sonar-db
+    environment:
+      POSTGRES_DB: sonar
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+    volumes:
+      - sonar_db:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  sonarqube:
+    image: sonarqube:10.4.1-community
+    container_name: cp-sonarqube
+    networks:
+      - cp-net
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://cp-sonar-db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    depends_on:
+      - sonarqube-db
+
 networks:
   cp-net:
     driver: bridge
 
 volumes:
   cp_pg:
+  sonar_db:
+  sonarqube_data:
+  sonarqube_extensions:
