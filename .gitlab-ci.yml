@@ -112,12 +112,15 @@ backend-sonarqube:
   before_script:
     - cd backend
   script:
-    - ./gradlew sonar \
-        -Dsonar.host.url=$SONAR_HOST_URL \
-        -Dsonar.token=$SONAR_TOKEN_BACKEND \
-        -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml \
-        -Dsonar.qualitygate.wait=true \
-        -Dsonar.qualitygate.timeout=600
+    - test -f build/reports/jacoco/test/jacocoTestReport.xml || { echo "❌ Jacoco XML missing"; exit 1; }
+    - >
+      ./gradlew
+      -Dsonar.host.url=$SONAR_HOST_URL
+      -Dsonar.token=$SONAR_TOKEN_BACKEND
+      -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+      -Dsonar.qualitygate.wait=true
+      -Dsonar.qualitygate.timeout=600
+      sonar
   allow_failure: false
   rules:
     - changes:
@@ -146,8 +149,9 @@ frontend-test:
   script:
     - npm run test -- --code-coverage --watch=false
   artifacts:
+    when: always
     paths:
-      - frontend/coverage.careerpath-frontend/lcov.info
+      - frontend/coverage*/lcov.info
     expire_in: 1 week
   rules:
     - changes:
@@ -170,19 +174,27 @@ frontend-sonarqube:
       artifacts: true
   before_script:
     - cd frontend
-    - if [ ! -d sonar-scanner ]; then
+      - if [ ! -d sonar-scanner ]; then
         wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip &&
         unzip sonar-scanner-cli-5.0.1.3006-linux.zip &&
         mv sonar-scanner-5.0.1.3006-linux sonar-scanner;
       fi
     - export PATH="$PWD/sonar-scanner/bin:$PATH"
+    - export LCOV_PATH="$(ls -1 coverage*/lcov.info 2>/dev/null | head -n1)"
+    - |
+      if [ -z "$LCOV_PATH" ]; then
+        echo "❌ lcov.info not found under coverage*/"
+        find . -maxdepth 3 -type f -name "lcov.info" -o -type d -name "coverage*"
+        exit 1
+      else
+        echo "✅ Using LCOV_PATH=$LCOV_PATH"
+      fi
   script:
-    - test -f coverage.careerpath-frontend/lcov.info || { echo "❌ lcov.info missing"; exit 1; }
     - >
       sonar-scanner
       -Dsonar.projectBaseDir=.
       -Dsonar.sources=src
-      -Dsonar.javascript.lcov.reportPaths=coverage.careerpath-frontend/lcov.info
+      -Dsonar.javascript.lcov.reportPaths=$LCOV_PATH
       -Dsonar.projectKey=careerpath-frontend
       -Dsonar.projectName="CareerPath Frontend"
       -Dsonar.token=$SONAR_TOKEN_FRONTEND
