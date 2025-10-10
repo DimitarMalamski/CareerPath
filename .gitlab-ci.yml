@@ -129,16 +129,17 @@ frontend-sonarqube:
     SONAR_HOST_URL: $SONAR_HOST_URL
   before_script:
     - cd frontend
-    - apt-get update && apt-get install -y wget gnupg ca-certificates curl
-    - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - apt install -y ./google-chrome-stable_current_amd64.deb || apt -f install -y
+    - apt-get update && apt-get install -y wget unzip curl gnupg ca-certificates
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+    - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+    - export PATH="$PATH:$(pwd)/sonar-scanner-5.0.1.3006-linux/bin"
     - npm ci
     - npm run test -- --code-coverage --watch=false
   script:
     - sonar-scanner \
       -Dsonar.projectBaseDir=. \
       -Dsonar.sources=src \
-      -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info \
+      -Dsonar.javascript.lcov.reportPaths=coverage.careerpath-frontend/lcov.info \
       -Dsonar.projectKey=careerpath-frontend \
       -Dsonar.projectName="CareerPath Frontend" \
       -Dsonar.token=$SONAR_TOKEN_FRONTEND \
