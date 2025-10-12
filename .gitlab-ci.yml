@@ -80,7 +80,7 @@ test:
   extends: .default_job
   script:
     - mkdir -p "$CI_PROJECT_DIR/.gradle"
-    - ./gradlew test jacocoTestReport --no-daemon --gradle-user-home "$CI_PROJECT_DIR/.gradle" --no-configuration-cache
+    - ./gradlew test --no-daemon --gradle-user-home "$CI_PROJECT_DIR/.gradle" --no-configuration-cache
   artifacts:
     when: always
     reports:
@@ -88,7 +88,6 @@ test:
     paths:
       - backend/build/test-results/test/
       - backend/build/reports/tests/test/
-      - backend/build/reports/jacoco/test/jacocoTestReport.xml
     expire_in: 1 week
   rules:
     - changes:
@@ -106,56 +105,16 @@ backend-sonarqube:
   variables:
     SONAR_HOST_URL: $SONAR_HOST_URL
     SONAR_TOKEN_BACKEND: $SONAR_TOKEN_BACKEND
-  needs:
-    - job: test
-      artifacts: true
   before_script:
+    - git fetch --unshallow || true
     - cd backend
   script:
-    - test -f build/reports/jacoco/test/jacocoTestReport.xml || { echo "❌ Jacoco XML missing"; exit 1; }
-    - >
-      ./gradlew
-      -Dsonar.host.url=$SONAR_HOST_URL
-      -Dsonar.token=$SONAR_TOKEN_BACKEND
-      -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
-      -Dsonar.qualitygate.wait=true
-      -Dsonar.qualitygate.timeout=600
-      sonar
+    - ./gradlew test jacocoTestReport
+    - ./gradlew sonar "-Dsonar.host.url=$SONAR_HOST_URL" "-Dsonar.token=$SONAR_TOKEN_BACKEND" "-Dsonar.qualitygate.wait=true" "-Dsonar.qualitygate.timeout=600"
   allow_failure: false
   rules:
     - changes:
         - backend/**/*
-        - .gitlab-ci.yml
-    - when: always
-
-frontend-test:
-  stage: test
-  tags:
-    - docker
-  image: node:20
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - frontend/.npm/
-      - frontend/node_modules/
-  before_script:
-    - cd frontend
-    - apt-get update && apt-get install -y wget gnupg ca-certificates
-    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-    - apt-get update && apt-get install -y google-chrome-stable
-    - export CHROME_BIN="/usr/bin/google-chrome"
-    - npm ci
-  script:
-    - npm run test -- --code-coverage --watch=false
-  artifacts:
-    when: always
-    paths:
-      - frontend/coverage*/lcov.info
-    expire_in: 1 week
-  rules:
-    - changes:
-        - frontend/**/*
         - .gitlab-ci.yml
     - when: always
 
@@ -165,36 +124,27 @@ frontend-sonarqube:
   tags:
     - docker
   image: node:20
-  cache:
-    key: sonar-scanner
-    paths:
-      - frontend/sonar-scanner/
-  needs:
-    - job: frontend-test
-      artifacts: true
+  variables:
+    SONAR_TOKEN_FRONTEND: $SONAR_TOKEN_FRONTEND
+    SONAR_HOST_URL: $SONAR_HOST_URL
   before_script:
     - cd frontend
-      - if [ ! -d sonar-scanner ]; then
-        wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip &&
-        unzip sonar-scanner-cli-5.0.1.3006-linux.zip &&
-        mv sonar-scanner-5.0.1.3006-linux sonar-scanner;
-      fi
+    - apt-get update && apt-get install -y wget unzip gnupg ca-certificates
+    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+    - apt-get update && apt-get install -y google-chrome-stable
+    - export CHROME_BIN="/usr/bin/google-chrome"
+    - npm ci
+    - npm run test -- --code-coverage --watch=false
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+    - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
+    - mv sonar-scanner-5.0.1.3006-linux sonar-scanner
     - export PATH="$PWD/sonar-scanner/bin:$PATH"
-    - export LCOV_PATH="$(ls -1 coverage*/lcov.info 2>/dev/null | head -n1)"
-    - |
-      if [ -z "$LCOV_PATH" ]; then
-        echo "❌ lcov.info not found under coverage*/"
-        find . -maxdepth 3 -type f -name "lcov.info" -o -type d -name "coverage*"
-        exit 1
-      else
-        echo "✅ Using LCOV_PATH=$LCOV_PATH"
-      fi
   script:
-    - >
-      sonar-scanner
+    - sonar-scanner
       -Dsonar.projectBaseDir=.
       -Dsonar.sources=src
-      -Dsonar.javascript.lcov.reportPaths=$LCOV_PATH
+      -Dsonar.javascript.lcov.reportPaths=coverage.careerpath-frontend/lcov.info
       -Dsonar.projectKey=careerpath-frontend
       -Dsonar.projectName="CareerPath Frontend"
       -Dsonar.token=$SONAR_TOKEN_FRONTEND
