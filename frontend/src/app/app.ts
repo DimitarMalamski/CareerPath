@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { UserService } from './services/user.service';
-import { UserDto } from './models/./user.dto';
+import * as AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +11,10 @@ import { UserDto } from './models/./user.dto';
 })
 
 export class App implements OnInit {
-  users: UserDto[] = [];
-
-  constructor(private userService: UserService) {}
-
   ngOnInit() {
-    this.userService.getUsers().subscribe((data) => {
-      this.users = data;
+    AOS.init({
+      duration: 700,
+      once: true
     });
   }
 }
