@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { HowItWorksSectionComponent } from './how-it-works-section/how-it-works-section.component';
-import { BeforeAfterSectionComponent } from './before-after-section/before-after-section.component';
+import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +11,7 @@ import { BeforeAfterSectionComponent } from './before-after-section/before-after
     CommonModule,
     HeroSectionComponent,
     HowItWorksSectionComponent,
-    BeforeAfterSectionComponent
+    CarouselSectionComponent
   ],
   templateUrl: './home.component.html'
 })
