@@ -10,4 +10,11 @@ import { Component } from '@angular/core';
 
 export class FooterComponent {
   currentYear = new Date().getFullYear();
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }

@@ -1,9 +1,9 @@
 <footer class="bg-black text-gray-300 px-6 py-12 text-sm">
-  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start text-left">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
 
     <!-- Brands (or Pages) -->
     <div>
-      <h3 class="text-lg font-semibold text-white mb-3">CareerPath</h3>
+      <h3 class="text-lg font-semibold text-orange-400 mb-3">CareerPath</h3>
       <ul class="space-y-1">
         <li><a routerLink="/jobs" class="hover:text-orange-400 transition">Browse Jobs</a></li>
         <li><a routerLink="/profile" class="hover:text-orange-400 transition">Create Profile</a></li>
@@ -12,7 +12,7 @@
 
     <!-- Contact Info -->
     <div>
-      <h3 class="text-lg font-semibold text-white mb-3">Contact</h3>
+      <h3 class="text-lg font-semibold text-orange-400 mb-3">Contact</h3>
       <p class="text-sm leading-relaxed">
         Fontys University of Applied Sciences<br/>
         Rachelsmolen 1, Eindhoven<br/>
@@ -21,9 +21,9 @@
     </div>
 
     <!-- Logo -->
-    <div class="flex justify-center md:justify-end">
-      <img src="assets/logo.png" alt="CareerPath Logo" class="h-32 w-auto" />
-    </div>
+    <a (click)="scrollToTop()" class="flex justify-center md:justify-end cursor-pointer">
+      <img src="assets/logo.png" alt="CareerPath Logo" class="h-32 w-auto transition-transform hover:scale-105" />
+    </a>
   </div>
 
   <hr class="my-6 border-orange-500"/>
@@ -31,14 +31,14 @@
   <!-- Bottom row -->
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs gap-4">
     <p>&copy; {{ currentYear }} CareerPath. All rights reserved.</p>
-    <div class="flex gap-4 ml-auto text-3xl">
-      <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-600 transition">
+    <div class="flex gap-4 justify-center md:ml-auto md:justify-end text-3xl w-full md:w-auto">
+      <a href="https://github.com/DimitarMalamski" aria-label="Github" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-600 transition">
         <i class="fab fa-github"></i>
       </a>
-      <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-600 transition">
+      <a href="https://www.instagram.com/m.itko/" aria-label="Instagram" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-600 transition">
         <i class="fab fa-instagram"></i>
       </a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-600 transition">
+      <a href="https://www.linkedin.com/in/dimitar-malamski-a00253238/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" class="text-orange-400 hover:text-orange-600 transition">
         <i class="fab fa-linkedin"></i>
       </a>
     </div>
