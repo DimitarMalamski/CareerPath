@@ -69,6 +69,23 @@ build:
         - .gitlab-ci.yml
     - when: always
 
+#Angular lint - Checking code practices
+frontend-lint:
+  stage: test
+  tags:
+    - docker
+  image: node:20
+  before_script:
+    - cd frontend
+    - npm ci
+  script:
+    - npx ng lint
+  rules:
+    - changes:
+        - frontend/**/*
+        - .gitlab-ci.yml
+    - when: always
+
 # backend test job
 test:
   dependencies:
