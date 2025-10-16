@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JobService } from '../../services/job.service';
 import { JobListing } from '../../models/job-listing';
@@ -14,7 +14,7 @@ export class JobListComponent implements OnInit {
   jobs: JobListing[] = [];
   loading = true;
 
-  constructor(private jobService: JobService) { }
+  private jobService = inject(JobService);
 
   ngOnInit(): void {
     this.jobService.getAll().subscribe({

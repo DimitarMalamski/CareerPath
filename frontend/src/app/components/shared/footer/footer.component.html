@@ -21,9 +21,13 @@
     </div>
 
     <!-- Logo -->
-    <a (click)="scrollToTop()" class="flex justify-center md:justify-end cursor-pointer">
+    <button
+      (click)="scrollToTop()"
+      class="flex justify-center md:justify-end cursor-pointer"
+      aria-label="Scroll to top"
+    >
       <img src="assets/logo.png" alt="CareerPath Logo" class="h-32 w-auto transition-transform hover:scale-105" />
-    </a>
+    </button>
   </div>
 
   <hr class="my-6 border-orange-500"/>
