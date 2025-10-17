@@ -3,6 +3,9 @@ import { HeroSectionComponent } from './hero-section.component';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
+const AOS = require('aos');
+AOS.init = jasmine.createSpy('init');
+
 describe('HeroSectionComponent', () => {
   let component: HeroSectionComponent;
   let fixture: ComponentFixture<HeroSectionComponent>;
@@ -49,5 +52,17 @@ describe('HeroSectionComponent', () => {
   it('should render hero image with alt text', () => {
     const image = fixture.debugElement.query(By.css('img')).nativeElement;
     expect(image.alt).toBe('Hero Component Image');
+  });
+
+  it('should call AOS.init on ngOnInit', () => {
+    const aosInitSpy = jasmine.createSpy('init');
+    (AOS as any).init = aosInitSpy;
+
+    component.ngOnInit();
+
+    expect(aosInitSpy).toHaveBeenCalledWith({
+      duration: 800,
+      once: true
+    });
   });
 });
