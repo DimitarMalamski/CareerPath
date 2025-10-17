@@ -53,4 +53,11 @@ describe('HowItWorksSectionComponent', () => {
     expect(stepDivs[1].attributes['data-aos-delay']).toBe('100');
     expect(stepDivs[2].attributes['data-aos-delay']).toBe('200');
   });
+
+  it('should sanitize SVG string correctly', () => {
+    const rawSvg = '<svg><path d="M0,0 L10,10"/></svg>';
+    const result = component['sanitizeSvg'](rawSvg);
+
+    expect(result).toBeTruthy();
+  });
 });
