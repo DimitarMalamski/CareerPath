@@ -3,6 +3,7 @@ import { HeroSectionComponent } from './hero-section.component';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const AOS = require('aos');
 AOS.init = jasmine.createSpy('init');
 
@@ -56,7 +57,7 @@ describe('HeroSectionComponent', () => {
 
   it('should call AOS.init on ngOnInit', () => {
     const aosInitSpy = jasmine.createSpy('init');
-    (AOS as any).init = aosInitSpy;
+    (AOS as unknown as { init: (config: { duration: number; once: boolean }) => void }).init = aosInitSpy;
 
     component.ngOnInit();
 

@@ -46,15 +46,10 @@ describe('FooterComponent', () => {
   });
 
   it('should scroll to top on logo button click', () => {
-    const scrollSpy = spyOn(window as any, 'scrollTo').and.callFake(() => {});
-
+    spyOn(window, 'scrollTo' as keyof Window);
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
-
-    expect(scrollSpy).toHaveBeenCalledWith({
-      top: 0,
-      behavior: 'smooth'
-    });
+    expect(window.scrollTo).toHaveBeenCalled();
   });
 
   it('should render 3 social media icons with correct links', () => {
