@@ -16,12 +16,7 @@
         <div class="flex flex-col items-center text-center" data-aos="fade-up" [attr.data-aos-delay]="step.delay">
           <!-- Icon -->
           <div
-            [ngClass]="{
-              'bg-yellow-100 text-yellow-600': step.color === 'yellow',
-              'bg-blue-100 text-blue-600': step.color === 'blue',
-              'bg-green-100 text-green-600': step.color === 'green'
-            }"
-            class="w-24 h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center mb-6 shadow-lg hover:shadow-yellow-300/60 transition-all duration-300 hover:scale-110 ring-1 ring-yellow-400/30 backdrop-blur-sm"
+            class="bg-yellow-100 text-yellow-600 w-24 h-24 md:w-28 md:h-28 rounded-full flex items-center justify-center mb-6 shadow-lg hover:shadow-yellow-300/60 transition-all duration-300 hover:scale-110 ring-1 ring-yellow-400/30 backdrop-blur-sm"
             [innerHTML]="step.svg"
           ></div>
 
