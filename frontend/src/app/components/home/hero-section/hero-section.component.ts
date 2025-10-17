@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import * as AOS from 'aos';
 
 @Component({
   selector: 'app-hero-section',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+  ],
   templateUrl: './hero-section.component.html',
 })
 

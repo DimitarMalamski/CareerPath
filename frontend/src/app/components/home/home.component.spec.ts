@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
+import { provideRouter } from '@angular/router';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { HowItWorksSectionComponent } from './how-it-works-section/how-it-works-section.component';
 import { CarouselSectionComponent } from './carousel-section/carousel-section.component';
@@ -17,7 +18,8 @@ describe('HomeComponent', () => {
         HowItWorksSectionComponent,
         CarouselSectionComponent,
         CallToActionSectionComponent
-      ]
+      ],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);

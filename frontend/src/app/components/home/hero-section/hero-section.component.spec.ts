@@ -9,7 +9,10 @@ describe('HeroSectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeroSectionComponent, RouterTestingModule],
+      imports: [
+        HeroSectionComponent,
+        RouterTestingModule.withRoutes([]),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HeroSectionComponent);
@@ -32,29 +35,19 @@ describe('HeroSectionComponent', () => {
   });
 
   it('should have Explore Jobs with correct routerLink', () => {
-    const exploreLink = fixture.debugElement
-      .queryAll(By.css('a'))
-      .find(link => link.nativeElement.textContent.includes('Explore Jobs'));
-
-    expect(exploreLink).toBeTruthy();
-    expect(exploreLink?.nativeElement.getAttribute('ng-reflect-router-link'))
-      || exploreLink?.properties['routerLink']
-      .toContain('/jobs');
+    const link = fixture.nativeElement.querySelector('a[routerLink="/jobs"]');
+    expect(link).toBeTruthy();
+    expect(link?.textContent).toContain('Explore Jobs');
   });
 
   it('should have Create Profile link with correct routerLink', () => {
-    const profileLink = fixture.debugElement
-      .queryAll(By.css('a'))
-      .find(link => link.nativeElement.textContent.includes('Create Profile'));
-
-    expect(profileLink).toBeTruthy();
-    expect(profileLink?.nativeElement.getAttribute('ng-reflect-router-link'))
-      || profileLink?.properties['routerLink']
-      .toContain('/profile');
+    const link = fixture.nativeElement.querySelector('a[routerLink="/profile"]');
+    expect(link).toBeTruthy();
+    expect(link?.textContent).toContain('Create Profile');
   });
 
   it('should render hero image with alt text', () => {
     const image = fixture.debugElement.query(By.css('img')).nativeElement;
     expect(image.alt).toBe('Hero Component Image');
   });
-})
+});
