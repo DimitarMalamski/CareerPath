@@ -47,13 +47,20 @@ describe('NavbarComponent', () => {
     expect(signUpLink?.attributes['routerLink']).toBe('/register');
   });
 
-  it('should toggle mobile menu visibility', () => {
-    expect(component.menuOpen).toBeFalse();
+  it('should toggle mobile menu visibility in the DOM', () => {
+    let mobileMenu = fixture.debugElement.query(By.css('.md\\:hidden.px-6.pb-4'));
+    expect(mobileMenu).toBeNull();
 
     component.toggleMenu();
-    expect(component.menuOpen).toBeTrue();
+    fixture.detectChanges();
+
+    mobileMenu = fixture.debugElement.query(By.css('.md\\:hidden.px-6.pb-4'));
+    expect(mobileMenu).not.toBeNull();
 
     component.toggleMenu();
-    expect(component.menuOpen).toBeFalse();
+    fixture.detectChanges();
+
+    mobileMenu = fixture.debugElement.query(By.css('.md\\:hidden.px-6.pb-4'));
+    expect(mobileMenu).toBeNull();
   })
 })
