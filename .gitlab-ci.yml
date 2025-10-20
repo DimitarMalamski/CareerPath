@@ -38,10 +38,10 @@ frontend-lint:
     paths:
       - frontend/eslint-report.json
     expire_in: 1 week
-  rules:
-    - changes:
-        - frontend/**/*
-    - when: never
+#  rules:
+#    - changes:
+#        - frontend/**/*
+#    - when: never
   allow_failure: false
 
 backend-lint:
@@ -64,10 +64,10 @@ backend-lint:
     paths:
       - backend/build/reports/
     expire_in: 1 week
-  rules:
-    - changes:
-        - backend/**/*
-    - when: never
+#  rules:
+#    - changes:
+#        - backend/**/*
+#    - when: never
   allow_failure: false
 
 frontend-build:
@@ -90,10 +90,10 @@ frontend-build:
     paths:
       - frontend/dist/
     expire_in: 1 week
-  rules:
-    - changes:
-        - frontend/**/*
-    - when: never
+#  rules:
+#    - changes:
+#        - frontend/**/*
+#    - when: never
   allow_failure: false
 
 backend-build:
@@ -114,10 +114,10 @@ backend-build:
     paths:
       - backend/build/libs/
     expire_in: 1 week
-  rules:
-    - changes:
-        - backend/**/*
-    - when: never
+#  rules:
+#    - changes:
+#        - backend/**/*
+#    - when: never
   allow_failure: false
 
 frontend-test:
@@ -142,10 +142,10 @@ frontend-test:
     reports:
       junit: frontend/test-results.xml
     expire_in: 1 week
-  rules:
-    - changes:
-        - frontend/**/*
-    - when: never
+#  rules:
+#    - changes:
+#        - frontend/**/*
+#    - when: never
   allow_failure: false
 
 backend-test:
@@ -168,8 +168,8 @@ backend-test:
     reports:
       junit: backend/build/test-results/test/*.xml
     expire_in: 1 week
-  rules:
-    - changes:
-        - backend/**/*
-    - when: never
+#  rules:
+#    - changes:
+#        - backend/**/*
+#    - when: never
   allow_failure: false
