@@ -6,4 +6,6 @@ import { register } from 'swiper/element/bundle'
 
 register();
 
+//testing
+
 bootstrapApplication(App, appConfig).catch((err) => console.error(err));
