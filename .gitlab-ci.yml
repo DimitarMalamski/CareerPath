@@ -130,10 +130,8 @@ backend-sonarqube:
     - ./gradlew sonar "-Dsonar.host.url=$SONAR_HOST_URL" "-Dsonar.token=$SONAR_TOKEN_BACKEND" "-Dsonar.qualitygate.wait=true" "-Dsonar.qualitygate.timeout=600"
   allow_failure: false
   rules:
-    - changes:
-        - backend/**/*
-        - .gitlab-ci.yml
-    - when: always
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
 
 #frontend sonerqube
 frontend-sonarqube:
@@ -141,6 +139,7 @@ frontend-sonarqube:
   tags:
     - docker
   image: node:20
+  allow_failure: false
   variables:
     SONAR_TOKEN_FRONTEND: $SONAR_TOKEN_FRONTEND
     SONAR_HOST_URL: $SONAR_HOST_URL
@@ -167,7 +166,5 @@ frontend-sonarqube:
       -Dsonar.token=$SONAR_TOKEN_FRONTEND
       -Dsonar.host.url=$SONAR_HOST_URL
   rules:
-    - changes:
-        - frontend/**/*
-        - .gitlab-ci.yml
-    - when: always
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
