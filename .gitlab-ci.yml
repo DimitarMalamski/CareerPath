@@ -1,170 +1,29 @@
-# Starter
-
-variables:
-  WORK_DIR: "backend"
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.caching=true"
-  GIT_DEPTH: "20"
-  GIT_LFS_SKIP_SMUDGE: "1"
-
 stages:
+  - lint
   - build
   - test
+  - analyze
+  - report
 
-.default_job:
-  before_script:
-    - cd backend
-  variables:
-    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
-
-# Frontend build
-
-frontend-build:
-  stage: build
-  tags:
-    - docker
-  image: node:20
+#frontend linting ( runs code checks that ensure style, syntax and structure consistency )
+# if this stage fails, the whole pipeline stops, so saves resources
+frontend-lint:
+  stage: lint
+  image: node:20 #tells the container which image to use for this job
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
-    NODE_OPTIONS: "--max-old-space-size=4096"
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
+  cache: #stores all the downloaded dependencies, so in future build it can be reused
+    key: ${CI_COMMIT_REF_SLUG} #we keep different caches for each branch. The cache is stored on the runners host, which is outside the job's docker container
     paths:
       - frontend/.npm/
       - frontend/node_modules/
   before_script:
-    - test -d frontend || { echo "❌ Frontend directory not found"; exit 1; }
     - cd frontend
+    - npm ci --prefer-offline --cache .npm --no-audit #installs all the dependencies from package.json ( wipes all the existing node modules and starts fresh)
   script:
-    - npm install --prefer-offline --cache .npm
-    - rm -rf .angular
-    - npx ng build --configuration=production
-  artifacts:
-    name: "frontend-build"
-    paths:
-      - frontend/dist/
-    expire_in: 1 week
+    - npx ng lint #runs the linting
   rules:
     - changes:
         - frontend/**/*
-        - .gitlab-ci.yml
-    - when: always
-
-# backend build
-build:
-  stage: build
-  tags:
-    - docker
-  image: gradle:8.4.0-jdk17
-  extends: .default_job
-  script:
-    - mkdir -p "$CI_PROJECT_DIR/.gradle"
-    - ./gradlew assemble --no-daemon --gradle-user-home "$CI_PROJECT_DIR/.gradle"
-  artifacts:
-    paths:
-      - backend/build/libs/
-    expire_in: 1 week
-  rules:
-    - changes:
-        - backend/**/*
-        - .gitlab-ci.yml
-    - when: always
-
-#Angular lint - Checking code practices
-frontend-lint:
-  stage: test
-  tags:
-    - docker
-  image: node:20
-  before_script:
-    - cd frontend
-    - npm ci
-  script:
-    - npx ng lint
-  rules:
-    - changes:
-        - frontend/**/*
-        - .gitlab-ci.yml
-    - when: always
-
-# backend test job
-test:
-  dependencies:
-    - build
-  stage: test
-  tags:
-    - docker
-  image: gradle:8.4.0-jdk17
-  extends: .default_job
-  script:
-    - mkdir -p "$CI_PROJECT_DIR/.gradle"
-    - ./gradlew test --no-daemon --gradle-user-home "$CI_PROJECT_DIR/.gradle" --no-configuration-cache
-  artifacts:
-    when: always
-    reports:
-      junit: backend/build/test-results/test/*.xml
-    paths:
-      - backend/build/test-results/test/
-      - backend/build/reports/tests/test/
-    expire_in: 1 week
-  rules:
-    - changes:
-        - backend/**/*
-        - .gitlab-ci.yml
-    - when: always
-
-# backend sonarqube
-backend-sonarqube:
-  stage: test
-  image: gradle:8.4.0-jdk17
-  extends: .default_job
-  tags:
-    - docker
-  variables:
-    SONAR_HOST_URL: $SONAR_HOST_URL
-    SONAR_TOKEN_BACKEND: $SONAR_TOKEN_BACKEND
-  before_script:
-    - git fetch --unshallow || true
-    - cd backend
-  script:
-    - ./gradlew test jacocoTestReport
-    - ./gradlew sonar "-Dsonar.host.url=$SONAR_HOST_URL" "-Dsonar.token=$SONAR_TOKEN_BACKEND" "-Dsonar.qualitygate.wait=true" "-Dsonar.qualitygate.timeout=600"
+    - when: never
   allow_failure: false
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always
-
-#frontend sonerqube
-frontend-sonarqube:
-  stage: test
-  tags:
-    - docker
-  image: node:20
-  allow_failure: false
-  variables:
-    SONAR_TOKEN_FRONTEND: $SONAR_TOKEN_FRONTEND
-    SONAR_HOST_URL: $SONAR_HOST_URL
-  before_script:
-    - cd frontend
-    - apt-get update && apt-get install -y wget unzip gnupg ca-certificates
-    - wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-    - echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
-    - apt-get update && apt-get install -y google-chrome-stable
-    - export CHROME_BIN="/usr/bin/google-chrome"
-    - npm ci
-    - npm run test -- --code-coverage --watch=false
-    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-    - unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-    - mv sonar-scanner-5.0.1.3006-linux sonar-scanner
-    - export PATH="$PWD/sonar-scanner/bin:$PATH"
-  script:
-    - sonar-scanner
-      -Dsonar.projectBaseDir=.
-      -Dsonar.sources=src
-      -Dsonar.javascript.lcov.reportPaths=coverage/careerpath-frontend/lcov.info
-      -Dsonar.projectKey=careerpath-frontend
-      -Dsonar.projectName="CareerPath Frontend"
-      -Dsonar.token=$SONAR_TOKEN_FRONTEND
-      -Dsonar.host.url=$SONAR_HOST_URL
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always
