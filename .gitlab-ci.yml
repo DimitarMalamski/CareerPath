@@ -6,7 +6,7 @@ default:
 #run everything on the test branch
 workflow:
   rules:
-    - if: '$CI_COMMIT_BRANCH == "ci-pipeline-test"'
+    - if: '$CI_COMMIT_BRANCH == "ci/refactor"'
       when: always
     - when: never
 
