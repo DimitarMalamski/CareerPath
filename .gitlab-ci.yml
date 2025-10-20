@@ -160,7 +160,7 @@ frontend-sonarqube:
     - sonar-scanner
       -Dsonar.projectBaseDir=.
       -Dsonar.sources=src
-      -Dsonar.javascript.lcov.reportPaths=frontend/coverage/careerpath-frontend/lcov.info
+      -Dsonar.javascript.lcov.reportPaths=coverage/careerpath-frontend/lcov.info
       -Dsonar.projectKey=careerpath-frontend
       -Dsonar.projectName="CareerPath Frontend"
       -Dsonar.token=$SONAR_TOKEN_FRONTEND
