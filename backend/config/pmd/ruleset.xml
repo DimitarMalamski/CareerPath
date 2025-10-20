@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ruleset name="CareerPath PMD Rules"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             https://pmd.github.io/pmd-7.1.0/pmd-7.1.0.xsd">
+
+    <description>Stable PMD 7 ruleset for CareerPath backend</description>
+
+    <!-- Error-prone patterns -->
+    <rule ref="category/java/errorprone.xml/CloseResource"/>
+    <rule ref="category/java/errorprone.xml/NullAssignment"/>
+
+    <!-- Best practices -->
+    <rule ref="category/java/bestpractices.xml/UnusedImports"/>
+    <rule ref="category/java/bestpractices.xml/AvoidReassigningParameters"/>
+
+    <!-- Code style -->
+    <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName"/>
+
+    <!-- Maintainability -->
+    <rule ref="category/java/bestpractices.xml/OneDeclarationPerLine"/>
+</ruleset>

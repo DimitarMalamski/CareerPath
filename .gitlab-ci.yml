@@ -1,9 +1,9 @@
 stages:
-  - lint
-  - build
-  - test
-  - analyze
-  - report
+  - lint #code quality check
+  - build #produce artifacts
+  - test # testing
+  - analyze # static analyze with SonarQube
+  - report # Summary and Deployment
 
 #frontend linting ( runs code checks that ensure style, syntax and structure consistency )
 # if this stage fails, the whole pipeline stops, so saves resources
@@ -22,6 +22,10 @@ frontend-lint:
     - npm ci --prefer-offline --cache .npm --no-audit #installs all the dependencies from package.json ( wipes all the existing node modules and starts fresh)
   script:
     - npx ng lint #runs the linting
+  artifacts:
+    paths:
+      - frontend/eslint-report.json
+    expire_in: 1 week
   rules:
     - changes:
         - frontend/**/*
@@ -97,6 +101,60 @@ backend-build:
     name: "backend-jar-$CI_COMMIT_SHORT_SHA"
     paths:
       - backend/build/libs/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - backend/**/*
+    - when: never
+  allow_failure: false
+
+frontend-test:
+  stage: test
+  image: node:20
+  variables:
+    NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - frontend/.npm/
+      - frontend/node_modules/
+  before_script:
+    - cd frontend
+    - npm ci --prefer-offline --cache .npm --no-audit
+  script:
+    - npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+  artifacts:
+    when: always
+    paths:
+      - frontend/coverage/
+    reports:
+      junit: frontend/test-results.xml
+    expire_in: 1 week
+  rules:
+    - changes:
+        - frontend/**/*
+    - when: never
+  allow_failure: false
+
+backend-test:
+  stage: test
+  image: gradle:8.4.0-jdk17
+  variables:
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - backend/.gradle/
+  before_script:
+    - cd backend
+  script:
+    - ./gradlew test --no-daemon
+  artifacts:
+    when: always
+    paths:
+      - backend/build/reports/tests/
+    reports:
+      junit: backend/build/test-results/test/*.xml
     expire_in: 1 week
   rules:
     - changes:
