@@ -1,3 +1,15 @@
+#making the docker runner to run by default
+default:
+  tags:
+    - docker
+
+#run everything on the test branch
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "ci-pipeline-test"'
+      when: always
+    - when: never
+
 stages:
   - lint #code quality check
   - build #produce artifacts
