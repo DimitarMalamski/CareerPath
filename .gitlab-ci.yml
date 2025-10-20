@@ -27,3 +27,79 @@ frontend-lint:
         - frontend/**/*
     - when: never
   allow_failure: false
+
+backend-lint:
+  stage: lint
+  image: gradle:8.4.0-jdk17
+  variables:
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle" #where we download the dependencies
+  cache:
+    key: ${CI_COMMIT_REF_SLUG} #branch name, converted into string. That way, each branch has its own isolated cache
+    paths:
+      - backend/.gradle/
+  before_script:
+    - cd backend
+  script:
+    - ./gradlew clean check --no-daemon --console=plain
+  artifacts:
+    when: always
+    reports:
+      junit: backend/build/test-results/test/*.xml
+    paths:
+      - backend/build/reports/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - backend/**/*
+    - when: never
+  allow_failure: false
+
+frontend-build:
+  stage: build
+  image: node:20
+  variables:
+    NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - frontend/.npm/
+      - frontend/node_modules/
+  before_script:
+    - cd frontend
+    - npm ci --prefer-offline --cache .npm --no-audit
+  script:
+    - npm run build -- --configuration=production
+  artifacts:
+    name: "frontend-dist-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - frontend/dist/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - frontend/**/*
+    - when: never
+  allow_failure: false
+
+backend-build:
+  stage: build
+  image: gradle:8.4.0-jdk17
+  variables:
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - backend/.gradle/
+  before_script:
+    - cd backend
+  script:
+    - ./gradlew clean assemble --no-daemon
+  artifacts:
+    name: "backend-jar-$CI_COMMIT_SHORT_SHA"
+    paths:
+      - backend/build/libs/
+    expire_in: 1 week
+  rules:
+    - changes:
+        - backend/**/*
+    - when: never
+  allow_failure: false
