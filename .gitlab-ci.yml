@@ -31,8 +31,16 @@ frontend-lint:
       - frontend/node_modules/
   before_script:
     - cd frontend
+    - echo "=== DEBUG: Current working directory ==="
+    - pwd
+    - echo "=== DEBUG: Listing frontend cache directories ==="
+    - ls -R .npm || echo "No npm cache yet"
+    - ls -R node_modules | head -20 || echo "node_modules empty or missing"
+    - echo "=== DEBUG: Checking for /cache mount (host cache volume) ==="
+    - ls -la /cache || echo "No /cache volume detected"
     - npm ci --prefer-offline --cache .npm --no-audit #installs all the dependencies from package.json ( wipes all the existing node modules and starts fresh)
   script:
+    - echo "=== DEBUG: Running ESLint ==="
     - npx eslint . --format json --output-file eslint-report.json #runs the linting
   artifacts:
     paths:
@@ -57,6 +65,13 @@ backend-lint:
   before_script:
     - cd backend
   script:
+    - echo "=== DEBUG: Current working directory ==="
+    - pwd
+    - echo "=== DEBUG: Listing backend/.gradle directory ==="
+    - ls -R .gradle || echo "No gradle cache yet"
+    - echo "=== DEBUG: Checking for /cache mount (host cache volume) ==="
+    - ls -la /cache || echo "No /cache volume detected"
+    - echo "=== Running Gradle checks ==="
     - ./gradlew clean check --no-daemon --console=plain
   artifacts:
     when: always
