@@ -79,6 +79,8 @@ backend-lint:
 frontend-build:
   stage: build
   image: node:20
+  dependencies:
+    - frontend-lint
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
   cache:
@@ -105,6 +107,8 @@ frontend-build:
 backend-build:
   stage: build
   image: gradle:8.4.0-jdk17
+  dependencies:
+    - backend-lint
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
@@ -132,6 +136,8 @@ backend-build:
 frontend-test:
   stage: test
   image: node:20
+  dependencies:
+    - frontend-build
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
   cache:
@@ -160,6 +166,8 @@ frontend-test:
 backend-test:
   stage: test
   image: gradle:8.4.0-jdk17
+  dependencies:
+    - backend-build
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
