@@ -1,84 +1,103 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="9" failures="9" errors="0" time="0">
-    <testsuite name="src/app/app.spec.ts" timestamp="2025-10-23T23:02:09.603Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/app.spec.ts" name="src/app/app.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+<testsuites name="vitest tests" tests="41" failures="0" errors="0" time="2.0832865">
+    <testsuite name="src/app/app.spec.ts" timestamp="2025-10-24T08:02:03.151Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.1068742">
+        <testcase classname="src/app/app.spec.ts" name="App &gt; should create the app" time="0.0845009">
+        </testcase>
+        <testcase classname="src/app/app.spec.ts" name="App &gt; should render a router outlet" time="0.0129975">
+        </testcase>
+        <testcase classname="src/app/app.spec.ts" name="App &gt; should call AOS.init on ngOnInit" time="0.0072701">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/home/home.component.spec.ts" timestamp="2025-10-23T23:02:09.606Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/home/home.component.spec.ts" name="src/app/components/home/home.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/home/home.component.spec.ts" timestamp="2025-10-24T08:02:03.153Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.3417165">
+        <testcase classname="src/app/components/home/home.component.spec.ts" name="HomeComponent &gt; should create the component" time="0.2739626">
+        </testcase>
+        <testcase classname="src/app/components/home/home.component.spec.ts" name="HomeComponent &gt; should render all homepage components" time="0.0655666">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/layout/main-layout/main-layout.component.spec.ts" timestamp="2025-10-23T23:02:09.608Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="src/app/layout/main-layout/main-layout.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/layout/main-layout/main-layout.component.spec.ts" timestamp="2025-10-24T08:02:03.153Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.2220987">
+        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="MainLayoutComponent &gt; should create the layout component" time="0.1845593">
+        </testcase>
+        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="MainLayoutComponent &gt; should render navbar, router-outlet, and footer" time="0.0349147">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" timestamp="2025-10-23T23:02:09.609Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" timestamp="2025-10-24T08:02:03.154Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.1419145">
+        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; it should create the component" time="0.0990629">
+        </testcase>
+        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the title" time="0.0117675">
+        </testcase>
+        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the description" time="0.0094956">
+        </testcase>
+        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the call to action button" time="0.0110316">
+        </testcase>
+        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the background visual elements" time="0.0078864">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/home/carousel-section/carousel-section.component.spec.ts" timestamp="2025-10-23T23:02:09.610Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/home/carousel-section/carousel-section.component.spec.ts" name="src/app/components/home/carousel-section/carousel-section.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/home/carousel-section/carousel-section.component.spec.ts" timestamp="2025-10-24T08:02:03.155Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2851565">
+        <testcase classname="src/app/components/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should create the component" time="0.1777187">
+        </testcase>
+        <testcase classname="src/app/components/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should have 5 testmonials defined" time="0.0183657">
+        </testcase>
+        <testcase classname="src/app/components/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should render all testimonials twice for seamless loop" time="0.0425096">
+        </testcase>
+        <testcase classname="src/app/components/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should render testimonial name and role correctly" time="0.0430215">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/home/hero-section/hero-section.component.spec.ts" timestamp="2025-10-23T23:02:09.611Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="src/app/components/home/hero-section/hero-section.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/home/hero-section/hero-section.component.spec.ts" timestamp="2025-10-24T08:02:03.156Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.1591563">
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should create the component" time="0.0984146">
+        </testcase>
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render correct heading text" time="0.0158653">
+        </testcase>
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render subtext" time="0.0085879">
+        </testcase>
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should have Explore Jobs with correct routerLink" time="0.0090363">
+        </testcase>
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should have Create Profile link with correct routerLink" time="0.0078036">
+        </testcase>
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render hero image with alt text" time="0.0079706">
+        </testcase>
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should call AOS.init on ngOnInit" time="0.0089839">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" timestamp="2025-10-23T23:02:09.612Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" timestamp="2025-10-24T08:02:03.157Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.2787397">
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should create the component" time="0.1781696">
+        </testcase>
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should render 3 steps" time="0.0181146">
+        </testcase>
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should render correct titles and descriptions for each step" time="0.0348475">
+        </testcase>
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should inject save SVG into each step" time="0.019091">
+        </testcase>
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should set data-delay attribute on each step" time="0.013874">
+        </testcase>
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should sanitize SVG string correctly" time="0.0119187">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/shared/footer/footer.component.spec.ts" timestamp="2025-10-23T23:02:09.613Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="src/app/components/shared/footer/footer.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/shared/footer/footer.component.spec.ts" timestamp="2025-10-24T08:02:03.158Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.2327026">
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should create the component" time="0.1330764">
+        </testcase>
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should render current year correctly" time="0.0155096">
+        </testcase>
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should render CareerPath brand section" time="0.0176601">
+        </testcase>
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should render contact information" time="0.0097209">
+        </testcase>
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should have routerLink to /jobs and /profile" time="0.0174778">
+        </testcase>
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should scroll to top on logo button click" time="0.0177446">
+        </testcase>
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="FooterComponent &gt; should render 3 social media icons with correct links" time="0.0146521">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/components/shared/navbar/navbar.component.spec.ts" timestamp="2025-10-23T23:02:09.613Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
-        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="src/app/components/shared/navbar/navbar.component.spec.ts" time="0">
-            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
-Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
-            </failure>
+    <testsuite name="src/app/components/shared/navbar/navbar.component.spec.ts" timestamp="2025-10-24T08:02:03.159Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.3149275">
+        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should create the component" time="0.1794916">
+        </testcase>
+        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should display the logo image" time="0.0272678">
+        </testcase>
+        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should have routerLink for Jobs, Dashboard, and Profile" time="0.0254943">
+        </testcase>
+        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should have routerLink for Login and Sign Up" time="0.0258367">
+        </testcase>
+        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should toggle mobile menu visibility in the DOM" time="0.0533566">
         </testcase>
     </testsuite>
 </testsuites>
