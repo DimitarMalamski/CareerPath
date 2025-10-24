@@ -192,3 +192,68 @@ backend-test:
 #        - backend/**/*
 #    - when: never
   allow_failure: false
+
+# ---------- ANALYZE ----------
+backend-sonarqube:
+  stage: analyze
+  image: gradle:8.5-jdk17
+  dependencies:
+    - backend-test
+  variables:
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+    SONAR_USER_HOME: "$CI_PROJECT_DIR/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: gradle-sonar-cache
+    paths:
+      - .gradle/wrapper/
+      - .gradle/caches/
+      - backend/.gradle/
+      - .sonar/cache
+  before_script:
+    - cd backend
+  script:
+    - echo "🔍 Running SonarQube analysis for Backend..."
+    - ./gradlew sonarqube \
+        -Dsonar.projectKey=careerpath-backend \
+        -Dsonar.host.url=$SONAR_HOST_URL \
+        -Dsonar.login=$SONAR_TOKEN_BACKEND
+  artifacts:
+    when: always
+    paths:
+      - backend/build/reports/
+    expire_in: 1 week
+  allow_failure: false
+  only:
+    - ci/refactor
+
+frontend-sonarqube:
+  stage: analyze
+  image: sonarsource/sonar-scanner-cli:latest
+  dependencies:
+    - frontend-test
+  variables:
+    SONAR_USER_HOME: "$CI_PROJECT_DIR/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: sonar-frontend-cache
+    paths:
+      - .sonar/cache
+  before_script:
+    - cd frontend
+  script:
+    - echo "🔍 Running SonarQube analysis for Frontend..."
+    - sonar-scanner \
+        -Dsonar.projectKey=careerpath-frontend \
+        -Dsonar.sources=src \
+        -Dsonar.host.url=$SONAR_HOST_URL \
+        -Dsonar.login=$SONAR_TOKEN_FRONTEND \
+        -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+  artifacts:
+    when: always
+    paths:
+      - frontend/sonar-report/
+    expire_in: 1 week
+  allow_failure: false
+  only:
+      - ci/refactor
