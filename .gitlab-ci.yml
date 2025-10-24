@@ -214,10 +214,7 @@ backend-sonarqube:
     - cd backend
   script:
     - echo "🔍 Running SonarQube analysis for Backend..."
-    - ./gradlew sonarqube \
-        -Dsonar.projectKey=careerpath-backend \
-        -Dsonar.host.url=$SONAR_HOST_URL \
-        -Dsonar.login=$SONAR_TOKEN_BACKEND
+    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN_BACKEND
   artifacts:
     when: always
     paths:
@@ -243,12 +240,7 @@ frontend-sonarqube:
     - cd frontend
   script:
     - echo "🔍 Running SonarQube analysis for Frontend..."
-    - sonar-scanner \
-        -Dsonar.projectKey=careerpath-frontend \
-        -Dsonar.sources=src \
-        -Dsonar.host.url=$SONAR_HOST_URL \
-        -Dsonar.login=$SONAR_TOKEN_FRONTEND \
-        -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+    - sonar-scanner -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
   artifacts:
     when: always
     paths:
