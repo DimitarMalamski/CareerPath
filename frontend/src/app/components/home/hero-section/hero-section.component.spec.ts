@@ -2,10 +2,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeroSectionComponent } from './hero-section.component';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import {vi} from 'vitest';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const AOS = require('aos');
-AOS.init = jasmine.createSpy('init');
+vi.mock('aos', () => ({
+  init: vi.fn(),
+}));
+
+import * as AOS from 'aos';
 
 describe('HeroSectionComponent', () => {
   let component: HeroSectionComponent;
@@ -56,7 +59,7 @@ describe('HeroSectionComponent', () => {
   });
 
   it('should call AOS.init on ngOnInit', () => {
-    const aosInitSpy = jasmine.createSpy('init');
+    const aosInitSpy = vi.fn();
     (AOS as unknown as { init: (config: { duration: number; once: boolean }) => void }).init = aosInitSpy;
 
     component.ngOnInit();

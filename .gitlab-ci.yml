@@ -19,6 +19,8 @@ stages:
 
 #frontend linting ( runs code checks that ensure style, syntax and structure consistency )
 # if this stage fails, the whole pipeline stops, so saves resources
+
+# ---------- LINT ----------
 frontend-lint:
   stage: lint
   image: node:20 #tells the container which image to use for this job
@@ -30,18 +32,9 @@ frontend-lint:
       - frontend/.npm/
       - frontend/node_modules/
   before_script:
-    - echo "=== Starting frontend lint stage ==="
     - cd frontend
-    - echo "=== Current working directory ==="
-    - pwd
-    - echo "=== Listing frontend cache directories ==="
-    - ls -R .npm || echo "No npm cache yet"
-    - ls -R node_modules | head -20 || echo "node_modules empty or missing"
-    - echo "=== Checking for /cache mount (host cache volume) ==="
-    - ls -la /cache || echo "No /cache volume detected"
     - npm ci --prefer-offline --cache .npm --no-audit #installs all the dependencies from package.json ( wipes all the existing node modules and starts fresh)
   script:
-    - echo "=== Running ESLint ==="
     - npx eslint . --format json --output-file eslint-report.json #runs the linting
   artifacts:
     paths:
@@ -66,13 +59,6 @@ backend-lint:
   before_script:
     - cd backend
   script:
-    - echo "=== Current working directory ==="
-    - pwd
-    - echo "=== Listing backend/.gradle directory ==="
-    - ls -R .gradle || echo "No gradle cache yet"
-    - echo "=== Checking for /cache mount (host cache volume) ==="
-    - ls -la /cache || echo "No /cache volume detected"
-    - echo "=== Running Gradle checks ==="
     - ./gradlew clean check --no-daemon --console=plain
   artifacts:
     when: always
@@ -87,6 +73,7 @@ backend-lint:
 #    - when: never
   allow_failure: false
 
+# ---------- BUILD ----------
 frontend-build:
   stage: build
   image: node:20
@@ -137,6 +124,7 @@ backend-build:
 #    - when: never
   allow_failure: false
 
+# ---------- TEST ----------
 frontend-test:
   stage: test
   image: node:20
@@ -151,7 +139,7 @@ frontend-test:
     - cd frontend
     - npm ci --prefer-offline --cache .npm --no-audit
   script:
-    - npm run test -- --watch=false --browsers=ChromeHeadless --code-coverage
+    - npm run test -- --coverage --reporter=junit --outputFile=test-results.xml
   artifacts:
     when: always
     paths:

@@ -46,7 +46,7 @@ describe('FooterComponent', () => {
   });
 
   it('should scroll to top on logo button click', () => {
-    spyOn(window, 'scrollTo' as keyof Window);
+    vi.spyOn(window, 'scrollTo');
     const button = fixture.debugElement.query(By.css('button'));
     button.triggerEventHandler('click');
     expect(window.scrollTo).toHaveBeenCalled();

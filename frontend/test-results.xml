@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="9" failures="9" errors="0" time="0">
+    <testsuite name="src/app/app.spec.ts" timestamp="2025-10-23T23:02:09.603Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/app.spec.ts" name="src/app/app.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/home/home.component.spec.ts" timestamp="2025-10-23T23:02:09.606Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/home/home.component.spec.ts" name="src/app/components/home/home.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/layout/main-layout/main-layout.component.spec.ts" timestamp="2025-10-23T23:02:09.608Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="src/app/layout/main-layout/main-layout.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" timestamp="2025-10-23T23:02:09.609Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" name="src/app/components/home/call-to-action-section/call-to-action-section.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/home/carousel-section/carousel-section.component.spec.ts" timestamp="2025-10-23T23:02:09.610Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/home/carousel-section/carousel-section.component.spec.ts" name="src/app/components/home/carousel-section/carousel-section.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/home/hero-section/hero-section.component.spec.ts" timestamp="2025-10-23T23:02:09.611Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/home/hero-section/hero-section.component.spec.ts" name="src/app/components/home/hero-section/hero-section.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" timestamp="2025-10-23T23:02:09.612Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" name="src/app/components/home/how-it-works-section/how-it-works-section.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/shared/footer/footer.component.spec.ts" timestamp="2025-10-23T23:02:09.613Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/shared/footer/footer.component.spec.ts" name="src/app/components/shared/footer/footer.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/components/shared/navbar/navbar.component.spec.ts" timestamp="2025-10-23T23:02:09.613Z" hostname="DESKTOP-9J60L9L" tests="1" failures="1" errors="0" skipped="0" time="0">
+        <testcase classname="src/app/components/shared/navbar/navbar.component.spec.ts" name="src/app/components/shared/navbar/navbar.component.spec.ts" time="0">
+            <failure message="Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;" type="Error">
+Error: Cannot find module &apos;/@id/D:/Fontys/Year 2/Semester 3/Individual project/CareerPath/careerpath/frontend/src/test-setup.ts&apos;
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+Serialized Error: { code: &apos;ERR_MODULE_NOT_FOUND&apos; }
+            </failure>
+        </testcase>
+    </testsuite>
+</testsuites>

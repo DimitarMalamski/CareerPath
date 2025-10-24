@@ -1,12 +1,14 @@
 {
   "name": "careerpath-frontend",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --code-coverage",
+    "test": "vitest run --coverage --config vitest.config.mts",
+    "test:watch": "vitest --watch",
     "serve:ssr:careerpath-frontend": "node dist/careerpath-frontend/server/server.mjs",
     "lint": "ng lint"
   },
@@ -41,26 +43,28 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
+    "@analogjs/vite-plugin-angular": "^1.22.1",
     "@angular/build": "^20.3.3",
     "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^20.3.0",
+    "@angular/platform-browser-dynamic": "^20.3.4",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/express": "^5.0.1",
-    "@types/jasmine": "~5.1.0",
+    "@types/jsdom": "^27.0.0",
     "@types/node": "^20.17.19",
     "@types/swiper": "^5.4.3",
+    "@vitest/coverage-v8": "^4.0.2",
     "angular-eslint": "20.4.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.37.0",
-    "jasmine-core": "~5.9.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jsdom": "^27.0.1",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.9.3",
-    "typescript-eslint": "8.46.0"
+    "typescript-eslint": "8.46.0",
+    "vitest": "^4.0.2"
+  },
+  "jest-junit": {
+    "output": "frontend/junit.xml"
   }
 }

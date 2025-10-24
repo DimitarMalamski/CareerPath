@@ -2,9 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { App } from './app';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const AOS = require('aos');
-AOS.init = jasmine.createSpy('init');
+vi.mock('aos', () => ({
+  init: vi.fn(),
+}));
+
+import * as AOS from 'aos';
 
 describe('App', () => {
   beforeEach(async () => {
