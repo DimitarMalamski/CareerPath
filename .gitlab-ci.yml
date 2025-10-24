@@ -215,7 +215,7 @@ backend-sonarqube:
   before_script:
     - cd backend
   script:
-    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes -Dsonar.junit.reportPaths=build/test-results/test,build/reports/tests/test
+    - ./gradlew sonar -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes -Dsonar.junit.reportPaths=build/test-results/test,build/reports/tests/test
   artifacts:
     when: always
     paths:
@@ -241,7 +241,7 @@ frontend-sonarqube:
     - cd frontend
   script:
     - echo "🔍 Running SonarQube analysis for Frontend..."
-    - sonar-scanner -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+    - sonar-scanner -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
   artifacts:
     when: always
     paths:
