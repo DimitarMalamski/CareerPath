@@ -51,13 +51,13 @@ backend-lint:
   stage: lint
   image: gradle:8.4.0-jdk17
   variables:
-    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle" #where we download the dependencies
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle" #where we store the cache
   cache:
-    key: ${CI_COMMIT_REF_SLUG} #branch name, converted into string. That way, each branch has its own isolated cache
+    key: gradle-cache
     paths:
+      - .gradle/wrapper/
+      - .gradle/caches/
       - backend/.gradle/
-      - /root/.gradle/wrapper/
-      - /root/.gradle/caches/
   before_script:
     - cd backend
   script:
@@ -108,11 +108,11 @@ backend-build:
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key: gradle-cache
     paths:
-      - backend/.gradle/
       - .gradle/wrapper/
       - .gradle/caches/
+      - backend/.gradle/
   before_script:
     - cd backend
   script:
@@ -163,11 +163,11 @@ backend-test:
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key: gradle-cache
     paths:
-      - backend/.gradle/
       - .gradle/wrapper/
       - .gradle/caches/
+      - backend/.gradle/
   before_script:
     - cd backend
   script:
