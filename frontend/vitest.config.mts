@@ -22,6 +22,10 @@ export default defineConfig({
     typecheck: {
       tsconfig: './tsconfig.vitest.json',
     },
+    reporters: [
+      'default',
+      ['junit', { outputFile: 'test-results.xml' }],
+    ],
   },
   resolve: {
     conditions: ['browser', 'module'],

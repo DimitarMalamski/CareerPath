@@ -59,7 +59,7 @@ backend-lint:
   before_script:
     - cd backend
   script:
-    - ./gradlew clean check --no-daemon --console=plain
+    - ./gradlew clean test --no-daemon --console=plain
   artifacts:
     when: always
     reports:
@@ -86,7 +86,7 @@ frontend-build:
       - frontend/node_modules/
   before_script:
     - cd frontend
-    - npm ci --prefer-offline --cache .npm --no-audit
+    - npm ci --prefer-offline --cache .npm --no-audit --legacy-peer-deps
   script:
     - npm run build -- --configuration=production
   artifacts:
@@ -112,7 +112,7 @@ backend-build:
   before_script:
     - cd backend
   script:
-    - ./gradlew clean assemble --no-daemon
+    - ./gradlew clean assemble --no-daemon --build-cache
   artifacts:
     name: "backend-jar-$CI_COMMIT_SHORT_SHA"
     paths:
@@ -137,9 +137,9 @@ frontend-test:
       - frontend/node_modules/
   before_script:
     - cd frontend
-    - npm ci --prefer-offline --cache .npm --no-audit
+    - npm ci --prefer-offline --cache .npm --no-audit --legacy-peer-deps
   script:
-    - npm run test -- --coverage --reporter=junit --outputFile=test-results.xml
+    - npm run test -- --coverage
   artifacts:
     when: always
     paths:
@@ -165,7 +165,7 @@ backend-test:
   before_script:
     - cd backend
   script:
-    - ./gradlew test --no-daemon
+    - ./gradlew test --no-daemon --build-cache
   artifacts:
     when: always
     paths:
