@@ -125,6 +125,7 @@ backend-build:
     name: "backend-jar-$CI_COMMIT_SHORT_SHA"
     paths:
       - backend/build/libs/
+      - backend/build/classes/
     expire_in: 1 week
 #  rules:
 #    - changes:
@@ -199,6 +200,7 @@ backend-sonarqube:
   image: gradle:8.5-jdk17
   dependencies:
     - backend-test
+    - backend-build
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
     SONAR_USER_HOME: "$CI_PROJECT_DIR/.sonar"
@@ -213,8 +215,7 @@ backend-sonarqube:
   before_script:
     - cd backend
   script:
-    - echo "🔍 Running SonarQube analysis for Backend..."
-    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN_BACKEND
+    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes -Dsonar.junit.reportPaths=build/test-results/test,build/reports/tests/test
   artifacts:
     when: always
     paths:
@@ -240,7 +241,7 @@ frontend-sonarqube:
     - cd frontend
   script:
     - echo "🔍 Running SonarQube analysis for Frontend..."
-    - sonar-scanner -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
+    - sonar-scanner -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts
   artifacts:
     when: always
     paths:
