@@ -56,6 +56,8 @@ backend-lint:
     key: ${CI_COMMIT_REF_SLUG} #branch name, converted into string. That way, each branch has its own isolated cache
     paths:
       - backend/.gradle/
+      - /root/.gradle/wrapper/
+      - /root/.gradle/caches/
   before_script:
     - cd backend
   script:
@@ -109,6 +111,8 @@ backend-build:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - backend/.gradle/
+      - /root/.gradle/wrapper/
+      - /root/.gradle/caches/
   before_script:
     - cd backend
   script:
@@ -162,6 +166,8 @@ backend-test:
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - backend/.gradle/
+      - /root/.gradle/wrapper/
+      - /root/.gradle/caches/
   before_script:
     - cd backend
   script:
