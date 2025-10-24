@@ -33,7 +33,7 @@ frontend-lint:
       - frontend/node_modules/
   before_script:
     - cd frontend
-    - npm ci --prefer-offline --cache .npm --no-audit #installs all the dependencies from package.json ( wipes all the existing node modules and starts fresh)
+    - npm ci --prefer-offline --cache .npm --no-audit --legacy-peer-deps #installs all the dependencies from package.json ( wipes all the existing node modules and starts fresh)
   script:
     - npx eslint . --format json --output-file eslint-report.json #runs the linting
   artifacts:
