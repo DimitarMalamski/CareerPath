@@ -241,7 +241,7 @@ frontend-sonarqube:
   before_script:
     - cd frontend
   script:
-    - sonar-scanner -Dsonar.typescript.tsconfigPath=tsconfig.sonar.json -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.testExecutionReportPaths=test-results.xml
+    - sonar-scanner -Dsonar.typescript.tsconfigPath=tsconfig.sonar.json -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.junit.reportPaths=test-results.xml
   artifacts:
     when: always
     paths:
