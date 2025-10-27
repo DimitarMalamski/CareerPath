@@ -215,6 +215,8 @@ backend-sonarqube:
   before_script:
     - cd backend
   script:
+    - echo "🔍 Searching for JUnit XML test files:"
+    - find . -type f -name "TEST-*.xml" || echo "❌ No XML reports found"
     - ./gradlew sonar -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes -Dsonar.junit.reportPaths=build/test-results/test,build/reports/tests/test
   artifacts:
     when: always
