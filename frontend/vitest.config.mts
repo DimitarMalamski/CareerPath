@@ -17,7 +17,8 @@ export default defineConfig({
     include: ['src/**/*.spec.ts'],
     coverage: {
       provider: 'v8',
-      reporter: ['text', 'json', 'html'],
+      reportsDirectory: './coverage',
+      reporter: ['text', 'lcov', 'json', 'html'],
     },
     typecheck: {
       tsconfig: './tsconfig.vitest.json',

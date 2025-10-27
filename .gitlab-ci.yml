@@ -216,9 +216,7 @@ backend-sonarqube:
   before_script:
     - cd backend
   script:
-    - echo "🔍 Searching for JUnit XML test files:"
-    - find . -type f -name "TEST-*.xml" || echo "❌ No XML reports found"
-    - ./gradlew sonar -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes -Dsonar.junit.reportPaths=build/test-results/test,build/reports/tests/test
+    - ./gradlew sonar -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes -Dsonar.junit.reportPaths=build/test-results/test
   artifacts:
     when: always
     paths:
@@ -243,12 +241,12 @@ frontend-sonarqube:
   before_script:
     - cd frontend
   script:
-    - echo "🔍 Running SonarQube analysis for Frontend..."
-    - sonar-scanner -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+    - sonar-scanner -Dsonar.typescript.tsconfigPath=tsconfig.sonar.json -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.testExecutionReportPaths=test-results.xml
   artifacts:
     when: always
     paths:
-      - frontend/sonar-report/
+      - frontend/coverage/
+      - frontend/test-results.xml
     expire_in: 1 week
   allow_failure: false
   only:
