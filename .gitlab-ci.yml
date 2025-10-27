@@ -184,6 +184,7 @@ backend-test:
   artifacts:
     when: always
     paths:
+      - backend/build/test-results/
       - backend/build/reports/tests/
     reports:
       junit: backend/build/test-results/test/*.xml
