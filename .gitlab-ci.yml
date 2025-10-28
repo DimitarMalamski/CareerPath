@@ -216,8 +216,6 @@ backend-sonarqube:
       - backend/build/reports/
     expire_in: 1 week
   allow_failure: false
-  only:
-    - ci/refactor
 
 frontend-sonarqube:
   stage: analyze
@@ -242,5 +240,3 @@ frontend-sonarqube:
       - frontend/test-results.xml
     expire_in: 1 week
   allow_failure: false
-  only:
-      - ci/refactor
