@@ -3,13 +3,6 @@ default:
   tags:
     - docker
 
-#run everything on the test branch
-workflow:
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "ci/refactor"'
-      when: always
-    - when: never
-
 stages:
   - lint #code quality check
   - build #produce artifacts
