@@ -1,0 +1,4 @@
+# Docker and environment files
+docker/env/.env*
+docker/db/*.sql
+docker/compose/*.log

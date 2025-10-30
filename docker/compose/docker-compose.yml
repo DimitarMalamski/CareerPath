@@ -1,21 +1,37 @@
-version: "3.8"
-
 services:
-  db:  # Main app database
+  # --- DEV DATABASE ---
+  db-dev:
     image: postgres:15.0
     networks:
       - cp-net
-    container_name: cp-db
+    container_name: cp-db-dev
     environment:
-      POSTGRES_DB: careerpath
+      POSTGRES_DB: careerpath_dev
       POSTGRES_USER: cp_user
       POSTGRES_PASSWORD: cp_pass
     ports:
       - "5432:5432"
     volumes:
-      - cp_pg:/var/lib/postgresql/data
+      - cp_pg_dev:/var/lib/postgresql/data
     restart: unless-stopped
 
+  # --- PROD DATABASE
+  db-prod:
+    image: postgres:15.0
+    container_name: cp-db-prod
+    networks:
+      - cp-net
+    environment:
+      POSTGRES_DB: careerpath_prod
+      POSTGRES_USER: cp_user
+      POSTGRES_PASSWORD: cp_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - cp_pg_prod:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  # --- PGADMIN ---
   pgadmin:
     image: dpage/pgadmin4
     networks:
@@ -28,22 +44,24 @@ services:
       - "5050:80"
     restart: unless-stopped
 
+  # --- BACKEND ---
   backend:
     build:
-      context: ../backend
+      context: ../../backend
     networks:
       - cp-net
     container_name: cp-backend
     ports:
       - "8080:8080"
     env_file:
-      - .env
+      - ../env/.env.${ENV:-dev}
     depends_on:
-      - db
+      - pgadmin
 
+  # --- FRONTEND ---
   frontend:
     build:
-      context: ../frontend
+      context: ../../frontend
     networks:
       - cp-net
     container_name: cp-frontend
@@ -52,6 +70,7 @@ services:
     depends_on:
       - backend
 
+  # --- SONARQUBE DATABASE ---
   sonarqube-db:
     image: postgres:16
     networks:
@@ -65,6 +84,7 @@ services:
       - sonar_db:/var/lib/postgresql/data
     restart: unless-stopped
 
+  # --- SONARQUBE ---
   sonarqube:
     image: sonarqube:10.4.1-community
     container_name: cp-sonarqube
@@ -87,7 +107,8 @@ networks:
     driver: bridge
 
 volumes:
-  cp_pg:
+  cp_pg_dev:
+  cp_pg_prod:
   sonar_db:
   sonarqube_data:
   sonarqube_extensions:
