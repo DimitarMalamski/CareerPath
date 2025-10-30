@@ -70,38 +70,6 @@ services:
     depends_on:
       - backend
 
-  # --- SONARQUBE DATABASE ---
-  sonarqube-db:
-    image: postgres:16
-    networks:
-      - cp-net
-    container_name: cp-sonar-db
-    environment:
-      POSTGRES_DB: sonar
-      POSTGRES_USER: sonar
-      POSTGRES_PASSWORD: sonar
-    volumes:
-      - sonar_db:/var/lib/postgresql/data
-    restart: unless-stopped
-
-  # --- SONARQUBE ---
-  sonarqube:
-    image: sonarqube:10.4.1-community
-    container_name: cp-sonarqube
-    networks:
-      - cp-net
-    ports:
-      - "9000:9000"
-    environment:
-      SONAR_JDBC_URL: jdbc:postgresql://cp-sonar-db:5432/sonar
-      SONAR_JDBC_USERNAME: sonar
-      SONAR_JDBC_PASSWORD: sonar
-    volumes:
-      - sonarqube_data:/opt/sonarqube/data
-      - sonarqube_extensions:/opt/sonarqube/extensions
-    depends_on:
-      - sonarqube-db
-
 networks:
   cp-net:
     driver: bridge
