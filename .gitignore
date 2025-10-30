@@ -25,4 +25,4 @@ Thumbs.db
 
 # Ignore environment variable files
 .env
-**/.env
+docker/env/.env
