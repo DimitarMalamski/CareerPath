@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { JobsService } from '../jobs.service';
 import { JobListing } from '../../../core/models/job-listing';
 import {RouterModule} from '@angular/router';
@@ -15,7 +15,7 @@ export class JobsListComponent implements OnInit {
   jobs: JobListing[] = [];
   isLoading = true;
 
-  constructor(private readonly jobsService: JobsService) {}
+  private readonly jobsService = inject(JobsService);
 
   ngOnInit(): void {
     this.jobsService.getAllJobs().subscribe({

@@ -17,7 +17,7 @@ interface Step {
 })
 
 export class HowItWorksSectionComponent {
-  private sanitizer = inject(DomSanitizer);
+  private readonly sanitizer = inject(DomSanitizer);
 
   steps: Step[] = [
     {
