@@ -68,7 +68,6 @@ public class DevDatabaseSeeder {
                 );
 
                 jobListingRepository.saveAll(jobs);
-                System.out.println("✅ Dev DB seeded with test data: " + jobs.size() + " job listings.");
             }
         };
     }

@@ -24,5 +24,7 @@ Thumbs.db
 **/volumes/
 
 # Ignore environment variable files
-.env
-docker/env/.env
+env/.env.dev
+env/.env.prod
+docker/env/.env.dev
+docker/env/.env.prod

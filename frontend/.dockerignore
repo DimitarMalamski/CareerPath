@@ -4,5 +4,5 @@
 **/.git
 **/.idea
 **/.vscode
-Dockerfile
+Dockerfile.prod
 docker-compose.yml

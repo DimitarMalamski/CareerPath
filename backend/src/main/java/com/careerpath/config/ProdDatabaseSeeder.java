@@ -57,7 +57,6 @@ public class ProdDatabaseSeeder {
                 );
 
                 jobRepo.saveAll(jobs);
-                System.out.println("✅ Prod DB seeded with demo data: " + jobs.size() + " job listings.");
             }
         };
     }

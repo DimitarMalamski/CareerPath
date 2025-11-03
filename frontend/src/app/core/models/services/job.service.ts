@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JobListing } from '../job-listing';
 import { Observable } from 'rxjs';
-import { environment } from '../../../../environments/environments';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({ providedIn: 'root' })
 export class JobService {
