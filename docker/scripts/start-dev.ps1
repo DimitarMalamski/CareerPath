@@ -7,13 +7,13 @@ param (
 Write-Host ("🚀 Starting CareerPath environment: " + $envName) -ForegroundColor Cyan
 
 # Stop existing containers first
-docker compose -f "../compose/docker-compose.yml" -f "../compose/docker-compose.$envName.yml" down
+docker compose -f "../compose/docker-compose.prod.yml" -f "../compose/docker-compose.$envName.yml" down
 
 # Set the ENV variable for Spring Boot
 $env:ENV = $envName
 
 # Start containers
-docker compose -f "../compose/docker-compose.yml" -f "../compose/docker-compose.$envName.yml" up -d --build
+docker compose -f "../compose/docker-compose.prod.yml" -f "../compose/docker-compose.$envName.yml" up -d --build
 
 Write-Host ""
 Write-Host "✅ $envName environment is now running!" -ForegroundColor Green

@@ -1,0 +1,51 @@
+services:
+  db-prod:
+    image: postgres:15
+    container_name: cp-db
+    environment:
+      POSTGRES_DB: careerpath_prod
+      POSTGRES_USER: cp_user
+      POSTGRES_PASSWORD: cp_pass
+    volumes: [ cp_pg_data_prod:/var/lib/postgresql/data ]
+    networks: [ cp-net ]
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile.prod
+    container_name: cp-backend
+    networks: [cp-net]
+    ports: ["8080:8080"]
+    env_file: [../env/.env.prod]
+    depends_on: [db-prod]
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../../frontend
+      dockerfile: Dockerfile.prod
+    container_name: cp-frontend
+    networks: [cp-net]
+    depends_on: [backend]
+    ports: ["80:80"]
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: cp-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - cp-net
+    restart: unless-stopped
+
+networks:
+  cp-net:
+    driver: bridge
+
+volumes:
+  cp_pg_data_prod:

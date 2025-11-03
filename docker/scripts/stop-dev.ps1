@@ -9,7 +9,7 @@ Write-Host "🛑 Stopping all CareerPath containers..." -ForegroundColor Yellow
 
 # Paths to compose files
 $composeFiles = @(
-    "./compose/docker-compose.yml",
+    "./compose/docker-compose.prod.yml",
     "./compose/docker-compose.dev.yml",
     "./compose/docker-compose.prod.yml",
     "./compose/docker-compose.sonar.yml"
