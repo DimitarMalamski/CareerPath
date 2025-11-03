@@ -1,0 +1,164 @@
+<div class="min-h-screen bg-hero-gradient text-white py-12">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Page Header -->
+    <section class="text-center mb-12">
+      <h1 class="text-5xl text-black font-extrabold mb-3">Discover Your Career Path</h1>
+      <p class="text-lg text-black">
+        Browse {{ jobs.length }} AI-matched opportunities that align with your goals.
+      </p>
+    </section>
+
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
+      <!-- Filters Sidebar -->
+      <aside class="bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 lg:col-span-1">
+        <h2 class="text-lg font-semibold text-orange-400 mb-4">Filters</h2>
+
+        <!-- Search -->
+        <div class="mb-6">
+          <input
+            type="text"
+            placeholder="Job title, keyword..."
+            class="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
+
+        <!-- Job Type -->
+        <div class="mb-6">
+          <h3 class="text-sm font-semibold text-gray-300 mb-3">Job Type</h3>
+          <div class="space-y-2 text-sm text-gray-400">
+            <label class="flex items-center gap-2">
+              <input type="radio" name="jobType" class="text-orange-400" /> Full-time
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="radio" name="jobType" class="text-orange-400" /> Internship
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="radio" name="jobType" class="text-orange-400" /> Remote
+            </label>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="mb-6">
+          <h3 class="text-sm font-semibold text-gray-300 mb-3">Location</h3>
+          <select
+            class="w-full px-3 py-2 bg-black border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
+          >
+            <option>Select location</option>
+            <option>Eindhoven, NL</option>
+            <option>Amsterdam, NL</option>
+            <option>London, UK</option>
+            <option>Remote</option>
+          </select>
+        </div>
+
+        <!-- Match Score -->
+        <div class="mb-8">
+          <h3 class="text-sm font-semibold text-gray-300 mb-3">Minimum Match Score</h3>
+          <input type="range" min="0" max="100" value="0" class="w-full accent-orange-400" />
+        </div>
+
+        <button
+          class="w-full bg-orange-500 hover:bg-orange-600 text-black text-sm font-semibold py-2 rounded-lg transition"
+        >
+          Apply Filters
+        </button>
+      </aside>
+
+      <!-- Jobs List -->
+      <section class="lg:col-span-3">
+        <!-- Loading State -->
+        <div *ngIf="isLoading" class="text-center text-gray-400 py-10">
+          Loading jobs...
+        </div>
+
+        <!-- No Jobs -->
+        <div *ngIf="!isLoading && jobs.length === 0" class="text-center text-gray-400 py-10">
+          No jobs found.
+        </div>
+
+        <!-- Job Cards -->
+        <div *ngIf="!isLoading && jobs.length > 0" class="space-y-6">
+          <div
+            *ngFor="let job of jobs"
+            class="bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 hover:border-orange-500 transition-all duration-300"
+          >
+            <div class="flex justify-between items-start">
+              <!-- Job Info -->
+              <div>
+                <h2 class="text-2xl font-semibold text-white mb-1">{{ job.title }}</h2>
+                <p class="text-gray-400 font-medium mb-2">{{ job.company }}</p>
+
+                <div class="flex flex-wrap gap-2 mb-3">
+                  <span class="text-gray-300 text-sm flex items-center">
+                    📍 {{ job.location }}
+                  </span>
+                  <span
+                    *ngIf="job.type?.includes('Remote')"
+                    class="bg-green-500/20 text-green-300 px-2 py-1 rounded-lg text-xs font-medium"
+                  >
+                    Remote
+                  </span>
+                  <span
+                    class="bg-gray-700 text-gray-100 px-2 py-1 rounded-lg text-xs font-medium"
+                  >
+                    {{ job.type }}
+                  </span>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mt-2">
+                  <span
+                    *ngFor="let skill of job.skills"
+                    class="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-lg text-xs font-semibold"
+                  >
+                    {{ skill }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Match -->
+              <div class="text-right">
+                <p class="text-orange-400 font-bold text-lg">
+                  92%
+                </p>
+                <p class="text-xs text-gray-400">Match</p>
+              </div>
+            </div>
+
+            <button
+              class="mt-5 bg-orange-500 hover:bg-orange-600 text-black font-semibold py-2 px-4 rounded-lg w-full transition"
+            >
+              View Details
+            </button>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex justify-center items-center mt-10 gap-2">
+          <button class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition">
+            Previous
+          </button>
+          <button
+            class="px-3 py-1 rounded-lg bg-orange-500 text-black text-sm font-semibold hover:bg-orange-600"
+          >
+            1
+          </button>
+          <button
+            class="px-3 py-1 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800"
+          >
+            2
+          </button>
+          <button
+            class="px-3 py-1 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800"
+          >
+            3
+          </button>
+          <button class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition">
+            Next
+          </button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MainLayoutComponent } from './main-layout.component';
-import { NavbarComponent } from '../../components/shared/navbar/navbar.component';
-import { FooterComponent } from '../../components/shared/footer/footer.component';
+import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
+import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('MainLayoutComponent', () => {

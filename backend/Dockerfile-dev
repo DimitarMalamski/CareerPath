@@ -1,0 +1,13 @@
+# ==========================
+# Backend Dev Dockerfile
+# ==========================
+FROM gradle:8.4.0-jdk17
+WORKDIR /app
+
+COPY . .
+
+# Expose Spring Boot port
+EXPOSE 8080
+
+# Run app with hot reload (works with Spring DevTools)
+CMD ["gradle", "bootRun"]

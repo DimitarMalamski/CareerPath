@@ -1,82 +1,43 @@
 services:
-  # --- DEV DATABASE ---
-  db-dev:
-    image: postgres:15.0
+  backend:
+    build:
+      context: ../../backend
+    container_name: cp-backend
     networks:
       - cp-net
-    container_name: cp-db-dev
-    environment:
-      POSTGRES_DB: careerpath_dev
-      POSTGRES_USER: cp_user
-      POSTGRES_PASSWORD: cp_pass
     ports:
-      - "5432:5432"
-    volumes:
-      - cp_pg_dev:/var/lib/postgresql/data
+      - "8080:8080"
+    env_file:
+      - ../env/.env.${ENV:-dev}
+    depends_on:
+      - db
     restart: unless-stopped
 
-  # --- PROD DATABASE
-  db-prod:
-    image: postgres:15.0
-    container_name: cp-db-prod
+  frontend:
+    build:
+      context: ../../frontend
+    container_name: cp-frontend
     networks:
       - cp-net
-    environment:
-      POSTGRES_DB: careerpath_prod
-      POSTGRES_USER: cp_user
-      POSTGRES_PASSWORD: cp_pass
-    ports:
-      - "5433:5432"
-    volumes:
-      - cp_pg_prod:/var/lib/postgresql/data
+    depends_on:
+      - backend
     restart: unless-stopped
 
-  # --- PGADMIN ---
   pgadmin:
     image: dpage/pgadmin4
-    networks:
-      - cp-net
     container_name: cp-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
+    networks:
+      - cp-net
     restart: unless-stopped
-
-  # --- BACKEND ---
-  backend:
-    build:
-      context: ../../backend
-    networks:
-      - cp-net
-    container_name: cp-backend
-    ports:
-      - "8080:8080"
-    env_file:
-      - ../env/.env.${ENV:-dev}
-    depends_on:
-      - pgadmin
-
-  # --- FRONTEND ---
-  frontend:
-    build:
-      context: ../../frontend
-    networks:
-      - cp-net
-    container_name: cp-frontend
-    ports:
-      - "4200:80"
-    depends_on:
-      - backend
 
 networks:
   cp-net:
     driver: bridge
 
 volumes:
-  cp_pg_dev:
-  cp_pg_prod:
-  sonar_db:
-  sonarqube_data:
-  sonarqube_extensions:
+  cp_pg_data:
