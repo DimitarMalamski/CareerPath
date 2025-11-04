@@ -1,0 +1,18 @@
+services:
+  db-local:
+    image: postgres:15
+    container_name: cp-db-local
+    environment:
+      POSTGRES_DB: careerpath_local
+      POSTGRES_USER: cp_user
+      POSTGRES_PASSWORD: cp_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - ../../backend/src/main/resources/db/seed:/docker-entrypoint-initdb.d
+    networks:
+      - cp-net
+
+networks:
+  cp-net:
+    driver: bridge
