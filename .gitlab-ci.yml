@@ -165,13 +165,16 @@ backend-test:
   stage: test
   image:
     name: gradle:8.4.0-jdk17
-    pull_policy: if-not-present
+    entrypoint: [""]
+  services:
+    - docker:dind
   dependencies:
     - backend-build
   variables:
-    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+    DOCKER_HOST: tcp://docker:2375
     TESTCONTAINERS_RYUK_DISABLED: "true"
     TESTCONTAINERS_HOST_OVERRIDE: "host.docker.internal"
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
     key: gradle-cache
     paths:
@@ -180,10 +183,10 @@ backend-test:
       - backend/.gradle/
       - /home/gradle/.gradle/
   before_script:
-    - docker version
+    - apk add --no-cache openjdk17 gradle bash
     - cd backend
   script:
-    - ./gradlew test --no-daemon --build-cache
+    - gradle test --no-daemon --build-cache
   artifacts:
     when: always
     paths:
@@ -199,7 +202,6 @@ backend-test:
   allow_failure: false
   tags:
     - docker
-  services: []
 
 # ---------- ANALYZE ----------
 backend-sonarqube:
