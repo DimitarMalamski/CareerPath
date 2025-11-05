@@ -192,8 +192,6 @@ backend-test:
   tags:
     - docker
   services: []
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
 
 # ---------- ANALYZE ----------
 backend-sonarqube:
