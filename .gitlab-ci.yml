@@ -191,7 +191,7 @@ backend-test:
     - cd backend
     - docker info || true
   script:
-    - ./gradle clean test jacocoTestReport --no-daemon --build-cache
+    - gradle clean test jacocoTestReport --no-daemon --build-cache --info
   artifacts:
     when: always
     paths:
