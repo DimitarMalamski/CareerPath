@@ -54,11 +54,9 @@ backend-lint:
   before_script:
     - cd backend
   script:
-    - ./gradlew clean test -x integrationTest --no-daemon --console=plain
+    - ./gradlew clean assemble --no-daemon --console=plain
   artifacts:
     when: always
-    reports:
-      junit: backend/build/test-results/test/*.xml
     paths:
       - backend/build/reports/
     expire_in: 1 week
@@ -160,10 +158,14 @@ frontend-test:
 backend-test:
   stage: test
   image: gradle:8.4.0-jdk17
+  services:
+    - docker:dind
   dependencies:
     - backend-build
   variables:
+    DOCKER_TLS_CERTDIR: ""
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+    TESTCONTAINERS_RYUK_DISABLED: "true"
   cache:
     key: gradle-cache
     paths:
@@ -171,9 +173,10 @@ backend-test:
       - .gradle/caches/
       - backend/.gradle/
   before_script:
+    - apk add --no-cache docker-cli
     - cd backend
   script:
-    - ./gradlew test --no-daemon --build-cache
+    - ./gradlew clean test --no-daemon --build-cache
   artifacts:
     when: always
     paths:
