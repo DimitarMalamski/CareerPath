@@ -158,11 +158,15 @@ frontend-test:
 backend-test:
   stage: test
   image: gradle:8.4.0-jdk17
+  services:
+    - docker:dind
   dependencies:
     - backend-build
   variables:
-    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_TLS_CERTDIR: ""
     TESTCONTAINERS_RYUK_DISABLED: "true"
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
     key: gradle-cache
     paths:
@@ -171,6 +175,7 @@ backend-test:
       - backend/.gradle/
   before_script:
     - apt-get update && apt-get install -y docker-cli
+    - docker version
     - cd backend
   script:
     - ./gradlew clean test --no-daemon --build-cache
