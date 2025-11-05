@@ -54,7 +54,7 @@ backend-lint:
   before_script:
     - cd backend
   script:
-    - ./gradlew clean test --no-daemon --console=plain
+    - ./gradlew clean test -x integrationTest --no-daemon --console=plain
   artifacts:
     when: always
     reports:

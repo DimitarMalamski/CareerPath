@@ -64,7 +64,7 @@ describe('JobsListComponent', () => {
   })
 
   it('should log error and set isLoading=false when API fails', () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
     jobsServiceMock.getAllJobs.mockReturnValue(throwError(() => new Error(('API error'))));
 
     fixture.detectChanges();

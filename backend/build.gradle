@@ -106,4 +106,9 @@ tasks.withType(Pmd).configureEach {
     }
 }
 
+tasks.register('integrationTest', Test) {
+    useJUnitPlatform()
+    include '**/*IntegrationTest.class'
+}
+
 
