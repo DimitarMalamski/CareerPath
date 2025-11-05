@@ -167,14 +167,19 @@ backend-test:
     name: gradle:8.4.0-jdk17
     entrypoint: [""]
   services:
-    - docker:dind
+    - name: docker:dind
+      command: ["--tls=false"]
   dependencies:
     - backend-build
   variables:
+    DOCKER_DRIVER: overlay2
     DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
     TESTCONTAINERS_RYUK_DISABLED: "true"
+    TESTCONTAINERS_CHECKS_DISABLE: "true"
     TESTCONTAINERS_HOST_OVERRIDE: "host.docker.internal"
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs='-Xmx2g'"
   cache:
     key: gradle-cache
     paths:
@@ -183,10 +188,10 @@ backend-test:
       - backend/.gradle/
       - /home/gradle/.gradle/
   before_script:
-    - apk add --no-cache openjdk17 gradle bash
     - cd backend
+    - docker info || true
   script:
-    - gradle test --no-daemon --build-cache
+    - gradle clean test --no-daemon --build-cache --info
   artifacts:
     when: always
     paths:
