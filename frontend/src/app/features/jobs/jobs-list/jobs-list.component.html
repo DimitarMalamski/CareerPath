@@ -8,13 +8,9 @@
       </p>
     </section>
 
-    <!-- Grid Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-10">
-      <!-- Filters Sidebar -->
       <aside class="bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 lg:col-span-1">
         <h2 class="text-lg font-semibold text-orange-400 mb-4">Filters</h2>
-
-        <!-- Search -->
         <div class="mb-6">
           <input
             type="text"
@@ -23,7 +19,6 @@
           />
         </div>
 
-        <!-- Job Type -->
         <div class="mb-6">
           <h3 class="text-sm font-semibold text-gray-300 mb-3">Job Type</h3>
           <div class="space-y-2 text-sm text-gray-400">
@@ -39,7 +34,6 @@
           </div>
         </div>
 
-        <!-- Location -->
         <div class="mb-6">
           <h3 class="text-sm font-semibold text-gray-300 mb-3">Location</h3>
           <select
@@ -53,7 +47,6 @@
           </select>
         </div>
 
-        <!-- Match Score -->
         <div class="mb-8">
           <h3 class="text-sm font-semibold text-gray-300 mb-3">Minimum Match Score</h3>
           <input type="range" min="0" max="100" value="0" class="w-full accent-orange-400" />
@@ -66,9 +59,7 @@
         </button>
       </aside>
 
-      <!-- Jobs List -->
       <section class="lg:col-span-3">
-        <!-- Loading State -->
         <div *ngIf="isLoading" class="space-y-6">
           <div
             *ngFor="let _ of [1, 2, 3]"
@@ -90,26 +81,23 @@
           </div>
         </div>
 
-        <!-- No Jobs -->
         <div *ngIf="!isLoading && jobs.length === 0" class="text-center text-gray-400 py-10">
           No jobs found.
         </div>
 
-        <!-- Job Cards -->
         <div *ngIf="!isLoading && jobs.length > 0" class="space-y-6">
           <div
             *ngFor="let job of jobs"
             class="bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 hover:border-orange-500 transition-all duration-300"
           >
             <div class="flex justify-between items-start">
-              <!-- Job Info -->
               <div>
                 <h2 class="text-2xl font-semibold text-white mb-1">{{ job.title }}</h2>
                 <p class="text-gray-400 font-medium mb-2">{{ job.company }}</p>
 
                 <div class="flex flex-wrap gap-2 mb-3">
                   <span class="text-gray-300 text-sm flex items-center">
-                    📍 {{ job.location }}
+                     {{ job.location }}
                   </span>
                   <span
                     *ngIf="job.type?.includes('Remote')"
@@ -134,7 +122,6 @@
                 </div>
               </div>
 
-              <!-- Match -->
               <div class="text-right">
                 <p class="text-orange-400 font-bold text-lg">
                   92%
@@ -151,7 +138,6 @@
           </div>
         </div>
 
-        <!-- Pagination -->
         <div class="flex justify-center items-center mt-10 gap-2">
           <button class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition">
             Previous
