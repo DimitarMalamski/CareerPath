@@ -3,11 +3,23 @@ default:
   tags:
     - docker
 
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "dev"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: always
+    - if: '$CI_COMMIT_BRANCH =~ /^feature\/.*$/'
+      when: always
+    - when: never
+
 stages:
   - lint #code quality check
   - build #produce artifacts
   - test # testing
-  - analyze # static analyze with SonarQube
+  - analyze
+  - integration
+  - deploy # static analyze with SonarQube
 #  - report # Summary and Deployment
 
 #frontend linting ( runs code checks that ensure style, syntax and structure consistency )
@@ -251,3 +263,59 @@ frontend-sonarqube:
     expire_in: 1 week
   allow_failure: false
 
+# ---------- INTEGRATION ----------
+integration-test:
+  stage: integration
+  image:  docker:27.0.3
+  dependencies:
+    - backend-build
+    - frontend-build
+  services:
+    - docker:dind
+  script:
+    - docker compose -f docker/compose/docker-compose.dev.yml up -d
+    - sleep 25
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest
+  only:
+    - dev
+  allow_failure: false
+
+# ---------- DEPLOY_DEV ----------
+deploy-dev:
+  stage: deploy
+  image: docker/compose:1.29.2
+  dependencies:
+    - integration-test
+  script:
+    - docker compose -f docker/compose/docker-compose.dev.yml up -d --build
+  environment:
+    name: dev
+    url: https://dev.careerpath.com
+  only:
+    - dev
+
+# ---------- BUILD_PROD ----------
+build-prod:
+  stage: build
+  image: node:20
+  script:
+    - cd frontend
+    - npm ci
+    - npm run build -- --configuration=production
+  artifacts:
+    paths:
+      - frontend/dist/
+  only:
+    - main
+
+# ---------- DEPLOY_PROD ----------
+deploy-prod:
+  stage: deploy
+  image: docker/compose:1.29.2
+  script:
+    - docker compose -f docker/compose/docker-compose.prod.yml up -d --build
+  environment:
+    name: production
+    url: https://careerpath.com
+  only:
+    - main

@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   db:
     image: postgres:15
@@ -6,41 +8,51 @@ services:
       POSTGRES_DB: careerpath_dev
       POSTGRES_USER: cp_user
       POSTGRES_PASSWORD: cp_pass
-    ports: ["5432:5432"]
-    volumes: [cp_pg_data_dev:/var/lib/postgresql/data]
-    networks: [cp-net]
+    ports:
+      - "5432:5432"
+    volumes:
+      - cp_pg_data_dev:/var/lib/postgresql/data
+    networks:
+      - cp-net
 
   backend:
     build:
-      context: ../../backend
+      context: ./backend
       dockerfile: Dockerfile.dev
     container_name: cp-backend-dev
-    command: gradle bootRun
-    volumes:
-      - ../../backend:/app
-      - ~/.gradle:/home/gradle/.gradle
-    ports: ["8080:8080"]
-    env_file: [../env/.env.dev]
-    depends_on: [db]
-    networks: [cp-net]
+    command: ./gradlew bootRun
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cp-db-dev:5432/careerpath_dev
+      SPRING_DATASOURCE_USERNAME: cp_user
+      SPRING_DATASOURCE_PASSWORD: cp_pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - db
+    networks:
+      - cp-net
 
   frontend:
     build:
-      context: ../../frontend
+      context: ./frontend
       dockerfile: Dockerfile.dev
     container_name: cp-frontend-dev
     command: npm run start
-    volumes:
-      - ../../frontend:/app
-      - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
-    ports: ["4200:4200"]
-    depends_on: [backend]
-    networks: [cp-net]
+      - API_URL=http://cp-backend-dev:8080/api
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - cp-net
 
 networks:
-  cp-net: {driver: bridge}
+  cp-net:
+    driver: bridge
 
 volumes:
   cp_pg_data_dev:
