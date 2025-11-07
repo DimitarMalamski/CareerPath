@@ -278,6 +278,7 @@ integration-test:
     - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest
   only:
     - dev
+    - /^feature\/.*$/
   allow_failure: false
 
 # ---------- DEPLOY_DEV ----------
@@ -293,6 +294,7 @@ deploy-dev:
     url: https://dev.careerpath.com
   only:
     - dev
+    - /^feature\/.*$/
 
 # ---------- BUILD_PROD ----------
 build-prod:
