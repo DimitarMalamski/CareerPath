@@ -48,20 +48,20 @@ backend-lint:
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle" #where we store the cache
   cache:
-    key: gradle-cache
+    key: gradle-cache-${CI_COMMIT_REF_SLUG}
     paths:
       - .gradle/wrapper/
       - .gradle/caches/
       - backend/.gradle/
-      - /home/gradle/.gradle/
   before_script:
     - cd backend
   script:
-    - ./gradlew clean assemble --no-daemon --console=plain
+    - ./gradlew clean build --no-daemon --console=plain
   artifacts:
     when: always
     paths:
       - backend/build/reports/
+      - backend/build/libs/*.jar
     expire_in: 1 week
 #  rules:
 #    - changes:
@@ -108,12 +108,11 @@ backend-build:
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
-    key: gradle-cache
+    key: gradle-cache-${CI_COMMIT_REF_SLUG}
     paths:
       - .gradle/wrapper/
       - .gradle/caches/
       - backend/.gradle/
-      - /home/gradle/.gradle/
   before_script:
     - cd backend
   script:
@@ -181,17 +180,15 @@ backend-test:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
     GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs='-Xmx2g'"
   cache:
-    key: gradle-cache
+    key: gradle-cache-${CI_COMMIT_REF_SLUG}
     paths:
       - .gradle/wrapper/
       - .gradle/caches/
       - backend/.gradle/
-      - /home/gradle/.gradle/
   before_script:
     - cd backend
-    - docker info || true
   script:
-    - gradle clean test jacocoTestReport --no-daemon --build-cache --info
+    - ./gradlew clean test jacocoTestReport --no-daemon --build-cache
   artifacts:
     when: always
     paths:
