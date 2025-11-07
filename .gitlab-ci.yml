@@ -187,6 +187,7 @@ backend-test:
       - backend/.gradle/
   before_script:
     - cd backend
+    - docker info || true
   script:
     - ./gradlew test jacocoTestReport --no-daemon --build-cache
   artifacts:
