@@ -188,7 +188,7 @@ backend-test:
   before_script:
     - cd backend
   script:
-    - ./gradlewx test jacocoTestReport --no-daemon --build-cache
+    - ./gradlew test jacocoTestReport --no-daemon --build-cache
   artifacts:
     when: always
     paths:
