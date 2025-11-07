@@ -8,7 +8,7 @@ stages:
   - build #produce artifacts
   - test # testing
   - analyze # static analyze with SonarQube
-  - report # Summary and Deployment
+#  - report # Summary and Deployment
 
 #frontend linting ( runs code checks that ensure style, syntax and structure consistency )
 # if this stage fails, the whole pipeline stops, so saves resources
@@ -61,7 +61,6 @@ backend-lint:
     when: always
     paths:
       - backend/build/reports/
-      - backend/build/libs/*.jar
     expire_in: 1 week
 #  rules:
 #    - changes:
@@ -162,21 +161,10 @@ frontend-test:
 
 backend-test:
   stage: test
-  image:
-    name: gradle:8.4.0-jdk17
-    entrypoint: [""]
-  services:
-#    - name: docker:dind
-#      command: ["--tls=false"]
+  image: gradle:8.4.0-jdk17
   dependencies:
     - backend-build
   variables:
-#    DOCKER_DRIVER: overlay2
-#    DOCKER_HOST: tcp://docker:2375
-#    DOCKER_TLS_CERTDIR: ""
-#    TESTCONTAINERS_RYUK_DISABLED: "true"
-#    TESTCONTAINERS_CHECKS_DISABLE: "true"
-#    TESTCONTAINERS_HOST_OVERRIDE: "host.docker.internal"
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
     GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.jvmargs='-Xmx2g'"
   cache:
@@ -187,7 +175,6 @@ backend-test:
       - backend/.gradle/
   before_script:
     - cd backend
-    - docker info || true
   script:
     - ./gradlew test jacocoTestReport --no-daemon --build-cache
   artifacts:
