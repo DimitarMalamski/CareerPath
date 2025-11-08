@@ -20,7 +20,6 @@ stages:
   - analyze
   - integration
   - deploy # static analyze with SonarQube
-#  - report # Summary and Deployment
 
 #frontend linting ( runs code checks that ensure style, syntax and structure consistency )
 # if this stage fails, the whole pipeline stops, so saves resources
