@@ -1,0 +1,70 @@
+default:
+  tags:
+    - docker
+
+stages:
+  - build
+  - integration
+  - analyze
+
+include:
+  - local: '.gitlab/ci/feature.yml'
+    rules:
+      - when: never
+
+backend-build:
+  stage: build
+  image: gradle:8.5-jdk17
+  script:
+    - cd backend
+    - ./gradlew assemble --no-daemon
+  artifacts:
+    paths:
+      - backend/build/libs/
+    expire_in: 1 week
+
+frontend-build:
+  stage: build
+  image: node:20
+  script:
+    - cd frontend
+    - npm ci --prefer-offline --no-audit --legacy-peer-deps
+    - npm run build -- --configuration=production
+  artifacts:
+    paths:
+      - frontend/dist/
+    expire_in: 1 week
+
+# ---------- INTEGRATION ----------
+integration-test:
+  stage: integration
+  image: docker:27.0.3
+  services:
+    - docker:dind
+  dependencies:
+    - backend-build
+    - frontend-build
+  script:
+    - docker compose -f docker/compose/docker-compose.dev.yml up -d
+    - sleep 25
+    # backend API sanity check
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest
+    # (optional) frontend smoke test or API ping
+    - docker compose ps
+  after_script:
+    - docker compose -f docker/compose/docker-compose.dev.yml down
+  allow_failure: false
+  only:
+    - dev
+    - /^feature\/.*$/
+
+# ---------- ANALYZE ----------
+backend-sonarqube:
+  stage: analyze
+  image: gradle:8.5-jdk17
+  dependencies:
+    - backend-build
+  script:
+    - cd backend
+    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+  allow_failure: true
