@@ -7,6 +7,7 @@ stages:
   - build
   - test
   - analyze
+  - integration
 
 # ---------- LINT ----------
 frontend-lint:
@@ -244,4 +245,23 @@ frontend-sonarqube:
       - frontend/coverage/
       - frontend/test-results.xml
     expire_in: 1 week
+  allow_failure: false
+
+# ---------- INTEGRATION ----------
+integration-test:
+  stage: integration
+  image: docker:27.0.3
+  services:
+    - docker:dind
+  dependencies:
+    - backend-build
+    - frontend-build
+  script:
+    - docker compose -f docker/compose/docker-compose.dev.yml up -d
+    - sleep 25
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest
+  after_script:
+    - docker compose -f docker/compose/docker-compose.dev.yml down
+  only:
+    - /^feature\/.*$/
   allow_failure: false
