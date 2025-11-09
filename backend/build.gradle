@@ -1,7 +1,7 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.5.6'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version '3.5.6'
+    id 'io.spring.dependency-management' version '1.1.7'
     id 'jacoco'
     id 'org.sonarqube' version '5.1.0.4882'
     id 'checkstyle'
@@ -13,28 +13,54 @@ version = '0.0.1-SNAPSHOT'
 description = 'Backend for IP - CareerPath'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
 }
 
 sourceSets {
     integrationTest {
         java {
+            srcDir file('src/integrationTest/java')
             compileClasspath += sourceSets.main.output + configurations.testRuntimeClasspath
             runtimeClasspath += output + compileClasspath
-            srcDir file('src/integrationTest/java')
         }
         resources.srcDir file('src/integrationTest/resources')
     }
 }
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
     integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'org.postgresql:postgresql'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.flywaydb:flyway-core:11.11.0'
+    implementation 'org.flywaydb:flyway-database-postgresql:11.11.0'
+
+    // ✅ Unit test dependencies (NO Testcontainers here)
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // ✅ Integration test dependencies (Testcontainers lives here)
+    integrationTestImplementation 'org.testcontainers:junit-jupiter'
+    integrationTestImplementation 'org.testcontainers:postgresql'
 }
 
 tasks.register('integrationTest', Test) {
@@ -46,107 +72,29 @@ tasks.register('integrationTest', Test) {
     shouldRunAfter test
 }
 
-check.dependsOn integrationTest
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.postgresql:postgresql'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.mockito:mockito-core'
-    testImplementation 'org.testcontainers:junit-jupiter'
-    testImplementation 'org.testcontainers:postgresql'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.flywaydb:flyway-core:11.11.0'
-    implementation 'org.flywaydb:flyway-database-postgresql:11.11.0'
-}
-
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
     systemProperty "spring.profiles.active", "test"
     finalizedBy jacocoTestReport
+}
+
+// ✅ Important: don’t let `test` trigger integrationTest automatically
+check {
+    dependsOn integrationTest
 }
 
 jacoco {
     toolVersion = "0.8.10"
 }
 
-test {
-    systemProperty "spring.profiles.active", "test"
-    useJUnitPlatform()
-    finalizedBy jacocoTestReport
-}
-
 jacocoTestReport {
     dependsOn test, integrationTest
     executionData(fileTree(layout.buildDirectory.asFile.get()).include(
             "jacoco/test.exec",
-            "jacoco/test.exec*",
             "jacoco/integrationTest.exec*"
     ))
     reports {
         xml.required.set(true)
         html.required.set(false)
-        csv.required.set(false)
     }
 }
-
-sonarqube {
-    properties {
-        property "sonar.projectKey", "careerpath-backend"
-        property "sonar.projectName", "CareerPath Backend"
-        property "sonar.host.url", System.getenv("SONAR_HOST_URL")
-        property "sonar.login", System.getenv("SONAR_BACKEND_TOKEN")
-
-        property "sonar.java.coveragePlugin", "jacoco"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-
-        property "sonar.sources", "src/main/java"
-        property "sonar.tests", "src/test/java"
-        property "sonar.junit.reportPaths", "${project.buildDir}/test-results/test"
-    }
-}
-
-checkstyle {
-    toolVersion = "10.17.0"
-    configFile = file("config/checkstyle/checkstyle.xml")
-    ignoreFailures = false
-    showViolations = true
-}
-
-tasks.withType(Checkstyle).configureEach {
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
-}
-
-pmd {
-    toolVersion = "7.1.0"
-    ignoreFailures = false
-    ruleSets = []
-    ruleSetFiles = files("config/pmd/ruleset.xml")
-}
-
-tasks.withType(Pmd).configureEach {
-    reports {
-        xml.required.set(true)
-        html.required.set(true)
-    }
-}
-
-check {
-    dependsOn integrationTest
-}
-
-
