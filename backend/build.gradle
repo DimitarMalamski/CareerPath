@@ -156,4 +156,8 @@ check {
     dependsOn test
 }
 
+tasks.named('check') {
+    dependsOn integrationTest
+}
+
 

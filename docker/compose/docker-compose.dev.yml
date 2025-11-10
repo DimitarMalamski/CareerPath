@@ -16,9 +16,12 @@ services:
       - cp-net
 
   backend:
+    user: root
     build:
-      context: ./backend
+      context: ../../backend
       dockerfile: Dockerfile.dev
+      args:
+        DOCKER_GID: 1001
     container_name: cp-backend-dev
     command: ./gradlew bootRun
     ports:
@@ -29,6 +32,11 @@ services:
       SPRING_DATASOURCE_USERNAME: cp_user
       SPRING_DATASOURCE_PASSWORD: cp_pass
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+      TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: /var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - gradle_cache:/home/gradle/.gradle
     depends_on:
       - db
     networks:
@@ -36,7 +44,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ../../frontend
       dockerfile: Dockerfile.dev
     container_name: cp-frontend-dev
     command: npm run start
@@ -56,3 +64,4 @@ networks:
 
 volumes:
   cp_pg_data_dev:
+  gradle_cache:

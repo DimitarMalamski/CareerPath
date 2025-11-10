@@ -253,14 +253,24 @@ integration-test:
   image: docker:27.0.3
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_VERIFY: "0"
+
+    TESTCONTAINERS_HOST_OVERRIDE: docker
+    TESTCONTAINERS_CHECKS_DISABLE: "true"
+    TESTCONTAINERS_RYUK_DISABLED: "false"
+
+    DOCKER_DRIVER: overlay2
+    DOCKER_BUILDKIT: "1"
   dependencies:
     - backend-build
     - frontend-build
   script:
-    - docker compose -f docker/compose/docker-compose.dev.yml up -d
+    - docker compose -f docker/compose/docker-compose.dev.yml up -d db backend
     - sleep 25
-    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew tasks --all
-    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew clean integrationTest jacocoIntegrationTestReport --no-daemon --no-build-cache
+    - docker ps
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew clean integrationTest jacocoIntegrationTestReport --no-daemon --info
   after_script:
     - docker compose -f docker/compose/docker-compose.dev.yml down
   only:

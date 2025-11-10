@@ -1,10 +1,24 @@
+# Use Gradle base image with JDK 17
 FROM gradle:8.4.0-jdk17
+
+# Match Docker socket GID for Testcontainers
+ARG DOCKER_GID=1001
+RUN groupadd -for -g $DOCKER_GID docker && usermod -aG docker gradle
+
+# Create Gradle cache folder with correct ownership
+RUN mkdir -p /home/gradle/.gradle && chown -R gradle:gradle /home/gradle/.gradle
+
 WORKDIR /app
 
+# Copy project files first as root
 COPY . .
 
-# Expose Spring Boot port
+# Fix ownership so Gradle can write to /app/.gradle and build outputs
+RUN chown -R gradle:gradle /app
+
+# Switch to gradle user
+USER gradle
+
 EXPOSE 8080
 
-# Run app with hot reload
 CMD ["gradle", "bootRun"]
