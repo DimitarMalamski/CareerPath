@@ -172,7 +172,7 @@ backend-test:
   before_script:
     - cd backend
   script:
-    - ./gradlew test jacocoTestReport --no-daemon --build-cache
+    - ./gradlew test jacocoTestReport -x integrationTest --no-daemon --build-cache
   artifacts:
     when: always
     paths:
@@ -259,7 +259,7 @@ integration-test:
   script:
     - docker compose -f docker/compose/docker-compose.dev.yml up -d
     - sleep 25
-    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest jacocoIntegrationTestReport
   after_script:
     - docker compose -f docker/compose/docker-compose.dev.yml down
   only:
