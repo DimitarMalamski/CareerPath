@@ -259,7 +259,8 @@ integration-test:
   script:
     - docker compose -f docker/compose/docker-compose.dev.yml up -d
     - sleep 25
-    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest jacocoIntegrationTestReport
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew tasks --all
+    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew clean integrationTest jacocoIntegrationTestReport --no-daemon --no-build-cache
   after_script:
     - docker compose -f docker/compose/docker-compose.dev.yml down
   only:
