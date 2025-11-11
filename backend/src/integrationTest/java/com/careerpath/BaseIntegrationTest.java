@@ -21,7 +21,9 @@ public abstract class BaseIntegrationTest {
 
     @BeforeAll
     static void setUp() {
-        if (System.getenv("CI") == null && System.getenv("SPRING_DATASOURCE_URL") == null) {
+        boolean isCI = System.getenv("CI") != null;
+
+        if (!isCI && System.getenv("SPRING_DATASOURCE_URL") == null) {
             postgres.start();
 
             System.setProperty("spring.datasource.url", postgres.getJdbcUrl());
