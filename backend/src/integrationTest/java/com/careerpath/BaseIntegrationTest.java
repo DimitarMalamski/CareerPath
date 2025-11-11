@@ -14,18 +14,21 @@ public abstract class BaseIntegrationTest {
 
     @Container
     protected static final PostgreSQLContainer<?> postgres =
-            new PostgreSQLContainer<>("postgres:15-alpine")
+            new PostgreSQLContainer<>("postgres:16")
                     .withDatabaseName("careerpath_test")
                     .withUsername("cp_user")
                     .withPassword("cp_pass");
 
     @BeforeAll
     static void setUp() {
-        postgres.start();
+        if (System.getenv("CI") == null && System.getenv("SPRING_DATASOURCE_URL") == null) {
+            postgres.start();
 
-        System.setProperty("spring.datasource.url", postgres.getJdbcUrl());
-        System.setProperty("spring.datasource.username", postgres.getUsername());
-        System.setProperty("spring.datasource.password", postgres.getPassword());
-        System.setProperty("spring.jpa.hibernate.ddl-auto", "create-drop");
+            System.setProperty("spring.datasource.url", postgres.getJdbcUrl());
+            System.setProperty("spring.datasource.username", postgres.getUsername());
+            System.setProperty("spring.datasource.password", postgres.getPassword());
+            System.setProperty("spring.jpa.hibernate.ddl-auto", "create-drop");
+        }
     }
 }
+

@@ -253,6 +253,8 @@ integration-test:
   image: gradle:8.4.0-jdk17
   variables:
     DOCKER_HOST: unix:///var/run/docker.sock
+    TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: "/var/run/docker.sock"
+    TESTCONTAINERS_RYUK_DISABLED: "true"
     SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/careerpath
     SPRING_DATASOURCE_USERNAME: postgres
     SPRING_DATASOURCE_PASSWORD: password
@@ -266,6 +268,10 @@ integration-test:
   services:
     - name: postgres:16
       alias: db
+      variables:
+        POSTGRES_DB: careerpath
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: password
   dependencies:
     - backend-build
     - frontend-build
