@@ -251,20 +251,8 @@ frontend-sonarqube:
 integration-test:
   stage: integration
   image: gradle:8.4.0-jdk17
-  variables:
-    DOCKER_HOST: unix:///var/run/docker.sock
-    TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: "/var/run/docker.sock"
-    TESTCONTAINERS_RYUK_DISABLED: "true"
-    SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/careerpath
-    SPRING_DATASOURCE_USERNAME: postgres
-    SPRING_DATASOURCE_PASSWORD: password
-    SPRING_PROFILES_ACTIVE: test
-  cache:
-    key: gradle-cache-${CI_COMMIT_REF_SLUG}
-    paths:
-      - .gradle/wrapper/
-      - .gradle/caches/
-      - backend/.gradle/
+  dependencies:
+    - backend-build
   services:
     - name: postgres:16
       alias: db
@@ -272,13 +260,20 @@ integration-test:
         POSTGRES_DB: careerpath
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: password
-  dependencies:
-    - backend-build
-    - frontend-build
-  before_script:
-    - cd backend
+  variables:
+    SPRING_PROFILES_ACTIVE: test
+    SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/careerpath
+    SPRING_DATASOURCE_USERNAME: postgres
+    SPRING_DATASOURCE_PASSWORD: password
+    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+  cache:
+    key: gradle-cache-${CI_COMMIT_REF_SLUG}
+    paths:
+      - .gradle/wrapper/
+      - .gradle/caches/
+      - backend/.gradle/
   script:
-    - ./gradlew clean integrationTest --no-daemon --build-cache
+    - ./gradlew integrationTest --no-daemon --build-cache
   artifacts:
     when: always
     reports:
@@ -288,3 +283,4 @@ integration-test:
   only:
     - /^feature\/.*$/
   allow_failure: false
+
