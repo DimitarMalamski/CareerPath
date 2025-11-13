@@ -16,6 +16,7 @@ frontend-lint:
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
   cache:
+    policy: pull-push
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - frontend/.npm/
@@ -39,7 +40,7 @@ frontend-lint:
 backend-lint:
   stage: lint
   image:
-    name: gradle:8.4.0-jdk17
+    name: gradle:8.14.3-jdk17
     pull_policy: if-not-present
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
@@ -73,6 +74,7 @@ frontend-build:
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
   cache:
+    policy: pull-push
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - frontend/.npm/
@@ -96,7 +98,7 @@ frontend-build:
 backend-build:
   stage: build
   image:
-    name: gradle:8.4.0-jdk17
+    name: gradle:8.14.3-jdk17
     pull_policy: if-not-present
   dependencies:
     - backend-lint
@@ -133,6 +135,7 @@ frontend-test:
   variables:
     NPM_CONFIG_CACHE: "$CI_PROJECT_DIR/frontend/.npm"
   cache:
+    policy: pull-push
     key: ${CI_COMMIT_REF_SLUG}
     paths:
       - frontend/.npm/
@@ -157,7 +160,7 @@ frontend-test:
 
 backend-test:
   stage: test
-  image: gradle:8.4.0-jdk17
+  image: gradle:8.14.3-jdk17
   dependencies:
     - backend-build
   variables:
@@ -272,7 +275,5 @@ integration-test:
       junit: backend/build/test-results/**/*.xml
     paths:
       - backend/build/reports/tests/
-  only:
-    - /^feature\/.*$/
   allow_failure: false
 
