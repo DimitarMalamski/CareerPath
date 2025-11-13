@@ -253,18 +253,8 @@ integration-test:
   image: gradle:8.4.0-jdk17
   dependencies:
     - backend-build
-  services:
-    - name: postgres:16
-      alias: db
-      variables:
-        POSTGRES_DB: careerpath
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password
   variables:
     SPRING_PROFILES_ACTIVE: test
-    SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/careerpath
-    SPRING_DATASOURCE_USERNAME: postgres
-    SPRING_DATASOURCE_PASSWORD: password
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
     key: gradle-cache-${CI_COMMIT_REF_SLUG}
@@ -272,6 +262,8 @@ integration-test:
       - .gradle/wrapper/
       - .gradle/caches/
       - backend/.gradle/
+  before_script:
+    - cd backend
   script:
     - ./gradlew integrationTest --no-daemon --build-cache
   artifacts:
