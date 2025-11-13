@@ -254,6 +254,7 @@ integration-test:
   dependencies:
     - backend-build
   variables:
+    TESTCONTAINERS_RYUK_DISABLED: "true"
     SPRING_PROFILES_ACTIVE: test
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
