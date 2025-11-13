@@ -255,8 +255,8 @@ integration-test:
     - backend-build
   variables:
     TESTCONTAINERS_RYUK_DISABLED: "true"
-    SPRING_PROFILES_ACTIVE: test
-    GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+    TESTCONTAINERS_CHECKS_DISABLE: "true"
+    TESTCONTAINERS_CLOUD_TOKEN: $TESTCONTAINERS_CLOUD_TOKEN
   cache:
     key: gradle-cache-${CI_COMMIT_REF_SLUG}
     paths:
