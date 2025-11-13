@@ -250,7 +250,7 @@ frontend-sonarqube:
 # ---------- INTEGRATION ----------
 integration-test:
   stage: integration
-  image: gradle:8.4.0-jdk17
+  image: gradle:8.14.3-jdk17
   dependencies:
     - backend-build
   variables:
