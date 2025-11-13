@@ -254,9 +254,7 @@ integration-test:
   dependencies:
     - backend-build
   variables:
-    TESTCONTAINERS_RYUK_DISABLED: "true"
-    TESTCONTAINERS_CHECKS_DISABLE: "true"
-    TESTCONTAINERS_CLOUD_TOKEN: $TESTCONTAINERS_CLOUD_TOKEN
+    TC_CLOUD_TOKEN: $TC_CLOUD_TOKEN
   cache:
     key: gradle-cache-${CI_COMMIT_REF_SLUG}
     paths:
@@ -264,6 +262,7 @@ integration-test:
       - .gradle/caches/
       - backend/.gradle/
   before_script:
+    - curl -fsSL https://app.testcontainers.cloud/bash | bash
     - cd backend
   script:
     - ./gradlew integrationTest --no-daemon --build-cache
