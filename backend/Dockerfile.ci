@@ -1,0 +1,26 @@
+# ===== STAGE 1 — Build integrationTest classes =====
+FROM gradle:8.5-jdk17 AS builder
+WORKDIR /app
+
+# Copy ONLY backend folder
+COPY ./backend ./backend
+
+WORKDIR /app/backend
+RUN chmod +x gradlew
+
+RUN ./gradlew clean assemble integrationTestClasses --no-daemon
+
+
+# ===== STAGE 2 — Runtime for CI =====
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+
+# Install Testcontainers Cloud CLI
+RUN curl -fsSL https://app.testcontainers.cloud/bash | bash
+
+# Copy the backend project (only backend!)
+COPY --from=builder /app/backend .
+
+RUN chmod +x gradlew
+
+ENTRYPOINT ["./gradlew"]

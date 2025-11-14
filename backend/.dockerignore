@@ -1,8 +1,17 @@
-**/node_modules
-**/build
-**/dist
-**/.git
-**/.idea
-**/.vscode
-Dockerfile.prod
-docker-compose.yml
+# ignore backend build output ONLY
+build/
+.gradle/
+out/
+
+# ignore IDE
+*.iml
+.idea/
+.vscode/
+
+# ignore temp OS-specific
+.DS_Store
+
+# ignore logs
+*.log
+
+# DO NOT ignore gradlew, gradle/, or src/

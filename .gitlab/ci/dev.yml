@@ -7,64 +7,71 @@ stages:
   - integration
   - analyze
 
-include:
-  - local: '.gitlab/ci/feature.yml'
-    rules:
-      - when: never
-
-backend-build:
+# ---------------- BACKEND BUILD ----------------
+backend-docker-build:
   stage: build
-  image: gradle:8.5-jdk17
+  image: docker:27.0.3
+  services:
+    - name: docker:dind
+      command: ["--tls=false"]
+      privileged: true
   script:
-    - cd backend
-    - ./gradlew assemble --no-daemon
+    - docker build -f backend/Dockerfile.ci -t cp-backend-ci .
   artifacts:
-    paths:
-      - backend/build/libs/
     expire_in: 1 week
+    paths: []
+  only:
+    - dev
 
+# ---------------- FRONTEND BUILD ----------------
 frontend-build:
   stage: build
   image: node:20
-  script:
+  before_script:
     - cd frontend
+  script:
     - npm ci --prefer-offline --no-audit --legacy-peer-deps
     - npm run build -- --configuration=production
   artifacts:
     paths:
       - frontend/dist/
     expire_in: 1 week
+  only:
+    - dev
 
-# ---------- INTEGRATION ----------
+# ---------------- INTEGRATION TESTS ----------------
 integration-test:
   stage: integration
   image: docker:27.0.3
   services:
-    - docker:dind
+    - name: docker:dind
+      command: [ "--tls=false" ]
+      privileged: true
   dependencies:
-    - backend-build
+    - backend-docker-build
     - frontend-build
   script:
-    - docker compose -f docker/compose/docker-compose.dev.yml up -d
-    - sleep 25
-    # backend API sanity check
-    - docker compose -f docker/compose/docker-compose.dev.yml exec -T backend ./gradlew integrationTest
-    # (optional) frontend smoke test or API ping
-    - docker compose ps
+    - export TC_CLOUD_TOKEN="$TC_CLOUD_TOKEN"
+    - docker compose -f docker/compose/docker-compose.ci.yml up --build --abort-on-container-exit
   after_script:
-    - docker compose -f docker/compose/docker-compose.dev.yml down
+    - docker compose -f docker/compose/docker-compose.ci.yml down
   allow_failure: false
   only:
     - dev
-    - /^feature\/.*$/
 
-# ---------- ANALYZE ----------
+# ---------------- SONARQUBE (OPTIONAL) ----------------
 backend-sonarqube:
   stage: analyze
   image: gradle:8.5-jdk17
   dependencies:
-    - backend-build
+    - frontend-build
   script:
     - cd backend
-    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+    - ./gradlew sonarqube \
+      -Dsonar.projectKey=careerpath-backend \
+      -Dsonar.host.url=$SONAR_HOST_URL \
+      -Dsonar.token=$SONAR_TOKEN_BACKEND \
+      -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
   allow_failure: true
+  only:
+    - dev
