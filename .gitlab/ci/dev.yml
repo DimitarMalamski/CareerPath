@@ -22,6 +22,7 @@ backend-docker-build:
     paths: []
   only:
     - dev
+    - dev-test
 
 # ---------------- FRONTEND BUILD ----------------
 frontend-build:
@@ -38,6 +39,7 @@ frontend-build:
     expire_in: 1 week
   only:
     - dev
+    - dev-test
 
 # ---------------- INTEGRATION TESTS ----------------
 integration-test:
@@ -58,6 +60,7 @@ integration-test:
   allow_failure: false
   only:
     - dev
+    - dev-test
 
 # ---------------- SONARQUBE (OPTIONAL) ----------------
 backend-sonarqube:
@@ -75,3 +78,4 @@ backend-sonarqube:
   allow_failure: true
   only:
     - dev
+    - dev-test
