@@ -19,8 +19,8 @@ backend-docker-build:
   artifacts:
     expire_in: 1 week
     paths: []
-  only:
-    - dev
+#  only:
+#    - dev
 
 # ---------------- FRONTEND BUILD ----------------
 frontend-build:
@@ -35,8 +35,8 @@ frontend-build:
     paths:
       - frontend/dist/
     expire_in: 1 week
-  only:
-    - dev
+#  only:
+#    - dev
 
 # ---------------- INTEGRATION TESTS ----------------
 integration-test:
@@ -54,8 +54,8 @@ integration-test:
   after_script:
     - docker compose -f docker/compose/docker-compose.ci.yml down
   allow_failure: false
-  only:
-    - dev
+#  only:
+#    - dev
 
 # ---------------- SONARQUBE (OPTIONAL) ----------------
 backend-sonarqube:
@@ -71,5 +71,5 @@ backend-sonarqube:
       -Dsonar.token=$SONAR_TOKEN_BACKEND \
       -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
   allow_failure: true
-  only:
-    - dev
+#  only:
+#    - dev
