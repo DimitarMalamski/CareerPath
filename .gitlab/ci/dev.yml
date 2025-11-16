@@ -14,7 +14,6 @@ backend-docker-build:
   services:
     - name: docker:dind
       command: ["--tls=false"]
-      privileged: true
   script:
     - docker build -f backend/Dockerfile.ci -t cp-backend-ci .
   artifacts:
@@ -46,7 +45,6 @@ integration-test:
   services:
     - name: docker:dind
       command: [ "--tls=false" ]
-      privileged: true
   dependencies:
     - backend-docker-build
     - frontend-build
