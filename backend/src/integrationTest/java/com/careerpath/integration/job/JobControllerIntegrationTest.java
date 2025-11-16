@@ -1,13 +1,12 @@
 package com.careerpath.integration.job;
 
 import com.careerpath.BaseIntegrationTest;
-import com.careerpath.model.JobListing;
-import com.careerpath.model.User;
-import com.careerpath.model.enums.JobStatus;
-import com.careerpath.model.enums.JobType;
-import com.careerpath.model.enums.UserRole;
-import com.careerpath.repository.JobListingRepository;
-import com.careerpath.repository.UserRepository;
+import com.careerpath.domain.modelOld.User;
+import com.careerpath.domain.modelOld.enums.JobStatus;
+import com.careerpath.domain.modelOld.enums.JobType;
+import com.careerpath.domain.modelOld.enums.UserRole;
+import com.careerpath.domain.repository.JobListingRepository;
+import com.careerpath.domain.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
 package com.careerpath.controller;
 
-import com.careerpath.dto.UserDto;
-import com.careerpath.mapper.UserMapper;
-import com.careerpath.model.User;
-import com.careerpath.repository.UserRepository;
+import com.careerpath.application.dto.UserDto;
+import com.careerpath.application.mapper.UserMapper;
+import com.careerpath.domain.modelOld.User;
+import com.careerpath.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
