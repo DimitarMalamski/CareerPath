@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../core/models/services/user.service';
+import { UserService } from '../../core/services/user.service';
 import { Observable } from 'rxjs';
 import { UserDto } from '../../core/models/user.dto';
 

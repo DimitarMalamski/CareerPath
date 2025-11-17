@@ -1,8 +1,13 @@
 package com.careerpath.application.dto;
 
+import java.util.List;
+
 public record ProfileDto(
-    String firstname,
-    String lastname,
-    String headline,
-    String location
+        Long id,
+        String fullName,
+        String headline,
+        String about,
+        String location,
+        List<String> skills,
+        List<String> experiences
 ) { }
