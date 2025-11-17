@@ -1,11 +1,9 @@
 package com.careerpath.domain.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
 public class Skill {
     private Integer id;

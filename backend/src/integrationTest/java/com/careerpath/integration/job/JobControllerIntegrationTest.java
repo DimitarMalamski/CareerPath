@@ -1,12 +1,14 @@
 package com.careerpath.integration.job;
 
 import com.careerpath.BaseIntegrationTest;
-import com.careerpath.domain.modelOld.User;
-import com.careerpath.domain.modelOld.enums.JobStatus;
-import com.careerpath.domain.modelOld.enums.JobType;
-import com.careerpath.domain.modelOld.enums.UserRole;
-import com.careerpath.domain.repository.JobListingRepository;
-import com.careerpath.domain.repository.UserRepository;
+import com.careerpath.domain.model.enums.JobStatus;
+import com.careerpath.domain.model.enums.JobType;
+import com.careerpath.domain.model.enums.UserRole;
+import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
+import com.careerpath.infrastructure.persistence.jpa.entity.UserEntity;
+import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
+import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataUserRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,41 +20,36 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
 @AutoConfigureMockMvc
 public class JobControllerIntegrationTest extends BaseIntegrationTest {
 
-    private final MockMvc mockMvc;
-    private final JobListingRepository jobListingRepository;
-    private final UserRepository userRepository;
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
-    public JobControllerIntegrationTest(MockMvc mockMvc,
-                                        JobListingRepository jobListingRepository,
-                                        UserRepository userRepository) {
-        this.mockMvc = mockMvc;
-        this.jobListingRepository = jobListingRepository;
-        this.userRepository = userRepository;
-    }
+    private SpringDataJobListingRepository jobRepo;
+
+    @Autowired
+    private SpringDataUserRepository userRepo;
 
     @BeforeEach
     void setupData() {
-        jobListingRepository.deleteAll();
-        userRepository.deleteAll();
+        jobRepo.deleteAll();
+        userRepo.deleteAll();
 
-        User recruiter = userRepository.save(
-                User.builder()
+        UserEntity recruiter = userRepo.save(
+                UserEntity.builder()
                         .email("recruiter@example.com")
                         .passwordHash("hashedPassword123")
                         .role(UserRole.RECRUITER)
                         .build()
         );
 
-        JobListing job = JobListing.builder()
-                .recruiter(recruiter)
+        JobListingEntity job = JobListingEntity.builder()
+                .recruiterId(recruiter.getId())
                 .title("Backend Developer")
                 .company("CareerPath Inc.")
                 .location("Eindhoven, NL")
@@ -63,7 +60,7 @@ public class JobControllerIntegrationTest extends BaseIntegrationTest {
                 .expiresAt(LocalDate.now().plusDays(30))
                 .build();
 
-        jobListingRepository.save(job);
+        jobRepo.save(job);
     }
 
     @Test
