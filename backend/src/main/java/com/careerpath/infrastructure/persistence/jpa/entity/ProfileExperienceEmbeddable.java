@@ -15,6 +15,6 @@ public class ProfileExperienceEmbeddable {
     private String location;
     private String startDate;
     private String endDate;
-    private boolean isCurrent;
+    private boolean current;
     private String description;
 }

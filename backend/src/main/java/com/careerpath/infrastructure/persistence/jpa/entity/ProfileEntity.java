@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
-import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,21 +18,12 @@ public class ProfileEntity {
 
     @Id
     @Column(name = "user_id")
-    private Long userId;
-
-    private String fullName;
-    private String headline;
-
-    @Column(columnDefinition = "text")
-    private String about;
-
-    private String location;
+    private UUID userId;
 
     @Type(JsonType.class)
-    @Column(columnDefinition = "jsonb")
-    private List<ProfileExperienceEmbeddable> experiences;
+    @Column(columnDefinition = "jsonb", name = "data")
+    private ProfileDataEmbeddable data;
 
-    @Type(JsonType.class)
-    @Column(columnDefinition = "jsonb")
-    private List<ProfileSkillEmbeddable> skills;
+    @Column(name = "ai_opt_in")
+    private boolean aiOptIn;
 }

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class AiJobMatchingService {
     private final AiJobMatcherPort aiJobMatcherPort;
     private final JobMatchResultMapper jobMatchResultMapper;
 
-    public List<JobMatchResultDto> getRecommendations(Long userId) {
+    public List<JobMatchResultDto> getRecommendations(UUID userId) {
 
         Profile profile = profileRepository.getProfileByUserId(userId);
         List<JobListing> jobListings = jobListingRepository.findAll();

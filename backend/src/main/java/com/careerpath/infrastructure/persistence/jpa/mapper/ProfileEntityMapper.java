@@ -16,12 +16,12 @@ public class ProfileEntityMapper {
 
         return Profile.builder()
                 .id(entity.getUserId())
-                .fullName(entity.getFullName())
-                .headline(entity.getHeadline())
-                .about(entity.getAbout())
-                .location(entity.getLocation())
-                .experiences(mapExperiences(entity.getExperiences()))
-                .skills(mapSkills(entity.getSkills()))
+                .fullName(entity.getData().getFullName())
+                .headline(entity.getData().getHeadline())
+                .about(entity.getData().getAbout())
+                .location(entity.getData().getLocation())
+                .experiences(mapExperiences(entity.getData().getExperiences()))
+                .skills(mapSkills(entity.getData().getSkills()))
                 .build();
     }
 
