@@ -11,4 +11,7 @@ public class JobMatchResult {
     private String jobListingId;
     private double score;
     private String explanation;
+    private String jobTitle;
+    private String company;
+    private String aiExplanation;
 }

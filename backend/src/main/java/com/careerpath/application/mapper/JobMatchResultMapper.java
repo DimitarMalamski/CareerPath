@@ -10,7 +10,8 @@ public class JobMatchResultMapper {
         return new JobMatchResultDto(
                 jobMatchResult.getJobListingId(),
                 jobMatchResult.getScore(),
-                jobMatchResult.getExplanation()
+                jobMatchResult.getExplanation(),
+                jobMatchResult.getAiExplanation()
         );
     }
 }
