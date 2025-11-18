@@ -96,6 +96,7 @@ public class AiJobMatchingService {
                 .explanation(explanation.toString())
                 .jobTitle(job.getTitle())
                 .company(job.getCompany())
+                .description(job.getDescription())
                 .build();
     }
 }

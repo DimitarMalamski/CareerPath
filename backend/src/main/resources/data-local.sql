@@ -15,7 +15,7 @@ SELECT gen_random_uuid(), 'admin@example.com', 'hashed789', 'ADMIN', now()
 
 -- JOB LISTINGS ----------------------------------------------
 
-INSERT INTO job_listings (id, recruiter_id, title, company, type, status, stack_summary, created_at)
+INSERT INTO job_listings (id, recruiter_id, title, company, type, status, stack_summary, description, created_at)
 SELECT
     gen_random_uuid(),
     (SELECT id FROM users WHERE role = 'RECRUITER' LIMIT 1),
@@ -24,11 +24,61 @@ SELECT
     'FULL_TIME',
     'PUBLISHED',
     'Java, Spring Boot, PostgreSQL',
+    'We are looking for a skilled Java Backend Developer to join our backend engineering team. You will work with Spring Boot, REST APIs, cloud services, and relational databases. Experience with distributed systems is a plus.',
     now()
 WHERE NOT EXISTS (
     SELECT 1 FROM job_listings WHERE title = 'Java Backend Developer' AND company = 'Google'
     );
 
+INSERT INTO job_listings (
+    id,
+    recruiter_id,
+    title,
+    company,
+    type,
+    status,
+    stack_summary,
+    description,
+    created_at
+)
+SELECT
+    gen_random_uuid(),
+    (SELECT id FROM users WHERE role = 'RECRUITER' LIMIT 1),
+    'React Frontend Developer',
+    'Meta',
+    'FULL_TIME',
+    'PUBLISHED',
+    'React, TypeScript, GraphQL',
+    'This role involves building highly interactive UI components with React, optimizing performance, and collaborating with designers. Experience with TypeScript and GraphQL is required.',
+    now()
+WHERE NOT EXISTS (
+    SELECT 1 FROM job_listings WHERE title = 'React Frontend Developer' AND company = 'Meta'
+    );
+
+INSERT INTO job_listings (
+    id,
+    recruiter_id,
+    title,
+    company,
+    type,
+    status,
+    stack_summary,
+    description,
+    created_at
+)
+SELECT
+    gen_random_uuid(),
+    (SELECT id FROM users WHERE role = 'RECRUITER' LIMIT 1),
+    'DevOps Engineer',
+    'AWS',
+    'FULL_TIME',
+    'PUBLISHED',
+    'AWS, Docker, CI/CD, Terraform',
+    'Work with AWS cloud services, automate deployments, maintain CI/CD pipelines, and improve infrastructure reliability. Familiarity with containerization is essential.',
+    now()
+WHERE NOT EXISTS (
+    SELECT 1 FROM job_listings WHERE title = 'DevOps Engineer' AND company = 'AWS'
+    );
 
 -- SAMPLE JSONB PROFILE ---------------------------------------
 

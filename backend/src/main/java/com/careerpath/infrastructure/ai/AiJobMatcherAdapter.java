@@ -2,6 +2,7 @@ package com.careerpath.infrastructure.ai;
 
 import com.careerpath.domain.model.JobMatchResult;
 import com.careerpath.domain.model.Profile;
+import com.careerpath.domain.model.ProfileSkill;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
@@ -11,46 +12,86 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
-    private final OpenAiService openAi;
+    private final OpenAiService openAiService;
 
     @Override
     public List<JobMatchResult> enhanceMatches(Profile profile, List<JobMatchResult> matches) {
 
-        if (matches.isEmpty()) return matches;
+        List<JobMatchResult> topMatches = matches.stream()
+                .sorted((a, b) -> Double.compare(b.getScore(), a.getScore()))
+                .limit(5)
+                .toList();
 
-        String prompt = buildPrompt(profile, matches);
+        for (JobMatchResult match : topMatches) {
+            String prompt = buildPrompt(profile, match);
 
-        ChatCompletionRequest request = ChatCompletionRequest.builder()
-                .model("gpt-4o-mini")
-                .messages(List.of(
-                        new ChatMessage("user", prompt)
-                ))
-                .temperature(0.2)
-                .build();
+            try {
+                ChatCompletionRequest request = ChatCompletionRequest.builder()
+                        .model("gpt-4o-mini")
+                        .temperature(0.2)
+                        .maxTokens(150)
+                        .messages(List.of(
+                                new ChatMessage("user", prompt)
+                        ))
+                        .build();
 
-        ChatCompletionResult result = openAi.createChatCompletion(request);
+                ChatCompletionResult result = openAiService.createChatCompletion(request);
 
-        String response = result.getChoices().get(0).getMessage().getContent();
+                String aiText = result.getChoices().get(0).getMessage().getContent();
 
-        for (JobMatchResult m : matches) {
-            m.setAiExplanation(response);
+                match.setAiExplanation(aiText);
+
+            } catch (Exception e) {
+                match.setAiExplanation("AI explanation unavailable.");
+            }
         }
 
         return matches;
     }
 
-    private String buildPrompt(Profile p, List<JobMatchResult> m) {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Improve this job match explanation:\n\n");
+    private String buildPrompt(Profile profile, JobMatchResult match) {
+        return """
+                You are a job-matching assistant.
 
-        for (JobMatchResult r : m) {
-            sb.append("- ").append(r.getExplanation()).append("\n");
-        }
+                USER PROFILE:
+                - Name: %s
+                - Headline: %s
+                - Location: %s
+                - Skills: %s
 
-        return sb.toString();
+                JOB MATCH:
+                - Job title: %s
+                - Company: %s
+                - Job description: %s
+                - Baseline match score: %.2f
+                - Reasoning: %s
+
+                TASK:
+                Provide a short, clear explanation (max 3 sentences)
+                of why this job matches the user.
+                Write professionally. Do not repeat identical phrases across jobs.
+                """.formatted(
+                profile.getFullName(),
+                safe(profile.getHeadline()),
+                safe(profile.getLocation()),
+                profile.getSkills()
+                        .stream()
+                        .map(ProfileSkill::getName)
+                                .collect(Collectors.joining(", ")),
+                match.getJobTitle(),
+                match.getCompany(),
+                safe(match.getDescription()),
+                match.getScore(),
+                safe(match.getExplanation())
+        );
+    }
+
+    private String safe(String value) {
+        return value == null ? "unknown" : value;
     }
 }

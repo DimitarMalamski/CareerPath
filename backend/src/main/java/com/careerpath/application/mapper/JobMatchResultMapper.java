@@ -11,6 +11,7 @@ public class JobMatchResultMapper {
                 jobMatchResult.getJobListingId(),
                 jobMatchResult.getScore(),
                 jobMatchResult.getExplanation(),
+                jobMatchResult.getDescription(),
                 jobMatchResult.getAiExplanation()
         );
     }

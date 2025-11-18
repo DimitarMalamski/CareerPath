@@ -13,5 +13,6 @@ public class JobMatchResult {
     private String explanation;
     private String jobTitle;
     private String company;
+    private String description;
     private String aiExplanation;
 }
