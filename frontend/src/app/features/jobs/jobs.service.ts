@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { JobListing } from '../../core/models/job-listing';
+import { JobRecommendation } from '../../core/models/job-recommendation';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -13,7 +13,7 @@ export class JobsService {
 
   private readonly http = inject(HttpClient);
 
-  getAllJobs(): Observable<JobListing[]> {
-    return this.http.get<JobListing[]>(this.apiUrl);
+  getRecommendedJobs(userId: string): Observable<JobRecommendation[]> {
+    return this.http.get<JobRecommendation[]>(`${this.apiUrl}/recommendations/${userId}`);
   }
 }

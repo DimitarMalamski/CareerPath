@@ -1,8 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
 import { JobsService } from '../jobs.service';
-import { JobListing } from '../../../core/models/job-listing';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {JobRecommendation} from '../../../core/models/job-recommendation';
 
 @Component({
   selector: 'app-jobs-list',
@@ -12,13 +12,16 @@ import {CommonModule} from '@angular/common';
 })
 
 export class JobsListComponent implements OnInit {
-  jobs: JobListing[] = [];
+  jobs: JobRecommendation[] = [];
   isLoading = true;
 
   private readonly jobsService = inject(JobsService);
 
+  // Temporary user
+  private readonly userId = '84aade75-ff03-421d-983e-75f4bd61e22c';
+
   ngOnInit(): void {
-    this.jobsService.getAllJobs().subscribe({
+    this.jobsService.getRecommendedJobs(this.userId).subscribe({
       next: (data) => {
         this.jobs = data;
         this.isLoading = false;

@@ -15,4 +15,5 @@ public class JobMatchResult {
     private String company;
     private String description;
     private String aiExplanation;
+    private double finalScore;
 }

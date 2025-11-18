@@ -1,7 +1,7 @@
 package com.careerpath.application.service;
 
-import com.careerpath.application.dto.JobMatchResultDto;
-import com.careerpath.application.mapper.JobMatchResultMapper;
+import com.careerpath.application.dto.JobRecommendationDto;
+import com.careerpath.application.mapper.JobRecommendationMapper;
 import com.careerpath.domain.model.*;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.JobListingRepositoryPort;
@@ -19,9 +19,9 @@ public class AiJobMatchingService {
     private final ProfileRepositoryPort profileRepository;
     private final JobListingRepositoryPort jobListingRepository;
     private final AiJobMatcherPort aiJobMatcherPort;
-    private final JobMatchResultMapper jobMatchResultMapper;
+    private final JobRecommendationMapper jobRecommendationMapper;
 
-    public List<JobMatchResultDto> getRecommendations(UUID userId) {
+    public List<JobRecommendationDto> getRecommendations(UUID userId) {
 
         Profile profile = profileRepository.getProfileByUserId(userId);
         List<JobListing> jobListings = jobListingRepository.findAll();
@@ -34,7 +34,11 @@ public class AiJobMatchingService {
                 aiJobMatcherPort.enhanceMatches(profile, baselineResults);
 
         return aiResults.stream()
-                .map(jobMatchResultMapper::toDto)
+                .sorted((a, b) -> Double.compare(b.getFinalScore(), a.getFinalScore()))
+                .map(result -> {
+                    JobListing jobListing = jobListingRepository.findById(UUID.fromString(result.getJobListingId()));
+                    return jobRecommendationMapper.toDto(result, jobListing);
+                })
                 .toList();
     }
 

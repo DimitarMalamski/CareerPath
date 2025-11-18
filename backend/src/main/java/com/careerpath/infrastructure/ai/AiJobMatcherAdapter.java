@@ -46,8 +46,14 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
                 match.setAiExplanation(aiText);
 
+                double aiBoost = calculateAiBoost(aiText);
+
+                double finalScore = normalizeScore(match.getScore() + aiBoost);
+                match.setFinalScore(finalScore);
+
             } catch (Exception e) {
                 match.setAiExplanation("AI explanation unavailable.");
+                match.setFinalScore(match.getScore());
             }
         }
 
@@ -93,5 +99,33 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private String safe(String value) {
         return value == null ? "unknown" : value;
+    }
+
+    private double calculateAiBoost(String aiText) {
+        if (aiText == null) return 0.0;
+
+        String t = aiText.toLowerCase();
+
+        if (t.contains("aligns well") ||
+                t.contains("strong match") ||
+                t.contains("well suited") ||
+                t.contains("excellent fit")) {
+            return 0.2;
+        }
+
+        if (t.contains("not a match") ||
+                t.contains("does not align") ||
+                t.contains("unlikely fit") ||
+                t.contains("poor fit")) {
+            return -0.2;
+        }
+
+        return 0.0;
+    }
+
+    private double normalizeScore(double score) {
+        if (score < 0) return 0;
+        if (score > 1) return 1;
+        return score;
     }
 }
