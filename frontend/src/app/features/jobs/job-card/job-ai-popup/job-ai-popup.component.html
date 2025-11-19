@@ -1,0 +1,14 @@
+<div
+  class="ai-popup absolute top-4 right-4 bg-black border border-gray-700 rounded-xl p-5 w-96 shadow-2xl shadow-black/50 z-50 animate-fadeIn">
+
+  <p class="text-sm leading-relaxed text-gray-300 max-h-48 overflow-y-auto">
+    {{ explanation }}
+  </p>
+
+  <button
+    (click)="onClose()"
+    class="block ml-auto mt-3 text-xs text-orange-400 hover:text-orange-300">
+    Close ✖
+  </button>
+
+</div>

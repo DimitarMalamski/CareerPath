@@ -2,11 +2,12 @@ import { Component, Input, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JobRecommendation } from '../../../core/models/job-recommendation';
 import {JobScoreComponent} from './job-score/job-score.component';
+import {JobAiPopupComponent} from './job-ai-popup/job-ai-popup.component';
 
 @Component({
   selector: 'app-job-card',
   standalone: true,
-  imports: [CommonModule, JobScoreComponent],
+  imports: [CommonModule, JobScoreComponent, JobAiPopupComponent],
   templateUrl: 'job-card.component.html',
 })
 
