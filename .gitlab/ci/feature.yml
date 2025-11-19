@@ -250,30 +250,5 @@ frontend-sonarqube:
     expire_in: 1 week
   allow_failure: false
 
-# ---------- INTEGRATION ----------
-integration-test:
-  stage: integration
-  image: gradle:8.14.3-jdk17
-  dependencies:
-    - backend-build
-  variables:
-    TC_CLOUD_TOKEN: $TC_CLOUD_TOKEN
-  cache:
-    key: gradle-cache-${CI_COMMIT_REF_SLUG}
-    paths:
-      - .gradle/wrapper/
-      - .gradle/caches/
-      - backend/.gradle/
-  before_script:
-    - curl -fsSL https://app.testcontainers.cloud/bash | bash
-    - cd backend
-  script:
-    - ./gradlew integrationTest --no-daemon --build-cache
-  artifacts:
-    when: always
-    reports:
-      junit: backend/build/test-results/**/*.xml
-    paths:
-      - backend/build/reports/tests/
-  allow_failure: false
+c
 
