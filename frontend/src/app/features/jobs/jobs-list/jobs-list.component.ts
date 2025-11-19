@@ -19,7 +19,7 @@ export class JobsListComponent implements OnInit {
   private readonly jobsService = inject(JobsService);
 
   // Temporary user
-  private readonly userId = '12c18193-4bd3-44f5-a085-07610ffa4fa7';
+  private readonly userId = 'b29238d5-d6b4-482f-b5bc-15a755d5aa6a';
 
   ngOnInit(): void {
     this.jobsService.getRecommendedJobs(this.userId).subscribe({

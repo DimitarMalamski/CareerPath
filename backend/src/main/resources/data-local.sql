@@ -15,12 +15,13 @@ SELECT gen_random_uuid(), 'admin@example.com', 'hashed789', 'ADMIN', now()
 
 -- JOB LISTINGS ----------------------------------------------
 
-INSERT INTO job_listings (id, recruiter_id, title, company, type, status, stack_summary, description, created_at)
+INSERT INTO job_listings (id, recruiter_id, title, company, location, type, status, stack_summary, description, created_at)
 SELECT
     gen_random_uuid(),
     (SELECT id FROM users WHERE role = 'RECRUITER' LIMIT 1),
     'Java Backend Developer',
     'Google',
+    'Eindhoven',
     'FULL_TIME',
     'PUBLISHED',
     'Java, Spring Boot, PostgreSQL',
@@ -35,6 +36,7 @@ INSERT INTO job_listings (
     recruiter_id,
     title,
     company,
+    location,
     type,
     status,
     stack_summary,
@@ -46,7 +48,8 @@ SELECT
     (SELECT id FROM users WHERE role = 'RECRUITER' LIMIT 1),
     'React Frontend Developer',
     'Meta',
-    'FULL_TIME',
+    'Dubai',
+    'REMOTE',
     'PUBLISHED',
     'React, TypeScript, GraphQL',
     'This role involves building highly interactive UI components with React, optimizing performance, and collaborating with designers. Experience with TypeScript and GraphQL is required.',
@@ -60,6 +63,7 @@ INSERT INTO job_listings (
     recruiter_id,
     title,
     company,
+    location,
     type,
     status,
     stack_summary,
@@ -71,7 +75,8 @@ SELECT
     (SELECT id FROM users WHERE role = 'RECRUITER' LIMIT 1),
     'DevOps Engineer',
     'AWS',
-    'FULL_TIME',
+    'Blagoevgrad',
+    'HYBRID',
     'PUBLISHED',
     'AWS, Docker, CI/CD, Terraform',
     'Work with AWS cloud services, automate deployments, maintain CI/CD pipelines, and improve infrastructure reliability. Familiarity with containerization is essential.',

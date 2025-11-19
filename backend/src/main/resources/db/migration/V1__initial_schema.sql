@@ -21,7 +21,7 @@ CREATE TABLE job_listings (
       title VARCHAR(255) NOT NULL,
       company VARCHAR(255) NOT NULL,
       location VARCHAR(255),
-      type VARCHAR(20) NOT NULL CHECK (type IN ('INTERNSHIP','FULL_TIME','PART_TIME','CONTRACT')),
+      type VARCHAR(20) NOT NULL CHECK (type IN ('INTERNSHIP','FULL_TIME','PART_TIME','CONTRACT','REMOTE','HYBRID')),
       stack_summary VARCHAR(255),
       description TEXT,
       status VARCHAR(20) NOT NULL CHECK (status IN ('DRAFT','PENDING','PUBLISHED','CLOSED')),

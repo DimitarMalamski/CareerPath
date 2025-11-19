@@ -11,6 +11,14 @@ import { JobRecommendation } from '../../../../core/models/job-recommendation';
 export class JobTagsComponent {
   @Input() job!: JobRecommendation;
 
+  isRemote(type: string): boolean {
+    return type?.toUpperCase() === 'REMOTE';
+  }
+
+  isHybrid(type: string): boolean {
+    return type?.toUpperCase() === 'HYBRID';
+  }
+
   formatJobType(type: string): string {
     if (!type) return '';
 
