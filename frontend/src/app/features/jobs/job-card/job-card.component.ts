@@ -5,11 +5,19 @@ import {JobScoreComponent} from './job-score/job-score.component';
 import {JobAiPopupComponent} from './job-ai-popup/job-ai-popup.component';
 import {JobTagsComponent} from './job-tags/job-tags.component';
 import {JobSkillsComponent} from './job-skills/job-skills.component';
+import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-job-card',
   standalone: true,
-  imports: [CommonModule, JobScoreComponent, JobAiPopupComponent, JobTagsComponent, JobSkillsComponent],
+  imports: [
+    CommonModule,
+    JobScoreComponent,
+    JobAiPopupComponent,
+    JobTagsComponent,
+    JobSkillsComponent,
+    TimeAgoPipe
+  ],
   templateUrl: 'job-card.component.html',
 })
 

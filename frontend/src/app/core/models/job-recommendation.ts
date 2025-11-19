@@ -8,4 +8,5 @@ export interface JobRecommendation {
   description: string;
   finalScore: number;
   aiExplanation: string;
+  createdAt: string;
 }

@@ -11,5 +11,6 @@ public record JobRecommendationDto(
         List<String> skills,
         String description,
         double finalScore,
-        String aiExplanation
+        String aiExplanation,
+        String createdAt
 ) {}

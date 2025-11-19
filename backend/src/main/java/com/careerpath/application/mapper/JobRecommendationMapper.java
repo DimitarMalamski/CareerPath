@@ -21,7 +21,8 @@ public class JobRecommendationMapper {
                         .toList(),
                 jobListing.getDescription(),
                 jobMatchResult.getFinalScore(),
-                jobMatchResult.getAiExplanation()
+                jobMatchResult.getAiExplanation(),
+                jobListing.getCreatedAt().toString()
         );
     }
 }
