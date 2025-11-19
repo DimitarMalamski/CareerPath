@@ -16,6 +16,11 @@
       <app-job-skills
         [skills]="job.skills"
       ></app-job-skills>
+
+      <p class="text-gray-400 text-sm mt-2">
+        {{ getJobSummary(job) }}
+      </p>
+
     </div>
 
     <app-job-score

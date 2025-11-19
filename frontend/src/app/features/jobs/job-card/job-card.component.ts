@@ -33,4 +33,14 @@ export class JobCardComponent {
       this.isPopupOpen = false;
     }
   }
+
+  getJobSummary(job: JobRecommendation): string {
+    if (!job.description) return '';
+
+    const firstSentence = job.description.split('. ')[0];
+
+    return firstSentence.length > 80
+      ? firstSentence.substring(0, 80) + "..."
+      : firstSentence;
+  }
 }
