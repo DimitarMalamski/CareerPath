@@ -115,7 +115,7 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
         %s
     
         Keep it professional and concise.
-        Limit your answer to 2–3 sentences.
+        Limit your answer to 1–2 sentences.
         """.formatted(profile.toString(), match.getDescription());
     }
 

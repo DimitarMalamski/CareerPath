@@ -110,3 +110,39 @@ SELECT
     WHERE NOT EXISTS (
     SELECT 1 FROM profiles WHERE user_id = (SELECT id FROM users WHERE email = 'anna@example.com')
 );
+
+-- JOB SKILLS: Java Backend Developer (Google)
+INSERT INTO job_skills (job_id, skill_id)
+SELECT jl.id, s.id
+FROM job_listings jl, skills s
+WHERE jl.title = 'Java Backend Developer'
+  AND jl.company = 'Google'
+  AND s.name IN ('Java', 'Spring Boot', 'PostgreSQL')
+  AND NOT EXISTS (
+    SELECT 1 FROM job_skills js
+    WHERE js.job_id = jl.id AND js.skill_id = s.id
+);
+
+-- JOB SKILLS: React Frontend Developer (Meta)
+INSERT INTO job_skills (job_id, skill_id)
+SELECT jl.id, s.id
+FROM job_listings jl, skills s
+WHERE jl.title = 'React Frontend Developer'
+  AND jl.company = 'Meta'
+  AND s.name IN ('React', 'TypeScript', 'GraphQL')
+  AND NOT EXISTS (
+    SELECT 1 FROM job_skills js
+    WHERE js.job_id = jl.id AND js.skill_id = s.id
+);
+
+-- JOB SKILLS: DevOps Engineer (AWS)
+INSERT INTO job_skills (job_id, skill_id)
+SELECT jl.id, s.id
+FROM job_listings jl, skills s
+WHERE jl.title = 'DevOps Engineer'
+  AND jl.company = 'AWS'
+  AND s.name IN ('AWS', 'Docker', 'CI/CD', 'Terraform')
+  AND NOT EXISTS (
+    SELECT 1 FROM job_skills js
+    WHERE js.job_id = jl.id AND js.skill_id = s.id
+);

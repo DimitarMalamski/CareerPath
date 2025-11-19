@@ -4,11 +4,12 @@ import { JobRecommendation } from '../../../core/models/job-recommendation';
 import {JobScoreComponent} from './job-score/job-score.component';
 import {JobAiPopupComponent} from './job-ai-popup/job-ai-popup.component';
 import {JobTagsComponent} from './job-tags/job-tags.component';
+import {JobSkillsComponent} from './job-skills/job-skills.component';
 
 @Component({
   selector: 'app-job-card',
   standalone: true,
-  imports: [CommonModule, JobScoreComponent, JobAiPopupComponent, JobTagsComponent],
+  imports: [CommonModule, JobScoreComponent, JobAiPopupComponent, JobTagsComponent, JobSkillsComponent],
   templateUrl: 'job-card.component.html',
 })
 

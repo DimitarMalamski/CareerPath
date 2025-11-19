@@ -13,12 +13,9 @@
       ></app-job-tags>
 
       <!-- Skills -->
-      <div class="flex flex-wrap gap-2 mt-2">
-        <span *ngFor="let skill of job.skills"
-              class="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-lg text-xs font-semibold">
-          {{ skill }}
-        </span>
-      </div>
+      <app-job-skills
+        [skills]="job.skills"
+      ></app-job-skills>
     </div>
 
     <app-job-score

@@ -1,0 +1,13 @@
+<div class="flex flex-wrap gap-2 mt-2">
+
+  <span *ngFor="let skill of skills.slice(0, 4)"
+        class="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-lg text-xs font-semibold">
+    {{ skill }}
+  </span>
+
+  <span *ngIf="skills.length > 4"
+        class="text-xs text-gray-400 font-medium">
+    +{{ skills.length - 4 }} more
+  </span>
+
+</div>
