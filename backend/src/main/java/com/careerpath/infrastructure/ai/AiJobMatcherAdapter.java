@@ -1,8 +1,11 @@
 package com.careerpath.infrastructure.ai;
 
+import com.careerpath.application.dto.AiEnhancementResult;
 import com.careerpath.domain.model.JobMatchResult;
 import com.careerpath.domain.model.Profile;
 import com.careerpath.domain.port.AiJobMatcherPort;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.completion.chat.ChatMessage;
@@ -19,6 +22,7 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private final OpenAiService openAiService;
     private static final String MODEL = "gpt-4o-mini";
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<JobMatchResult> enhanceMatches(Profile profile, List<JobMatchResult> matches) {
@@ -28,95 +32,98 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
                 .limit(5)
                 .toList();
 
-        for (JobMatchResult match : topMatches) {
-            try {
-                int aiScore = generateAiScore(profile, match);
-                String explanation = generateAiExplanation(profile, match);
+        List<AiEnhancementResult> aiResults = batchAiEnhance(profile, topMatches);
 
-                match.setAiExplanation(explanation);
-
-                double finalScore = mergeScores(match.getScore(), aiScore);
-                match.setFinalScore(finalScore);
-
-            } catch (Exception e) {
-                match.setAiExplanation("AI explanation unavailable.");
-                match.setFinalScore(match.getScore());
-            }
+        for (JobMatchResult job : topMatches) {
+            aiResults.stream()
+                    .filter(ai -> ai.jobId().equals(job.getJobListingId()))
+                    .findFirst()
+                    .ifPresent(ai -> {
+                        double finalScore = mergeScores(job.getScore(), ai.aiScore());
+                        job.setFinalScore(finalScore);
+                        job.setAiExplanation(ai.aiExplanation());
+                    });
         }
 
         return matches;
     }
 
-    private int generateAiScore(Profile profile, JobMatchResult match) {
-        String prompt = buildScorePrompt(profile, match);
+    private List<AiEnhancementResult> batchAiEnhance(Profile profile, List<JobMatchResult> topMatches) {
+        try {
+            String prompt = buildBatchPrompt(profile, topMatches);
 
-        ChatCompletionRequest request = ChatCompletionRequest.builder()
-                .model(MODEL)
-                .temperature(0.0)
-                .maxTokens(5)
-                .messages(List.of(new ChatMessage("user", prompt)))
-                .build();
+            ChatCompletionRequest request = ChatCompletionRequest.builder()
+                    .model(MODEL)
+                    .temperature(0.0)
+                    .maxTokens(500)
+                    .messages(List.of(new ChatMessage("user", prompt)))
+                    .build();
 
-        ChatCompletionResult result = openAiService.createChatCompletion(request);
-        String content = result.getChoices().get(0).getMessage().getContent();
+            ChatCompletionResult result = openAiService.createChatCompletion(request);
+            String json = result.getChoices().get(0).getMessage().getContent()
+                    .replace("```json", "")
+                    .replace("```", "")
+                    .trim();
 
-        return parseScore(content);
+            System.out.println("\n----- RAW AI RESPONSE -----\n" + json + "\n---------------------------\n");
+
+            return objectMapper.readValue(json, new TypeReference<List<AiEnhancementResult>>() {});
+        } catch (Exception e) {
+            return topMatches.stream()
+                    .map(job -> new AiEnhancementResult(
+                            job.getJobListingId(),
+                            (int) (job.getScore() * 100),
+                            "AI enhancement unavailable."
+                    ))
+                    .toList();
+        }
     }
 
-    private String generateAiExplanation(Profile profile, JobMatchResult match) {
-        String prompt = buildExplanationPrompt(profile, match);
+    private String buildBatchPrompt(Profile profile, List<JobMatchResult> jobs) {
 
-        ChatCompletionRequest request = ChatCompletionRequest.builder()
-                .model(MODEL)
-                .temperature(0.2)
-                .maxTokens(80)
-                .messages(List.of(new ChatMessage("user", prompt)))
-                .build();
+        StringBuilder sb = new StringBuilder("""
+            You are an AI job-matching engine.
+            For each job, return a JSON array with:
+            - jobId
+            - aiScore (0–100)
+            - aiExplanation (1–2 short sentences)
 
-        ChatCompletionResult result = openAiService.createChatCompletion(request);
-        return result.getChoices().get(0).getMessage().getContent();
+            PROFILE:
+        """);
+
+        sb.append(profile.toString()).append("\n\nJOBS:\n");
+
+        for (JobMatchResult job : jobs) {
+            sb.append("""
+            {
+              "jobId": "%s",
+              "title": "%s",
+              "description": "%s",
+              "baselineScore": %.2f
+            },
+            """.formatted(
+                    job.getJobListingId(),
+                    safe(job.getJobTitle()),
+                    safe(job.getDescription()),
+                    job.getScore()
+            ));
+        }
+
+        sb.append("""    
+            Return ONLY a valid JSON array.
+            Do not wrap it in ```json or any other markdown.
+            Do not include explanations, comments, or text outside the JSON.
+            [
+              { "jobId": "...", "aiScore": 87, "aiExplanation": "..." },
+              ...
+            ]
+        """);
+
+        return sb.toString();
     }
 
-    private String buildScorePrompt(Profile profile, JobMatchResult match) {
-        return """
-        You are an AI job-matching engine.
-        
-        Rate how well this job matches the candidate on a scale from 0 to 100.
-        Consider ONLY:
-        - skill alignment
-        - experience alignment
-        - seniority match
-        - technology/stack matching
-        - location fit (if mentioned)
-        
-        USER PROFILE:
-        %s
-    
-        JOB LISTING:
-        %s
-    
-        Return ONLY a single integer number between 0 and 100.
-        No explanations.
-        """.formatted(
-                profile.toString(),
-                match.getDescription()
-        );
-    }
-
-    private String buildExplanationPrompt(Profile profile, JobMatchResult match) {
-        return """
-        Explain in one short paragraph why this job is a good or bad match
-        for the candidate based on skills, experience, and stack.
-    
-        USER PROFILE:
-        %s
-    
-        JOB LISTING:
-        %s
-    
-        Keep it professional and concise.
-        Limit your answer to 1–2 sentences.
-        """.formatted(profile.toString(), match.getDescription());
+    private String safe(String value) {
+        return value == null ? "" : value.replace("\"", "'");
     }
 
     private double mergeScores(double baseline, int aiScore) {
@@ -126,13 +133,5 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private double normalizeScore(double score) {
         return Math.max(0, Math.min(1, score));
-    }
-
-    private int parseScore(String value) {
-        try {
-            return Integer.parseInt(value.replaceAll("\\D", ""));
-        } catch (Exception e) {
-            return 50;
-        }
     }
 }

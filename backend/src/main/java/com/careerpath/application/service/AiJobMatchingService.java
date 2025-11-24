@@ -9,111 +9,36 @@ import com.careerpath.domain.port.ProfileRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class AiJobMatchingService {
-
     private final ProfileRepositoryPort profileRepository;
     private final JobListingRepositoryPort jobListingRepository;
+    private final JobScoringService scoringService;
     private final AiJobMatcherPort aiJobMatcherPort;
     private final JobRecommendationMapper jobRecommendationMapper;
 
     public List<JobRecommendationDto> getRecommendations(UUID userId) {
-
         Profile profile = profileRepository.getProfileByUserId(userId);
-        List<JobListing> jobListings = jobListingRepository.findAll();
 
-        List<JobMatchResult> baselineResults = jobListings.stream()
-                .map(job -> scoreJob(profile, job))
-                .toList();
+        List<JobListing> listings = jobListingRepository.findAll();
 
-        List<JobMatchResult> aiResults =
-                aiJobMatcherPort.enhanceMatches(profile, baselineResults);
+        List<JobMatchResult> baselineResults = scoringService.score(profile, listings);
 
-        return aiResults.stream()
-                .sorted((a, b) -> Double.compare(b.getFinalScore(), a.getFinalScore()))
+        List<JobMatchResult> enhancedResults = aiJobMatcherPort.enhanceMatches(profile, baselineResults);
+
+        return enhancedResults.stream()
+                .sorted(Comparator.comparingDouble(JobMatchResult::getFinalScore).reversed())
                 .map(result -> {
-                    JobListing jobListing = jobListingRepository.findById(UUID.fromString(result.getJobListingId()));
-                    return jobRecommendationMapper.toDto(result, jobListing);
+                    JobListing job = jobListingRepository.findById(UUID.fromString(result.getJobListingId()));
+                    return jobRecommendationMapper.toDto(result, job);
                 })
                 .toList();
     }
 
-    private JobMatchResult scoreJob(Profile profile, JobListing job) {
-        int score = 0;
-        StringBuilder explanation = new StringBuilder();
-
-        List<String> matchedSkills = new ArrayList<>();
-        List<String> missingSkills = new ArrayList<>();
-
-        for (ProfileSkill profileSkill : profile.getSkills()) {
-            for (Skill jobSkill : job.getSkills()) {
-                if (profileSkill.getName().equalsIgnoreCase(jobSkill.getName())) {
-                    score += 20;
-                    explanation.append("Matched skill: ")
-                            .append(profileSkill.getName()).append(". ");
-                    matchedSkills.add(jobSkill.getName());
-                }
-            }
-
-            if (job.getStackSummary() != null &&
-                    job.getStackSummary().toLowerCase().contains(profileSkill.getName().toLowerCase())) {
-                score += 10;
-                explanation.append("Stack summary contains ")
-                        .append(profileSkill.getName()).append(". ");
-            }
-        }
-
-        for (ProfileExperience exp : profile.getExperiences()) {
-
-            if (job.getTitle() != null &&
-                    exp.getTitle() != null &&
-                    job.getTitle().toLowerCase().contains(exp.getTitle().toLowerCase())) {
-                score += 10;
-                explanation.append("Experience title matches job title. ");
-            }
-
-            if (exp.getDescription() != null) {
-                for (Skill jobSkill : job.getSkills()) {
-                    if (exp.getDescription().toLowerCase().contains(jobSkill.getName().toLowerCase())) {
-                        score += 10;
-                        explanation.append("Experience includes ")
-                                .append(jobSkill.getName()).append(". ");
-                    }
-                }
-            }
-        }
-
-        for (Skill jobSkill : job.getSkills()) {
-            if (!matchedSkills.contains(jobSkill.getName())) {
-                missingSkills.add(jobSkill.getName());
-            }
-        }
-
-        if (profile.getLocation() != null &&
-                job.getLocation() != null &&
-                job.getLocation().toLowerCase().contains(profile.getLocation().toLowerCase())) {
-
-            score += 5;
-            explanation.append("Location matches. ");
-        }
-
-        double normalized = Math.min(score / 100.0, 1.0);
-
-        return JobMatchResult.builder()
-                .jobListingId(job.getId().toString())
-                .score(normalized)
-                .explanation(explanation.toString())
-                .jobTitle(job.getTitle())
-                .company(job.getCompany())
-                .description(job.getDescription())
-                .matchedSkills(matchedSkills)
-                .missingSkills(missingSkills)
-                .build();
-    }
 }
 
