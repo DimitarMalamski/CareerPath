@@ -2,6 +2,8 @@ package com.careerpath.domain.model;
 
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,4 +18,7 @@ public class JobMatchResult {
     private String description;
     private String aiExplanation;
     private double finalScore;
+
+    private List<String> matchedSkills;
+    private List<String> missingSkills;
 }

@@ -13,7 +13,12 @@
 
       <div class="space-y-2 mb-2">
         <app-job-tags [job]="job"></app-job-tags>
-        <app-job-skills [skills]="job.skills"></app-job-skills>
+        <app-job-skills
+          [skills]="job.skills"
+          [matchedSkills]="job.matchedSkills"
+          [missingSkills]="job.missingSkills"
+        >
+        </app-job-skills>
       </div>
 
       <p class="text-gray-400 text-sm mt-2 leading-relaxed">

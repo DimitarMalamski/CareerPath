@@ -250,5 +250,3 @@ frontend-sonarqube:
     expire_in: 1 week
   allow_failure: false
 
-c
-

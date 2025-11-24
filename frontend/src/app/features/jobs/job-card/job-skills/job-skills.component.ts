@@ -9,4 +9,6 @@ import { CommonModule } from '@angular/common';
 })
 export class JobSkillsComponent {
   @Input() skills: string[] = [];
+  @Input() matchedSkills: string[] = [];
+  @Input() missingSkills: string[] = [];
 }

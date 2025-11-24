@@ -22,7 +22,9 @@ public class JobRecommendationMapper {
                 jobListing.getDescription(),
                 jobMatchResult.getFinalScore(),
                 jobMatchResult.getAiExplanation(),
-                jobListing.getCreatedAt().toString()
+                jobListing.getCreatedAt().toString(),
+                jobMatchResult.getMatchedSkills(),
+                jobMatchResult.getMissingSkills()
         );
     }
 }

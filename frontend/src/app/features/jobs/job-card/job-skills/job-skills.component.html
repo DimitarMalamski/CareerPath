@@ -1,7 +1,16 @@
 <div class="flex flex-wrap gap-2 mt-2">
 
-  <span *ngFor="let skill of skills.slice(0, 4)"
-        class="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-lg text-xs font-semibold">
+  <span
+    *ngFor="let skill of matchedSkills"
+    class="bg-green-500/20 text-green-300 px-2 py-1 rounded-lg text-xs font-semibold"
+  >
+    {{ skill }}
+  </span>
+
+  <span
+    *ngFor="let skill of missingSkills"
+    class="bg-red-500/10 text-red-300 px-2 py-1 rounded-lg text-xs"
+  >
     {{ skill }}
   </span>
 

@@ -12,5 +12,8 @@ public record JobRecommendationDto(
         String description,
         double finalScore,
         String aiExplanation,
-        String createdAt
+        String createdAt,
+
+        List<String> matchedSkills,
+        List<String> missingSkills
 ) {}

@@ -9,4 +9,7 @@ export interface JobRecommendation {
   finalScore: number;
   aiExplanation: string;
   createdAt: string;
+
+  matchedSkills: string[];
+  missingSkills: string[];
 }

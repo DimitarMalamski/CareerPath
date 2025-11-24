@@ -9,6 +9,7 @@ import com.careerpath.domain.port.ProfileRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,9 +44,11 @@ public class AiJobMatchingService {
     }
 
     private JobMatchResult scoreJob(Profile profile, JobListing job) {
-
         int score = 0;
         StringBuilder explanation = new StringBuilder();
+
+        List<String> matchedSkills = new ArrayList<>();
+        List<String> missingSkills = new ArrayList<>();
 
         for (ProfileSkill profileSkill : profile.getSkills()) {
             for (Skill jobSkill : job.getSkills()) {
@@ -53,6 +56,7 @@ public class AiJobMatchingService {
                     score += 20;
                     explanation.append("Matched skill: ")
                             .append(profileSkill.getName()).append(". ");
+                    matchedSkills.add(jobSkill.getName());
                 }
             }
 
@@ -84,6 +88,12 @@ public class AiJobMatchingService {
             }
         }
 
+        for (Skill jobSkill : job.getSkills()) {
+            if (!matchedSkills.contains(jobSkill.getName())) {
+                missingSkills.add(jobSkill.getName());
+            }
+        }
+
         if (profile.getLocation() != null &&
                 job.getLocation() != null &&
                 job.getLocation().toLowerCase().contains(profile.getLocation().toLowerCase())) {
@@ -101,6 +111,8 @@ public class AiJobMatchingService {
                 .jobTitle(job.getTitle())
                 .company(job.getCompany())
                 .description(job.getDescription())
+                .matchedSkills(matchedSkills)
+                .missingSkills(missingSkills)
                 .build();
     }
 }
