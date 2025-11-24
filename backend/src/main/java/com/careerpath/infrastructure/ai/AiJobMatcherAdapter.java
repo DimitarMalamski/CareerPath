@@ -65,8 +65,6 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
                     .replace("```", "")
                     .trim();
 
-            System.out.println("\n----- RAW AI RESPONSE -----\n" + json + "\n---------------------------\n");
-
             return objectMapper.readValue(json, new TypeReference<List<AiEnhancementResult>>() {});
         } catch (Exception e) {
             return topMatches.stream()

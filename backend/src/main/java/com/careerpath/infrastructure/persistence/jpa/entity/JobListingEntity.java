@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -54,5 +55,8 @@ public class JobListingEntity {
     private OffsetDateTime updatedAt;
 
     private OffsetDateTime deletedAt;
+
+    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
+    private List<JobSkillEntity> jobSkills;
 }
 

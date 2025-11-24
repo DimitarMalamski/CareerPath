@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,12 @@ public class AiJobMatchingService {
     private final AiJobMatcherPort aiJobMatcherPort;
     private final JobRecommendationMapper jobRecommendationMapper;
 
+    // Caching
+    private final Map<UUID, List<JobRecommendationDto>> cache = new ConcurrentHashMap<>();
+
     public List<JobRecommendationDto> getRecommendations(UUID userId) {
+        if (cache.containsKey(userId)) return cache.get(userId);
+
         Profile profile = profileRepository.getProfileByUserId(userId);
 
         List<JobListing> listings = jobListingRepository.findAll();
@@ -31,14 +38,17 @@ public class AiJobMatchingService {
 
         List<JobMatchResult> enhancedResults = aiJobMatcherPort.enhanceMatches(profile, baselineResults);
 
-        return enhancedResults.stream()
+        List<JobRecommendationDto> jobRecommendationDtos = enhancedResults.stream()
                 .sorted(Comparator.comparingDouble(JobMatchResult::getFinalScore).reversed())
                 .map(result -> {
                     JobListing job = jobListingRepository.findById(UUID.fromString(result.getJobListingId()));
                     return jobRecommendationMapper.toDto(result, job);
                 })
                 .toList();
-    }
 
+        cache.put(userId, jobRecommendationDtos);
+
+        return jobRecommendationDtos;
+    }
 }
 
