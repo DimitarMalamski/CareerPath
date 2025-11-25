@@ -9,14 +9,16 @@ import java.util.List;
 
 public class JobListingEntityMapper {
     public static JobListing toDomain(JobListingEntity entity) {
-        List<Skill> skills = entity.getJobSkills()
-                .stream()
-                .map(JobSkillEntity::getSkill)
-                .map(se -> Skill.builder()
-                        .id(se.getId())
-                        .name(se.getName())
-                        .build()
-                )
+        List<Skill> skills =
+                entity.getJobSkills() == null ? List.of() :
+                entity.getJobSkills()
+                    .stream()
+                    .map(JobSkillEntity::getSkill)
+                    .map(se -> Skill.builder()
+                            .id(se.getId())
+                            .name(se.getName())
+                            .build()
+                    )
                 .toList();
 
         return JobListing.builder()

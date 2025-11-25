@@ -15,7 +15,7 @@ public class JobScoringService {
                 .toList();
     }
 
-    private JobMatchResult scoreSingle(Profile profile, JobListing job) {
+    JobMatchResult scoreSingle(Profile profile, JobListing job) {
 
         int score = 0;
         StringBuilder explanation = new StringBuilder();
