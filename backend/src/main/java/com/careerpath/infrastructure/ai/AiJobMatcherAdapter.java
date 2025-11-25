@@ -11,6 +11,7 @@ import com.theokanning.openai.completion.chat.ChatCompletionResult;
 import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "ai.enabled", havingValue = "true", matchIfMissing = true)
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private final OpenAiService openAiService;
