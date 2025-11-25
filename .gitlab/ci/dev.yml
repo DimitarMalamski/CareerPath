@@ -42,6 +42,7 @@ frontend-build:
     - dev-test
 
 
+
 # ---------------- INTEGRATION TESTS ----------------
 integration-test:
   stage: integration
