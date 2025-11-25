@@ -15,17 +15,13 @@ include:
   - local: '.gitlab/ci/feature.yml'
     rules:
       - if: '$CI_COMMIT_BRANCH =~ /^feature\/.*$/'
-
-<<<<<<< HEAD
   - local: '.gitlab/ci/dev.yml'
     rules:
       - if: '$CI_COMMIT_BRANCH == "dev"'
       - if: '$CI_COMMIT_BRANCH == "dev-test"'
-=======
 #  - local: '.gitlab/ci/dev.yml'
 #    rules:
 #      - if: '$CI_COMMIT_BRANCH == "dev"'
->>>>>>> 7482dff91bf762985debc9fb71ba77187ceb858c
 
   - local: '.gitlab/ci/main.yml'
     rules:
