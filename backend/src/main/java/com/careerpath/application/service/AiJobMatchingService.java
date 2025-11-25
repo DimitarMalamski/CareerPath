@@ -16,13 +16,40 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class AiJobMatchingService {
+//    private final ProfileRepositoryPort profileRepository;
+//    private final JobListingRepositoryPort jobListingRepository;
+//    private final JobScoringService scoringService;
+//    private final AiJobMatcherPort aiJobMatcherPort;
+//    private final JobRecommendationMapper jobRecommendationMapper;
+
     private final ProfileRepositoryPort profileRepository;
     private final JobListingRepositoryPort jobListingRepository;
     private final JobScoringService scoringService;
     private final AiJobMatcherPort aiJobMatcherPort;
     private final JobRecommendationMapper jobRecommendationMapper;
+
+    public AiJobMatchingService(
+            ProfileRepositoryPort profileRepository,
+            JobListingRepositoryPort jobListingRepository,
+            JobScoringService scoringService,
+            AiJobMatcherPort aiJobMatcherPort,
+            JobRecommendationMapper jobRecommendationMapper
+    ) {
+        this.profileRepository = profileRepository;
+        this.jobListingRepository = jobListingRepository;
+        this.scoringService = scoringService;
+        this.aiJobMatcherPort = aiJobMatcherPort;
+        this.jobRecommendationMapper = jobRecommendationMapper;
+
+        // Debug statements:
+        System.out.println("DEBUG: profileRepository = " + profileRepository);
+        System.out.println("DEBUG: jobListingRepository = " + jobListingRepository);
+        System.out.println("DEBUG: scoringService = " + scoringService);
+        System.out.println("DEBUG: aiJobMatcherPort = " + aiJobMatcherPort);
+        System.out.println("DEBUG: jobRecommendationMapper = " + jobRecommendationMapper);
+    }
 
     // Caching
     private final Map<UUID, List<JobRecommendationDto>> cache = new ConcurrentHashMap<>();
