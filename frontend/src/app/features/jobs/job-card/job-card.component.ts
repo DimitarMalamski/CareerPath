@@ -37,6 +37,12 @@ export class JobCardComponent {
   @HostListener('document:click', ['$event'])
   onClick(event: Event) {
     const target = event.target as HTMLElement;
+
+    if (!(target instanceof HTMLElement)) {
+      this.isPopupOpen = false;
+      return;
+    }
+
     if (!target.closest('.ai-popup') && !target.closest('.ai-info-btn')) {
       this.isPopupOpen = false;
     }

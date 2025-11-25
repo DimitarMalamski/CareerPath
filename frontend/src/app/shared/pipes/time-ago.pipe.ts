@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'timeAgo',
@@ -14,7 +14,7 @@ export class TimeAgoPipe implements PipeTransform {
     const now = new Date();
     const second = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-    const intervals: { [key: string]: number } = {
+    const intervals: Record<string, number> = {
       year: 31536000,
       month: 2592000,
       week: 604800,

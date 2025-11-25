@@ -14,7 +14,7 @@ import {DecimalPipe, NgClass, CommonModule} from '@angular/common';
 
 export class JobScoreComponent {
   @Input() score!: number;
-  @Input() hasAi: boolean = false;
+  @Input() hasAi = false;
 
   @Output() infoClick = new EventEmitter<void>();
 

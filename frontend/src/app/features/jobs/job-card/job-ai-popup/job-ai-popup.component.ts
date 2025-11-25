@@ -10,9 +10,9 @@ import { CommonModule } from '@angular/common';
 
 export class JobAiPopupComponent {
   @Input() explanation!: string;
-  @Output() close = new EventEmitter<void>();
+  @Output() closeExplanation = new EventEmitter<void>();
 
   onClose() {
-    this.close.emit();
+    this.closeExplanation.emit();
   }
 }
