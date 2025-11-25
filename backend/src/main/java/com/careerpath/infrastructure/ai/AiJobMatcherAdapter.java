@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import java.util.Comparator;
 import java.util.List;
 
-@org.springframework.context.annotation.Profile("!test")
 @Component
 @RequiredArgsConstructor
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
