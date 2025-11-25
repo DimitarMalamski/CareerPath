@@ -52,9 +52,10 @@ integration-test:
     - backend-ci-build
     - frontend-build
   before_script:
+    - curl -fsSL https://app.testcontainers.cloud/bash | bash
     - cd backend
   script:
-    - ./gradlew integrationTest --no-daemon -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN" -Dtestcontainers.environment=cloud -Ddocker.client.strategy=cloud
+    - ./gradlew integrationTest --no-daemon -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
   allow_failure: false
   only:
     - dev
