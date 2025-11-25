@@ -54,7 +54,9 @@ integration-test:
   before_script:
     - cd backend
   script:
-    - ./gradlew integrationTest --no-daemon -Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN
+    - ./gradlew integrationTest --no-daemon \
+      -Dtestcontainers.cloud.enabled=true \
+      "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
   allow_failure: false
   only:
     - dev
