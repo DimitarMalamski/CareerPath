@@ -14,6 +14,8 @@ backend-docker-build:
   services:
     - name: docker:dind
       command: ["--tls=false"]
+  variables:
+    DOCKER_TLS_CERTDIR: ""
   script:
     - docker build -f backend/Dockerfile.ci -t cp-backend-ci .
   artifacts:
@@ -44,14 +46,13 @@ frontend-build:
 integration-test:
   stage: integration
   image: docker:27.0.3
-  services:
-    - name: docker:dind
-      command: [ "--tls=false" ]
+  variables:
+    TC_CLOUD_TOKEN: "$TC_CLOUD_TOKEN"
   dependencies:
     - backend-docker-build
     - frontend-build
   script:
-    - export TC_CLOUD_TOKEN="$TC_CLOUD_TOKEN"
+    - curl -fsSL https://app.testcontainers.cloud/bash | bash
     - docker compose -f docker/compose/docker-compose.ci.yml up --build --abort-on-container-exit
   after_script:
     - docker compose -f docker/compose/docker-compose.ci.yml down
