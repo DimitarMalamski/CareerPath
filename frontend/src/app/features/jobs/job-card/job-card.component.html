@@ -1,0 +1,49 @@
+<div
+  class="relative overflow-visible bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 hover:border-orange-500 shadow-lg shadow-black/20 transition-all duration-300"
+>
+
+  <div class="flex justify-between items-start">
+    <div>
+      <h2 class="text-2xl font-semibold text-white mb-1">{{ job.title }}</h2>
+      <p class="text-gray-400 font-medium mb-1">{{ job.company }}</p>
+
+      <p class="text-gray-500 text-xs mb-3">
+        Posted {{ job.createdAt | timeAgo }}
+      </p>
+
+      <div class="space-y-2 mb-2">
+        <app-job-tags [job]="job"></app-job-tags>
+        <app-job-skills
+          [skills]="job.skills"
+          [matchedSkills]="job.matchedSkills"
+          [missingSkills]="job.missingSkills"
+        >
+        </app-job-skills>
+      </div>
+
+      <p class="text-gray-400 text-sm mt-2 leading-relaxed">
+        {{ getJobSummary(job) }}
+      </p>
+
+    </div>
+
+    <div>
+      <app-job-score
+        [score]="job.finalScore"
+        [hasAi]="!!job.aiExplanation"
+        (infoClick)="togglePopup()"
+      ></app-job-score>
+    </div>
+  </div>
+
+  <app-job-ai-popup
+    *ngIf="isPopupOpen"
+    [explanation]="job.aiExplanation"
+    (closeExplanation)="closePopup()">
+  </app-job-ai-popup>
+
+  <button class="mt-6 bg-orange-500 hover:bg-orange-600 text-black font-semibold py-2 px-4 rounded-xl w-full transition">
+    View Details
+  </button>
+
+</div>

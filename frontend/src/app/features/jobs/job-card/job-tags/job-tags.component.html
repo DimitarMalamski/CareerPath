@@ -1,0 +1,35 @@
+<div class="flex flex-wrap items-center gap-3 mb-2">
+
+  <div class="flex items-center gap-1 text-gray-300 text-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5s-3 1.343-3 3s1.343 3 3 3zm0 0c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" />
+    </svg>
+
+    {{ job.location || 'Location not specified' }}
+  </div>
+
+  <span *ngIf="isRemote(job.type)"
+        class="bg-green-500/20 text-green-300 px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 2a10 10 0 110 20a10 10 0 010-20zm0 0c2.5 2 4 5.5 4 10s-1.5 8-4 10m0-20c-2.5 2-4 5.5-4 10s1.5 8 4 10" />
+    </svg>
+    Remote
+  </span>
+
+  <span *ngIf="isHybrid(job.type)"
+        class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded-lg text-xs font-medium flex items-center gap-1">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 10l9-7l9 7m-2 2v9a2 2 0 01-2 2h-4m-6 0a2 2 0 01-2-2v-9" />
+    </svg>
+    Hybrid
+  </span>
+
+  <span *ngIf="!isRemote(job.type) && !isHybrid(job.type)"
+        class="bg-gray-700 text-gray-100 px-2 py-1 rounded-lg text-xs font-medium">
+    {{ formatJobType(job.type) }}
+  </span>
+
+</div>

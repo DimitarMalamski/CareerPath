@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController  } from '@angular/common/http/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { JobsService } from './jobs.service';
 import { environment } from '../../../environments/environment';
-import { JobListing } from '../../core/models/job-listing';
+import { JobRecommendation } from '../../core/models/job-recommendation';
 import { expect } from 'vitest';
 
 describe('JobsService', () => {
@@ -23,41 +23,40 @@ describe('JobsService', () => {
     httpMock.verify();
   });
 
-  it('should fetch all jobs from API', () => {
-    const mockJobs: JobListing[] = [
+  it('should fetch recommended jobs by userId', () => {
+    const mockJobs: JobRecommendation[] = [
       {
         id: '1',
         title: 'Backend Dev',
         company: 'Google',
         location: 'Berlin',
-        stackSummary: 'Java, Spring Boot',
         type: 'FULL_TIME',
-        status: 'PUBLISHED',
-        expiresAt: '2025-12-31',
-        skills: ['Java']
-      },
-      {
-        id: '2',
-        title: 'Frontend Dev',
-        company: 'Meta',
-        location: 'Amsterdam',
-        stackSummary: 'Angular, TypeScript',
-        type: 'INTERNSHIP',
-        status: 'PUBLISHED',
-        expiresAt: '2025-12-31',
-        skills: ['Angular']
+        skills: ['Java'],
+        description: 'desc',
+        finalScore: 0.9,
+        aiExplanation: 'Great match.',
+        createdAt: '2025-01-01',
+        matchedSkills: ['Java'],
+        missingSkills: []
       }
     ];
 
-    let result: JobListing[] = [];
-    service.getAllJobs().subscribe((jobListings) => (result = jobListings));
+    const userId = '12345';
+    let result: JobRecommendation[] = [];
 
-    const req = httpMock.expectOne(`${environment.apiUrl}/jobs`);
+    service.getRecommendedJobs(userId).subscribe((data) => {
+      result = data;
+    });
+
+    const req = httpMock.expectOne(
+      `${environment.apiUrl}/jobs/recommendations/${userId}`
+    );
+
     expect(req.request.method).toBe('GET');
 
     req.flush(mockJobs);
 
-    expect(result.length).toBe(2);
+    expect(result.length).toBe(1);
     expect(result[0].title).toBe('Backend Dev');
   });
 });

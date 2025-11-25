@@ -8,11 +8,11 @@ import { JobListing } from '../../../core/models/job-listing';
 describe('JobsListComponent', () => {
   let fixture: ComponentFixture<JobsListComponent>;
   let component: JobsListComponent;
-  let jobsServiceMock: { getAllJobs: ReturnType<typeof vi.fn> };
+  let jobsServiceMock: { getRecommendedJobs: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     jobsServiceMock = {
-      getAllJobs: vi.fn(),
+      getRecommendedJobs: vi.fn(),
     };
 
     await TestBed.configureTestingModule({
@@ -54,7 +54,7 @@ describe('JobsListComponent', () => {
       },
     ];
 
-    jobsServiceMock.getAllJobs.mockReturnValue(of(mockJobs));
+    jobsServiceMock.getRecommendedJobs.mockReturnValue(of(mockJobs));
 
     fixture.detectChanges();
 
@@ -65,7 +65,7 @@ describe('JobsListComponent', () => {
 
   it('should log error and set isLoading=false when API fails', () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
-    jobsServiceMock.getAllJobs.mockReturnValue(throwError(() => new Error(('API error'))));
+    jobsServiceMock.getRecommendedJobs.mockReturnValue(throwError(() => new Error(('API error'))));
 
     fixture.detectChanges();
 

@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: cp_user
       POSTGRES_PASSWORD: cp_pass
     ports:
-      - "5432:5432"
+      - "25432:5432"
     volumes:
       - cp_pg_data_dev:/var/lib/postgresql/data
     networks:
