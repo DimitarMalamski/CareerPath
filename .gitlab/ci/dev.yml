@@ -55,7 +55,7 @@ integration-test:
     - curl -fsSL https://app.testcontainers.cloud/bash | bash
     - cd backend
   script:
-    - ./gradlew integrationTest --no-daemon -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
+    - ./gradlew integrationTest --no-daemon -stacktrace -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
   allow_failure: false
   only:
     - dev
