@@ -15,6 +15,9 @@ RUN ./gradlew clean assemble integrationTestClasses --no-daemon
 FROM eclipse-temurin:17-jdk
 WORKDIR /app
 
+# Install Testcontainers Cloud CLI
+RUN curl -fsSL https://app.testcontainers.cloud/bash | bash
+
 # Copy the backend project (only backend!)
 COPY --from=builder /app/backend .
 

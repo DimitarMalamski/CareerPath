@@ -15,9 +15,7 @@ public abstract class BaseIntegrationTest {
 
     @Container
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16")
-            .withDatabaseName("careerpath_test")
-            .withUsername("postgres")
-            .withPassword("password");
+            .withDatabaseName("careerpath_test");
 
     @DynamicPropertySource
     static void configureDatabase(DynamicPropertyRegistry registry) {
