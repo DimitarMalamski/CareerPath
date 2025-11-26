@@ -1,5 +1,6 @@
 <header class="w-full bg-black shadow-sm z-50">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between text-white">
+
     <!-- Logo -->
     <a routerLink="/" class="flex items-center font-bold text-white text-2xl">
       <img src="assets/logo.png" class="h-10 w-auto" alt="CareerPath logo"/>
@@ -14,9 +15,9 @@
     </nav>
 
     <!-- Desktop Auth Buttons -->
-    <div class="hidden md:flex items-center gap-4">
-      <a routerLink="/login" class="text-base text-slate-100 hover:text-orange-400 flex items-center gap-1">
-        <span>Login</span>
+    <div class="hidden md:flex items-center gap-4" *ngIf="!session; else loggedInDesktop">
+      <a routerLink="/login" class="text-base text-slate-100 hover:text-orange-400 transition">
+        Login
       </a>
       <a
         routerLink="/register"
@@ -26,28 +27,47 @@
       </a>
     </div>
 
+    <ng-template #loggedInDesktop>
+      <div class="hidden md:flex items-center gap-4">
+        <span class="text-gray-300 text-sm">
+          {{ session?.user?.email }}
+        </span>
+
+        <button
+          (click)="logout()"
+          class="px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition"
+        >
+          Logout
+        </button>
+      </div>
+    </ng-template>
+
     <!-- Mobile Hamburger -->
     <button (click)="toggleMenu()" class="md:hidden text-white focus:outline-none">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
-           viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M4 6h16M4 12h16M4 18h16" />
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
       </svg>
     </button>
+
   </div>
 
-  <!-- Mobile Dropdown Menu -->
+  <!-- MOBILE DROPDOWN MENU -->
   <div *ngIf="menuOpen" class="md:hidden px-6 pb-4 text-white bg-black">
+
+    <!-- Mobile Nav -->
     <nav class="flex flex-col gap-3" aria-label="Navigation Bar">
-      <a routerLink="/jobs" routerLinkActive="text-emerald-400" class="hover:text-orange-400 transition">Jobs</a>
-      <a routerLink="/dashboard" routerLinkActive="text-emerald-400" class="hover:text-orange-400 transition">Dashboard</a>
-      <a routerLink="/profile" routerLinkActive="text-emerald-400" class="hover:text-orange-400 transition">Profile</a>
+      <a routerLink="/jobs" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Jobs</a>
+      <a routerLink="/dashboard" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Dashboard</a>
+      <a routerLink="/profile" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Profile</a>
     </nav>
-    <div class="mt-4">
+
+    <!-- Mobile Auth Buttons -->
+    <div class="mt-4" *ngIf="!session; else mobileLoggedIn">
       <a
         routerLink="/login"
-        class="mt-2 inline-block w-full text-center px-4 py-2 bg-orange-400 hover:bg-orange-500 text-black rounded-xl font-semibold shadow transition">
-        <span>Login</span>
+        class="mt-2 inline-block w-full text-center px-4 py-2 bg-orange-400 hover:bg-orange-500 text-black rounded-xl font-semibold shadow transition"
+      >
+        Login
       </a>
       <a
         routerLink="/register"
@@ -56,5 +76,21 @@
         Sign Up
       </a>
     </div>
+
+    <ng-template #mobileLoggedIn>
+      <div class="flex flex-col gap-3 mt-4">
+        <span class="text-gray-300 text-sm">
+          Logged in as: {{ session?.user?.email }}
+        </span>
+
+        <button
+          (click)="logout()"
+          class="inline-block w-full text-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-semibold transition"
+        >
+          Logout
+        </button>
+      </div>
+    </ng-template>
+
   </div>
 </header>
