@@ -1,44 +1,37 @@
-import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../../environments/environment';
+import { Injectable, inject } from '@angular/core';
+import { SupabaseClient } from '@supabase/supabase-js';
+import { SUPABASE_CLIENT } from '../supabase-client.token';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupabaseService {
-  private readonly supabase: SupabaseClient;
-
-  constructor() {
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseAnonKey
-    );
-  }
+  private readonly client = inject<SupabaseClient>(SUPABASE_CLIENT);
 
   signIn(email: string, password: string) {
-    return this.supabase.auth.signInWithPassword({
+    return this.client.auth.signInWithPassword({
       email,
       password
     });
   }
 
   signUp(email: string, password: string) {
-    return this.supabase.auth.signUp({
+    return this.client.auth.signUp({
       email,
       password
     });
   }
 
   signOut() {
-    return this.supabase.auth.signOut();
+    return this.client.auth.signOut();
   }
 
   async getSession() {
-    const { data } = await this.supabase.auth.getSession();
+    const { data } = await this.client.auth.getSession();
     return data.session;
   }
 
-  get client() {
-    return this.supabase;
+  getClient() : SupabaseClient {
+    return this.client;
   }
 }

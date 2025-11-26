@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../../core/services/supabase.service';
-import { Router } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
@@ -33,7 +33,7 @@ export class LoginComponent {
   }
 
   async loginWithGoogle() {
-    await this.supabase.client.auth.signInWithOAuth({
+    await this.supabase.getClient().auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: globalThis.location.origin

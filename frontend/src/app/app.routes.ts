@@ -6,19 +6,19 @@ import { JobsListComponent } from './features/jobs/jobs-list/jobs-list.component
 import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 import {LoginComponent} from './features/auth/login/login.component';
 import {RegisterComponent} from './features/auth/register/register.component';
+import {ForgotPasswordComponent} from './features/auth/forgot-password/forgot-password.component';
+import {ResetPasswordComponent} from './features/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
-  // Redirect for clean URLs
-  { path: 'login', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: 'register', redirectTo: 'auth/register', pathMatch: 'full' },
-
   // AUTH LAYOUT (no navbar/footer)
   {
     path: 'auth',
     component: AuthLayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
-      { path: 'register', component:  RegisterComponent }
+      { path: 'register', component:  RegisterComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent }
     ],
   },
 

@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
   async ngOnInit() {
     this.session = await this.supabase.getSession();
 
-    this.supabase.client.auth.onAuthStateChange((_event, session) => {
+    this.supabase.getClient().auth.onAuthStateChange((_event, session) => {
       this.session = session;
     });
   }

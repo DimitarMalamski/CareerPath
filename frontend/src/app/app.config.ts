@@ -5,15 +5,24 @@ import {
 from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {provideHttpClient, withFetch} from '@angular/common/http';
+import { SUPABASE_CLIENT } from './core/supabase-client.token';
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import {createClient} from '@supabase/supabase-js';
+import {environment} from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
+    {
+      provide: SUPABASE_CLIENT,
+      useFactory: () =>
+        createClient(
+          environment.supabaseUrl,
+          environment.supabaseAnonKey
+        )
+    }
   ]
 };

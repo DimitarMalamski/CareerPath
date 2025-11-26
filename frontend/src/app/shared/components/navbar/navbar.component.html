@@ -16,11 +16,11 @@
 
     <!-- Desktop Auth Buttons -->
     <div class="hidden md:flex items-center gap-4" *ngIf="!session; else loggedInDesktop">
-      <a routerLink="/login" class="text-base text-slate-100 hover:text-orange-400 transition">
+      <a routerLink="/auth/login" class="text-base text-slate-100 hover:text-orange-400 transition">
         Login
       </a>
       <a
-        routerLink="/register"
+        routerLink="/auth/register"
         class="px-4 py-2 bg-orange-500 hover:bg-orange-600 text-black rounded-xl font-semibold shadow transition"
       >
         Sign Up
@@ -64,13 +64,13 @@
     <!-- Mobile Auth Buttons -->
     <div class="mt-4" *ngIf="!session; else mobileLoggedIn">
       <a
-        routerLink="/login"
+        routerLink="/auth/login"
         class="mt-2 inline-block w-full text-center px-4 py-2 bg-orange-400 hover:bg-orange-500 text-black rounded-xl font-semibold shadow transition"
       >
         Login
       </a>
       <a
-        routerLink="/register"
+        routerLink="/auth/register"
         class="mt-2 inline-block w-full text-center px-4 py-2 bg-orange-400 hover:bg-orange-500 text-black rounded-xl font-semibold shadow transition"
       >
         Sign Up

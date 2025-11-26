@@ -1,38 +1,39 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {Router, RouterModule} from '@angular/router';
+import { Router } from '@angular/router';
 import { SupabaseService } from '../../../core/services/supabase.service';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-reset-password',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
-  templateUrl: './register.component.html'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './reset-password.component.html'
 })
-export class RegisterComponent {
-  email = '';
+export class ResetPasswordComponent {
   password = '';
   confirmPassword = '';
-  errorMessage: string | null = null;
+  error: string | null = null;
 
   constructor(
     private readonly supabase: SupabaseService,
     private readonly router: Router
   ) {}
 
-  async register() {
-    this.errorMessage = null;
+  async updatePassword() {
+    this.error = null;
 
     if (this.password !== this.confirmPassword) {
-      this.errorMessage = "Passwords do not match.";
+      this.error = 'Passwords do not match.';
       return;
     }
 
-    const { error } = await this.supabase.signUp(this.email, this.password);
+    const { error } = await this.supabase.getClient().auth.updateUser({
+      password: this.password
+    });
 
     if (error) {
-      this.errorMessage = error.message;
+      this.error = error.message;
       return;
     }
 
