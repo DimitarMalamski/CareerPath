@@ -18,7 +18,8 @@ export class JobScoreComponent {
 
   @Output() infoClick = new EventEmitter<void>();
 
-  onInfoClick() {
+  onInfoClick(event: MouseEvent) {
+    event.stopPropagation();
     this.infoClick.emit();
   }
 

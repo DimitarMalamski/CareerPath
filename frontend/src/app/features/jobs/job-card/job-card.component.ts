@@ -27,6 +27,7 @@ export class JobCardComponent {
   isPopupOpen = false;
 
   togglePopup() {
+    console.log("TOGGLE POPUP FIRED");
     this.isPopupOpen = !this.isPopupOpen;
   }
 
