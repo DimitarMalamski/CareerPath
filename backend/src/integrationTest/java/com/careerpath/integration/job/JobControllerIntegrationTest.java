@@ -4,6 +4,7 @@ import com.careerpath.BaseIntegrationTest;
 import com.careerpath.domain.model.enums.JobStatus;
 import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.model.enums.UserRole;
+import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.entity.UserEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @Transactional
 @AutoConfigureMockMvc
+@SpringBootTest
 public class JobControllerIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
@@ -34,6 +38,9 @@ public class JobControllerIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     private SpringDataUserRepository userRepo;
+
+    @MockitoBean
+    private AiJobMatcherPort aiJobMatcherPort;
 
     @BeforeEach
     void setupData() {
