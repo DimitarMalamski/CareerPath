@@ -8,6 +8,7 @@ import {LoginComponent} from './features/auth/login/login.component';
 import {RegisterComponent} from './features/auth/register/register.component';
 import {ForgotPasswordComponent} from './features/auth/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './features/auth/reset-password/reset-password.component';
+import {authGuard} from './core/guards/auth.guard';
 
 export const routes: Routes = [
   // AUTH LAYOUT (no navbar/footer)
@@ -29,8 +30,8 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
-      { path: 'jobs', component: JobsListComponent },
-      { path: 'users', component: UserComponent }
+      { path: 'jobs', component: JobsListComponent, canActivate: [authGuard] },
+      { path: 'users', component: UserComponent, canActivate: [authGuard] }
     ],
   },
 
