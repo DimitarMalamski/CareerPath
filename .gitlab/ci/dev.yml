@@ -1,6 +1,12 @@
 default:
   tags:
     - docker
+  cache:
+    key: ${CI_PROJECT_NAME}
+    paths:
+      - backend/.gradle/wrapper
+      - backend/.gradle/caches
+      - backend/.gradle/buildOutputCleanup
 
 stages:
   - build
@@ -28,6 +34,10 @@ backend-ci-build:
 frontend-build:
   stage: build
   image: node:20
+  cache:
+    key: ${CI_PROJECT_NAME}
+    paths:
+      - frontend/node_modules
   before_script:
     - cd frontend
   script:
@@ -51,7 +61,6 @@ integration-test:
     TC_CLOUD_TOKEN: "$TC_CLOUD_TOKEN"
   dependencies:
     - backend-ci-build
-    - frontend-build
   before_script:
     - curl -fsSL https://app.testcontainers.cloud/bash | bash
     - cd backend
