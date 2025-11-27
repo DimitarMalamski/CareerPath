@@ -38,7 +38,7 @@ public class ProfileEntityMapper {
                         .skills(mapSkillsToEmbeddable(profile.getSkills()))
                         .build()
                 )
-                .aiOptIn(false)
+                .aiOptIn(profile.isAiOptIn())
                 .build();
     }
 

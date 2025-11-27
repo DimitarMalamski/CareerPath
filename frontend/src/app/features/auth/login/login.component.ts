@@ -31,25 +31,13 @@ export class LoginComponent {
       return;
     }
 
-    const user = data.user;
-    if (!user) {
-      this.errorMessage = "Unexpected error: No Supabase user returned.";
+    const session = data.session;
+    if (!session) {
+      this.errorMessage = "Unexpected error: no session returned.";
       return;
     }
 
-    const syncResponse = await fetch(`${environment.apiUrl}/auth/sync`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        externalId: user.id,
-        email: user.email,
-        emailVerified: !!user.email_confirmed_at
-      })
-    });
-
-    const syncData = await syncResponse.json();
-
-    localStorage.setItem("jwt_token", syncData.token);
+    localStorage.setItem("jwt_token", session.access_token);
 
     await this.router.navigate(['/home']);
   }

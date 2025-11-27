@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {JobRecommendation} from '../../../core/models/job-recommendation';
 import {JobCardComponent} from '../job-card/job-card.component';
-import {UserSessionService} from '../../../core/services/user-session.service';
+import {UserIdentityService} from '../../../core/services/user-identity.service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -12,21 +12,23 @@ import {UserSessionService} from '../../../core/services/user-session.service';
   imports: [RouterModule, CommonModule, JobCardComponent],
   templateUrl: './jobs-list.component.html'
 })
-
 export class JobsListComponent implements OnInit {
+
   jobs: JobRecommendation[] = [];
   isLoading = true;
 
   private readonly jobsService = inject(JobsService);
-
-  // Temporary user
-  private readonly userSession = inject(UserSessionService);
+  private readonly identity = inject(UserIdentityService);
 
   ngOnInit(): void {
-    const userId = this.userSession.getUserId();
+    this.loadUserAndJobs();
+  }
+
+  private async loadUserAndJobs() {
+    const userId = await this.identity.getUserId();
 
     if (!userId) {
-      console.error("No JWT user ID found!");
+      console.error("No authenticated user (Supabase session missing)");
       this.isLoading = false;
       return;
     }

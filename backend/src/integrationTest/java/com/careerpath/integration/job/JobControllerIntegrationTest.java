@@ -6,9 +6,7 @@ import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.model.enums.UserRole;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
-import com.careerpath.infrastructure.persistence.jpa.entity.UserEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
-import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataUserRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

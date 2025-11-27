@@ -32,6 +32,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         String header = request.getHeader("Authorization");
 
+        System.out.println("=== JWT FILTER HIT ===");
+        System.out.println("Request URI: " + request.getRequestURI());
+        System.out.println("Authorization Header: " + header);
+
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -45,6 +49,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String userId = claims.getSubject();
             String email = (String) claims.get("email");
             String role =  (String) claims.get("role");
+
+            System.out.println("JWT VALIDATED OK");
+            System.out.println("UserId extracted: " + userId);
+            System.out.println("Role extracted: " + role);
 
             userOnboardingPort.ensureUserProfile(userId);
 
@@ -61,6 +69,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
+            System.out.println("JWT VALIDATION FAILED:");
+            e.printStackTrace();
             SecurityContextHolder.clearContext();
         }
 

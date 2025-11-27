@@ -1,0 +1,16 @@
+package com.careerpath.config;
+
+import com.careerpath.application.service.UserOnboardingService;
+import com.careerpath.domain.port.ProfileRepositoryPort;
+import com.careerpath.domain.port.UserOnboardingPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class DomainConfig {
+
+    @Bean
+    public UserOnboardingPort userOnboardingPort(ProfileRepositoryPort profileRepositoryPort) {
+        return new UserOnboardingService(profileRepositoryPort);
+    }
+}

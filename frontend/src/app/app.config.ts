@@ -6,7 +6,7 @@ import {
 }
   from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
+import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { SUPABASE_CLIENT } from './core/supabase-client.token';
 import { routes } from './app.routes';
@@ -20,7 +20,6 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withFetch(),
       withInterceptors([jwtInterceptor])),
     {
       provide: SUPABASE_CLIENT,

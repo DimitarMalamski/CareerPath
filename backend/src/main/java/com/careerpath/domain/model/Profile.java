@@ -11,8 +11,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Builder
 public class Profile {
-    private UUID id;
-
     private String userId;
 
     private String fullName;
@@ -22,4 +20,6 @@ public class Profile {
 
     private List<ProfileSkill> skills;
     private List<ProfileExperience> experiences;
+
+    private boolean aiOptIn;
 }

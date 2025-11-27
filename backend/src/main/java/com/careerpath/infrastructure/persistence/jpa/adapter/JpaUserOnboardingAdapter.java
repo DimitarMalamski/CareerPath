@@ -2,7 +2,7 @@ package com.careerpath.infrastructure.persistence.jpa.adapter;
 
 import com.careerpath.domain.port.ProfileRepositoryPort;
 import com.careerpath.domain.port.UserOnboardingPort;
-import com.careerpath.domain.service.UserOnboardingService;
+import com.careerpath.application.service.UserOnboardingService;
 import org.springframework.stereotype.Component;
 
 @Component

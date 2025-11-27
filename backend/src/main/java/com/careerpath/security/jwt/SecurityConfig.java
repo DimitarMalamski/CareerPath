@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/sync").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("api/jobs/**").authenticated()
+                        .requestMatchers("/api/jobs/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

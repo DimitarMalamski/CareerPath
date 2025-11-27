@@ -1,39 +1,24 @@
 import { Injectable } from '@angular/core';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserSessionService {
-  private readonly tokenKey = 'jwt_token';
+  constructor(private readonly supabase: SupabaseService) {}
 
-  getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+  async getUser() {
+    const session = await this.supabase.getSession();
+    return session?.user ?? null;
   }
 
-  private decode(): any | null {
-    const token = this.getToken();
-    if (!token) return null;
-
-    try {
-      const payload = token.split('.')[1];
-      return JSON.parse(atob(payload));
-    } catch (e) {
-      console.error('Invalid JWT token', e);
-      return null;
-    }
+  async getUserId(): Promise<string | null> {
+    return (await this.getUser())?.id ?? null;
   }
 
-  getUserId(): string | null {
-    return this.decode()?.sub ?? null;
+  async getEmail(): Promise<string | null> {
+    return (await this.getUser())?.email ?? null;
   }
 
-  getEmail(): string | null {
-    return this.decode()?.email ?? null;
-  }
-
-  getRole(): string | null {
-    return this.decode()?.role ?? null;
-  }
-
-  isLoggedIn(): boolean {
-    return !!this.getToken();
+  async isLoggedIn(): Promise<boolean> {
+    return !!(await this.getUser());
   }
 }

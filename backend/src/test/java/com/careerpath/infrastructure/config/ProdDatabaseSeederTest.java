@@ -1,9 +1,7 @@
 package com.careerpath.infrastructure.config;
 
 import com.careerpath.domain.model.enums.UserRole;
-import com.careerpath.infrastructure.persistence.jpa.entity.UserEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
-import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataUserRepository;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

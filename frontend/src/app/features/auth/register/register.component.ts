@@ -29,13 +29,18 @@ export class RegisterComponent {
       return;
     }
 
-    const { error } = await this.supabase.signUp(this.email, this.password);
+    const { data, error } = await this.supabase.getClient().auth.signUp({
+      email: this.email,
+      password: this.password,
+    });
 
     if (error) {
       this.errorMessage = error.message;
       return;
     }
 
-    await this.router.navigate(['/login']);
+    this.errorMessage = null;
+
+    await this.router.navigate(['/check-email']);
   }
 }
