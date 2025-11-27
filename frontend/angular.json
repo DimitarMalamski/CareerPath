@@ -79,7 +79,7 @@
             },
             "development": {
               "buildTarget": "careerpath-frontend:build:development"
-            }
+              }
           },
           "defaultConfiguration": "development"
         },

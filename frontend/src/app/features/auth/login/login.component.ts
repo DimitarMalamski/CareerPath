@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../../core/services/supabase.service';
 import {Router, RouterModule} from '@angular/router';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +23,29 @@ export class LoginComponent {
 
   async login() {
     this.errorMessage = null;
-    const { error } = await this.supabase.signIn(this.email, this.password);
+
+    const { data, error } = await this.supabase.signIn(this.email, this.password);
 
     if (error) {
       this.errorMessage = error.message;
       return;
     }
+
+    const user = data.user;
+    if (!user) {
+      this.errorMessage = "Unexpected error: No Supabase user returned.";
+      return;
+    }
+
+    await fetch(`${environment.apiUrl}/auth/sync`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        externalId: user.id,
+        email: user.email,
+        emailVerified: !!user.email_confirmed_at
+      })
+    });
 
     await this.router.navigate(['/home']);
   }
@@ -36,7 +54,7 @@ export class LoginComponent {
     await this.supabase.getClient().auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: globalThis.location.origin
+        redirectTo: `${globalThis.location.origin}`
       }
     });
   }

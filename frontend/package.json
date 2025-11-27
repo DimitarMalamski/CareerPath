@@ -1,7 +1,6 @@
 {
   "name": "careerpath-frontend",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 4200 --poll 2000",
@@ -9,7 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "vitest run --coverage --config vitest.config.mts",
     "test:watch": "vitest --watch",
-    "serve:ssr:careerpath-frontend": "node dist/careerpath-frontend/server/server.mjs",
     "lint": "ng lint"
   },
   "prettier": {
@@ -31,20 +29,16 @@
     "@angular/core": "^20.3.0",
     "@angular/forms": "^20.3.0",
     "@angular/platform-browser": "^20.3.0",
-    "@angular/platform-server": "^20.3.0",
     "@angular/router": "^20.3.0",
-    "@angular/ssr": "^20.3.3",
     "@fortawesome/fontawesome-free": "^7.1.0",
     "@supabase/supabase-js": "^2.84.0",
     "aos": "^2.3.4",
-    "express": "^5.1.0",
     "rxjs": "~7.8.0",
     "swiper": "^12.0.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@analogjs/vite-plugin-angular": "^1.22.1",
     "@angular/build": "^20.3.3",
     "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^20.3.0",

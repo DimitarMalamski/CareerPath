@@ -1,14 +1,17 @@
 import {
+  APP_INITIALIZER,
   ApplicationConfig,
   provideBrowserGlobalErrorListeners,
-  provideZoneChangeDetection }
-from '@angular/core';
+  provideZoneChangeDetection
+}
+  from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {provideHttpClient, withFetch} from '@angular/common/http';
 import { SUPABASE_CLIENT } from './core/supabase-client.token';
 import { routes } from './app.routes';
 import {createClient} from '@supabase/supabase-js';
 import {environment} from '../environments/environment';
+import {AuthInitService} from './core/services/auth-init.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,6 +26,13 @@ export const appConfig: ApplicationConfig = {
           environment.supabaseUrl,
           environment.supabaseAnonKey
         )
+    },
+
+    {
+      provide: APP_INITIALIZER,
+      multi: true,
+      deps: [AuthInitService],
+      useFactory: (authInit: AuthInitService) => () => authInit.init()
     }
   ]
 };

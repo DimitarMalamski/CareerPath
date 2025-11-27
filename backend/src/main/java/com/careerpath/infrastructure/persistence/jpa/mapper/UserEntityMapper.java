@@ -27,8 +27,13 @@ public class UserEntityMapper {
     public static UserEntity toEntity(User user) {
         if (user == null) return null;
 
-        return UserEntity.builder()
-                .id(user.getId())
+        UserEntity.UserEntityBuilder builder = UserEntity.builder();
+
+        if (user.getId() != null) {
+            builder.id(user.getId());
+        }
+
+        return builder
                 .email(user.getEmail())
                 .passwordHash(user.getPasswordHash())
                 .role(user.getRole())
