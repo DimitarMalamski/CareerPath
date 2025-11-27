@@ -5,7 +5,7 @@ import com.careerpath.application.mapper.JobRecommendationMapper;
 import com.careerpath.domain.model.*;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.JobListingRepositoryPort;
-import com.careerpath.domain.port.ProfileRepositoryPort;
+import com.careerpath.domain.port.ProfilePersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 @RequiredArgsConstructor
 public class AiJobMatchingService {
-    private final ProfileRepositoryPort profileRepository;
+    private final ProfilePersistencePort profileRepository;
     private final JobListingRepositoryPort jobListingRepository;
     private final JobScoringService scoringService;
     private final AiJobMatcherPort aiJobMatcherPort;

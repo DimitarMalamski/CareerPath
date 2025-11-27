@@ -1,7 +1,7 @@
 package com.careerpath.infrastructure.persistence.jpa.adapter;
 
 import com.careerpath.domain.model.Profile;
-import com.careerpath.domain.port.ProfileRepositoryPort;
+import com.careerpath.domain.port.ProfilePersistencePort;
 import com.careerpath.infrastructure.persistence.jpa.entity.ProfileEntity;
 import com.careerpath.infrastructure.persistence.jpa.mapper.ProfileEntityMapper;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataProfileRepository;
@@ -9,11 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class JpaProfileRepositoryAdapter implements ProfileRepositoryPort {
+public class JpaProfileRepositoryAdapter implements ProfilePersistencePort {
     private final SpringDataProfileRepository profileRepository;
 
     @Override

@@ -1,6 +1,12 @@
+import {ProfileSkill} from './profile-skill';
+import {ProfileExperience} from './profile-experience';
+
 export interface ProfileDto {
-  firstname?: string | null;
-  lastname?: string | null;
-  headline?: string | null;
-  location?: string | null;
+  fullName: string;
+  headline: string;
+  about: string;
+  location: string;
+  skills: ProfileSkill[];
+  experiences: ProfileExperience[];
+  aiOptIn: boolean;
 }

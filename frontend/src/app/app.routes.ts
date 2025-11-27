@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { HomeComponent } from './features/home/home.component';
-import { UserComponent } from './shared/user/user.component';
 import { JobsListComponent } from './features/jobs/jobs-list/jobs-list.component';
 import {AuthLayoutComponent} from './layout/auth-layout/auth-layout.component';
 import {LoginComponent} from './features/auth/login/login.component';
@@ -9,6 +8,7 @@ import {RegisterComponent} from './features/auth/register/register.component';
 import {ForgotPasswordComponent} from './features/auth/forgot-password/forgot-password.component';
 import {ResetPasswordComponent} from './features/auth/reset-password/reset-password.component';
 import {authGuard} from './core/guards/auth.guard';
+import {ProfilePageComponent} from './features/profile/profile-page/profile-page.component';
 
 export const routes: Routes = [
   // AUTH LAYOUT (no navbar/footer)
@@ -31,7 +31,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'jobs', component: JobsListComponent, canActivate: [authGuard] },
-      { path: 'users', component: UserComponent, canActivate: [authGuard] }
+      { path: 'profile', component: ProfilePageComponent, canActivate: [authGuard] }
     ],
   },
 

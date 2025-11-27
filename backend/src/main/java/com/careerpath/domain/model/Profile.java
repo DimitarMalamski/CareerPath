@@ -3,7 +3,6 @@ package com.careerpath.domain.model;
 import lombok.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @Setter

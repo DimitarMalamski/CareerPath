@@ -5,7 +5,7 @@ import com.careerpath.application.mapper.JobRecommendationMapper;
 import com.careerpath.domain.model.*;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.JobListingRepositoryPort;
-import com.careerpath.domain.port.ProfileRepositoryPort;
+import com.careerpath.domain.port.ProfilePersistencePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 
 class AiJobMatchingServiceTest {
 
-    private final ProfileRepositoryPort profileRepository = mock(ProfileRepositoryPort.class);
+    private final ProfilePersistencePort profileRepository = mock(ProfilePersistencePort.class);
     private final JobListingRepositoryPort jobListingRepository = mock(JobListingRepositoryPort.class);
     private final JobScoringService scoringService = mock(JobScoringService.class);
     private final AiJobMatcherPort aiJobMatcherPort = mock(AiJobMatcherPort.class);
