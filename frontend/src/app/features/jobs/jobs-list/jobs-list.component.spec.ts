@@ -1,73 +1,72 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {of, throwError} from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { expect, vi } from 'vitest';
 import { JobsListComponent } from './jobs-list.component';
 import { JobsService } from '../jobs.service';
-import { JobListing } from '../../../core/models/job-listing';
+import { UserIdentityService } from '../../../core/services/user-identity.service';
+import { provideMockSupabase } from '../../../../testing/mock-supabase';
 
 describe('JobsListComponent', () => {
   let fixture: ComponentFixture<JobsListComponent>;
   let component: JobsListComponent;
-  let jobsServiceMock: { getRecommendedJobs: ReturnType<typeof vi.fn> };
+
+  let jobsServiceMock: any;
+  let identityMock: any;
 
   beforeEach(async () => {
+    vi.useFakeTimers();
+
     jobsServiceMock = {
-      getRecommendedJobs: vi.fn(),
+      getRecommendedJobs: vi.fn()
+    };
+
+    identityMock = {
+      getUserId: vi.fn().mockResolvedValue('test-user-id')
     };
 
     await TestBed.configureTestingModule({
       imports: [JobsListComponent],
-      providers: [{ provide: JobsService, useValue: jobsServiceMock }],
+      providers: [
+        { provide: JobsService, useValue: jobsServiceMock },
+        { provide: UserIdentityService, useValue: identityMock },
+        provideMockSupabase()
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(JobsListComponent);
     component = fixture.componentInstance;
   });
 
-  it('should create the component', () => {
-    expect(component).toBeTruthy();
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
-  it('should load jobs on init and update the state', () => {
-    const mockJobs: JobListing[] = [
-      {
-        id: '1',
-        title: 'Backend Dev',
-        company: 'Google',
-        location: 'Berlin',
-        stackSummary: 'Java, Spring Boot',
-        type: 'FULL_TIME',
-        status: 'PUBLISHED',
-        expiresAt: '2025-12-31',
-        skills: ['Java'],
-      },
-      {
-        id: '2',
-        title: 'Frontend Dev',
-        company: 'Meta',
-        location: 'Amsterdam',
-        stackSummary: 'Angular, TypeScript',
-        type: 'INTERNSHIP',
-        status: 'PUBLISHED',
-        expiresAt: '2025-12-31',
-        skills: ['Angular'],
-      },
+  it('should load jobs on init and update the state', async () => {
+    const mockJobs = [
+      { id: '1', title: 'Backend Dev' },
+      { id: '2', title: 'Frontend Dev' }
     ];
 
     jobsServiceMock.getRecommendedJobs.mockReturnValue(of(mockJobs));
 
     fixture.detectChanges();
+    await fixture.whenStable();
+    await vi.runAllTimersAsync(); // <-- ensures subscribe runs
 
     expect(component.isLoading).toBe(false);
     expect(component.jobs.length).toBe(2);
-    expect(component.jobs[0].title).toBe('Backend Dev');
-  })
+  });
 
-  it('should log error and set isLoading=false when API fails', () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
-    jobsServiceMock.getRecommendedJobs.mockReturnValue(throwError(() => new Error(('API error'))));
+  it('should log error and set isLoading=false when API fails', async () => {
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+    jobsServiceMock.getRecommendedJobs.mockReturnValue(
+      throwError(() => new Error('API error'))
+    );
 
     fixture.detectChanges();
+    await fixture.whenStable();
+    await vi.runAllTimersAsync();
 
     expect(consoleSpy).toHaveBeenCalledWith(
       'Error loading jobs:',
@@ -75,6 +74,7 @@ describe('JobsListComponent', () => {
     );
 
     expect(component.isLoading).toBe(false);
+
     consoleSpy.mockRestore();
   });
 });

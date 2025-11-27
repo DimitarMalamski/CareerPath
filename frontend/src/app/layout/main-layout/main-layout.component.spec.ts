@@ -3,6 +3,7 @@ import { MainLayoutComponent } from './main-layout.component';
 import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import {provideMockSupabase} from '../../../testing/mock-supabase';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -16,6 +17,7 @@ describe('MainLayoutComponent', () => {
         FooterComponent,
         RouterTestingModule,
       ],
+      providers: [provideMockSupabase()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainLayoutComponent);

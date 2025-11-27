@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NavbarComponent } from './navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import {provideMockSupabase} from '../../../../testing/mock-supabase';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -10,6 +11,7 @@ describe('NavbarComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NavbarComponent, RouterTestingModule],
+      providers: [provideMockSupabase()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavbarComponent);
@@ -43,8 +45,8 @@ describe('NavbarComponent', () => {
     const loginLink = links.find(link => link.nativeElement.textContent.includes('Login'));
     const signUpLink = links.find(link => link.nativeElement.textContent.includes('Sign Up'));
 
-    expect(loginLink?.attributes['routerLink']).toBe('/login');
-    expect(signUpLink?.attributes['routerLink']).toBe('/register');
+    expect(loginLink?.attributes['routerLink']).toBe('/auth/login');
+    expect(signUpLink?.attributes['routerLink']).toBe('/auth/register');
   });
 
   it('should toggle mobile menu visibility in the DOM', () => {

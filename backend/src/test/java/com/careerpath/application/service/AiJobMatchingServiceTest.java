@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,7 +27,7 @@ class AiJobMatchingServiceTest {
 
     private AiJobMatchingService service;
 
-    private UUID userId;
+    private String userId;
     private Profile profile;
     private JobListing job;
     private JobMatchResult baseline;
@@ -42,10 +43,10 @@ class AiJobMatchingServiceTest {
                 jobRecommendationMapper
         );
 
-        userId = UUID.randomUUID();
+        userId = "test-user-id-123";
 
         profile = Profile.builder()
-                .id(userId)
+                .userId(userId)
                 .skills(List.of(
                         ProfileSkill.builder()
                                 .id(1L)
@@ -83,7 +84,7 @@ class AiJobMatchingServiceTest {
 
     @Test
     void getRecommendations_shouldReturnEnhancedAndSortedResults() {
-        when(profileRepository.getProfileByUserId(userId)).thenReturn(profile);
+        when(profileRepository.findByUserId(userId)).thenReturn(Optional.of(profile));
         when(jobListingRepository.findAll()).thenReturn(List.of(job));
         when(scoringService.score(profile, List.of(job))).thenReturn(List.of(baseline));
         when(aiJobMatcherPort.enhanceMatches(profile, List.of(baseline))).thenReturn(List.of(enhanced));
@@ -114,7 +115,7 @@ class AiJobMatchingServiceTest {
 
     @Test
     void getRecommendations_shouldCacheResults() {
-        when(profileRepository.getProfileByUserId(userId)).thenReturn(profile);
+        when(profileRepository.findByUserId(userId)).thenReturn(Optional.of(profile));
         when(jobListingRepository.findAll()).thenReturn(List.of(job));
         when(scoringService.score(profile, List.of(job))).thenReturn(List.of(baseline));
         when(aiJobMatcherPort.enhanceMatches(profile, List.of(baseline))).thenReturn(List.of(enhanced));
@@ -126,7 +127,7 @@ class AiJobMatchingServiceTest {
         service.getRecommendations(userId);
         service.getRecommendations(userId);
 
-        verify(profileRepository, times(1)).getProfileByUserId(userId);
+        verify(profileRepository, times(1)).findByUserId(userId);
         verify(jobListingRepository, times(1)).findAll();
         verify(scoringService, times(1)).score(any(), any());
         verify(aiJobMatcherPort, times(1)).enhanceMatches(any(), any());
@@ -134,7 +135,7 @@ class AiJobMatchingServiceTest {
 
     @Test
     void getRecommendations_shouldReturnEmptyList_whenNoJobs() {
-        when(profileRepository.getProfileByUserId(userId)).thenReturn(profile);
+        when(profileRepository.findByUserId(userId)).thenReturn(Optional.of(profile));
         when(jobListingRepository.findAll()).thenReturn(List.of());
 
         List<JobRecommendationDto> result = service.getRecommendations(userId);

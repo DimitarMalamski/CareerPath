@@ -95,7 +95,7 @@ class JobControllerTest {
         JobListingApplicationService mockListingService = mock(JobListingApplicationService.class);
         AiJobMatchingService mockAiService = mock(AiJobMatchingService.class);
 
-        UUID userId = UUID.randomUUID();
+        String userId = "test-user-id-123";
 
         JobRecommendationDto recommendation = new JobRecommendationDto(
                 UUID.randomUUID().toString(),
