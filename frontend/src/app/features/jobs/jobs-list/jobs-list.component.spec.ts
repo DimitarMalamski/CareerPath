@@ -10,8 +10,8 @@ describe('JobsListComponent', () => {
   let fixture: ComponentFixture<JobsListComponent>;
   let component: JobsListComponent;
 
-  let jobsServiceMock: any;
-  let identityMock: any;
+  let jobsServiceMock: { getRecommendedJobs: ReturnType<typeof vi.fn> };
+  let identityMock: { getUserId: ReturnType<typeof vi.fn> };
 
   beforeEach(async () => {
     vi.useFakeTimers();
@@ -58,7 +58,7 @@ describe('JobsListComponent', () => {
   });
 
   it('should log error and set isLoading=false when API fails', async () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => undefined);
 
     jobsServiceMock.getRecommendedJobs.mockReturnValue(
       throwError(() => new Error('API error'))
