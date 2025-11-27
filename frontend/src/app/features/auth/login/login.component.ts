@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SupabaseService } from '../../../core/services/supabase.service';
 import {Router, RouterModule} from '@angular/router';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +11,12 @@ import {environment} from '../../../../environments/environment';
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  email = '';
+  password= '';
   errorMessage: string | null = null;
 
-  constructor(
-    private readonly supabase: SupabaseService,
-    private readonly router: Router
-  ) {}
+  private readonly supabase = inject(SupabaseService);
+  private readonly router = inject(Router);
 
   async login() {
     this.errorMessage = null;

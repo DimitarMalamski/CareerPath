@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Router, RouterModule} from '@angular/router';
 import {SupabaseService} from '../../../core/services/supabase.service';
+import { Session } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-navbar',
@@ -12,12 +13,10 @@ import {SupabaseService} from '../../../core/services/supabase.service';
 
 export class NavbarComponent implements OnInit {
   menuOpen = false;
-  session: any = null;
+  session: Session | null = null;
 
-  constructor(
-    private readonly supabase: SupabaseService,
-    private readonly router: Router
-  ) {}
+  private readonly supabase = inject(SupabaseService);
+  private readonly router = inject(Router);
 
   async ngOnInit() {
     this.session = await this.supabase.getSession();

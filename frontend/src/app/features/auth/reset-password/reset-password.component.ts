@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,10 +15,8 @@ export class ResetPasswordComponent {
   confirmPassword = '';
   error: string | null = null;
 
-  constructor(
-    private readonly supabase: SupabaseService,
-    private readonly router: Router
-  ) {}
+  private readonly supabase = inject(SupabaseService);
+  private readonly router = inject(Router);
 
   async updatePassword() {
     this.error = null;

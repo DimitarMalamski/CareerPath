@@ -9,8 +9,9 @@
 
     <form (ngSubmit)="login()" #loginForm="ngForm" class="space-y-4">
       <div>
-        <label class="block text-gray-300 text-sm mb-1">Email</label>
+        <label for="email" class="block text-gray-300 text-sm mb-1">Email</label>
         <input
+          id="email"
           [(ngModel)]="email"
           name="email"
           required
@@ -20,8 +21,9 @@
         />
       </div>
       <div>
-        <label class="block text-gray-300 text-sm mb-1">Password</label>
+        <label for="password" class="block text-gray-300 text-sm mb-1">Password</label>
         <input
+          id="password"
           [(ngModel)]="password"
           name="password"
           required
@@ -55,7 +57,7 @@
       class="w-full border border-gray-700 hover:border-orange-500 text-gray-300
              font-medium py-3 rounded-xl flex items-center justify-center gap-2 transition"
     >
-      <img src="assets/google.png" class="w-5 h-5" />
+      <img src="assets/google.png" alt="Google image" class="w-5 h-5" />
       Continue with Google
     </button>
 

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {Router, RouterModule} from '@angular/router';
@@ -16,10 +16,8 @@ export class RegisterComponent {
   confirmPassword = '';
   errorMessage: string | null = null;
 
-  constructor(
-    private readonly supabase: SupabaseService,
-    private readonly router: Router
-  ) {}
+  private readonly supabase = inject(SupabaseService);
+  private readonly router = inject(Router);
 
   async register() {
     this.errorMessage = null;
@@ -29,7 +27,7 @@ export class RegisterComponent {
       return;
     }
 
-    const { data, error } = await this.supabase.getClient().auth.signUp({
+    const { error } = await this.supabase.getClient().auth.signUp({
       email: this.email,
       password: this.password,
     });

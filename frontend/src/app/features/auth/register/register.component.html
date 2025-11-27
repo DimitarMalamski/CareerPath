@@ -9,8 +9,9 @@
 
     <form (ngSubmit)="register()" #registerForm="ngForm" class="space-y-4">
       <div>
-        <label class="block text-gray-300 text-sm mb-1">Email</label>
+        <label for="email" class="block text-gray-300 text-sm mb-1">Email</label>
         <input
+          id="email"
           [(ngModel)]="email"
           name="email"
           required
@@ -21,8 +22,9 @@
       </div>
 
       <div>
-        <label class="block text-gray-300 text-sm mb-1">Password</label>
+        <label for="password" class="block text-gray-300 text-sm mb-1">Password</label>
         <input
+          id="password"
           [(ngModel)]="password"
           name="password"
           required
@@ -34,8 +36,9 @@
       </div>
 
       <div>
-        <label class="block text-gray-300 text-sm mb-1">Confirm Password</label>
+        <label for="confirmPassword" class="block text-gray-300 text-sm mb-1">Confirm Password</label>
         <input
+          id="confirmPassword"
           [(ngModel)]="confirmPassword"
           name="confirmPassword"
           required
