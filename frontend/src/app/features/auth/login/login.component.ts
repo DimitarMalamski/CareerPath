@@ -37,7 +37,7 @@ export class LoginComponent {
       return;
     }
 
-    await fetch(`${environment.apiUrl}/auth/sync`, {
+    const syncResponse = await fetch(`${environment.apiUrl}/auth/sync`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -46,6 +46,10 @@ export class LoginComponent {
         emailVerified: !!user.email_confirmed_at
       })
     });
+
+    const syncData = await syncResponse.json();
+
+    localStorage.setItem("jwt_token", syncData.token);
 
     await this.router.navigate(['/home']);
   }

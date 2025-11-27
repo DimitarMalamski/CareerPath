@@ -31,7 +31,7 @@ public class JobController {
     }
 
     @GetMapping("/recommendations/{userId}")
-    public List<JobRecommendationDto> recommendJobsListings(@PathVariable UUID userId) {
+    public List<JobRecommendationDto> recommendJobsListings(@PathVariable String userId) {
         return aiJobMatchingService.getRecommendations(userId);
     }
 }

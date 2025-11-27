@@ -85,11 +85,13 @@ WHERE NOT EXISTS (
     SELECT 1 FROM job_listings WHERE title = 'DevOps Engineer' AND company = 'AWS'
     );
 
--- SAMPLE JSONB PROFILE ---------------------------------------
+
+-- SAMPLE JSONB PROFILE (UPDATED FOR VARCHAR user_id)
+--------------------------------------------------------
 
 INSERT INTO profiles (user_id, data, ai_opt_in)
 SELECT
-    (SELECT id FROM users WHERE email = 'anna@example.com'),
+    (SELECT id::text FROM users WHERE email = 'anna@example.com'),
     '{
       "fullName": "Anna Petrescu",
       "headline": "Aspiring Java Developer",
@@ -113,10 +115,12 @@ SELECT
     }'::jsonb,
     true
     WHERE NOT EXISTS (
-    SELECT 1 FROM profiles WHERE user_id = (SELECT id FROM users WHERE email = 'anna@example.com')
+    SELECT 1 FROM profiles WHERE user_id = (SELECT id::text FROM users WHERE email = 'anna@example.com')
 );
 
--- JOB SKILLS: Java Backend Developer (Google)
+
+-- JOB SKILLS -----------------------------------------------
+
 INSERT INTO job_skills (job_id, skill_id)
 SELECT jl.id, s.id
 FROM job_listings jl, skills s
@@ -128,7 +132,6 @@ WHERE jl.title = 'Java Backend Developer'
     WHERE js.job_id = jl.id AND js.skill_id = s.id
 );
 
--- JOB SKILLS: React Frontend Developer (Meta)
 INSERT INTO job_skills (job_id, skill_id)
 SELECT jl.id, s.id
 FROM job_listings jl, skills s
@@ -140,7 +143,6 @@ WHERE jl.title = 'React Frontend Developer'
     WHERE js.job_id = jl.id AND js.skill_id = s.id
 );
 
--- JOB SKILLS: DevOps Engineer (AWS)
 INSERT INTO job_skills (job_id, skill_id)
 SELECT jl.id, s.id
 FROM job_listings jl, skills s

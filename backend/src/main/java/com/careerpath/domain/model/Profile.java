@@ -13,6 +13,8 @@ import java.util.UUID;
 public class Profile {
     private UUID id;
 
+    private String userId;
+
     private String fullName;
     private String headline;
     private String about;

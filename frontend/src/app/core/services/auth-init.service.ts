@@ -17,8 +17,7 @@ export class AuthInitService {
 
     const user = session.user;
 
-    // === Sync with backend after Google redirect ===
-    await fetch(`${environment.apiUrl}/auth/sync`, {
+    const response = await fetch(`${environment.apiUrl}/auth/sync`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -27,5 +26,12 @@ export class AuthInitService {
         emailVerified: !!user.email_confirmed_at,
       })
     });
+
+    const result = await response.json();
+
+    if (result.token) {
+      localStorage.setItem('jwt_token', result.token);
+      console.log("Backend JWT stored:", result.token);
+    }
   }
 }

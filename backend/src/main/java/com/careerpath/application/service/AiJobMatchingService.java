@@ -25,12 +25,13 @@ public class AiJobMatchingService {
     private final JobRecommendationMapper jobRecommendationMapper;
 
     // Caching
-    private final Map<UUID, List<JobRecommendationDto>> cache = new ConcurrentHashMap<>();
+    private final Map<String, List<JobRecommendationDto>> cache = new ConcurrentHashMap<>();
 
-    public List<JobRecommendationDto> getRecommendations(UUID userId) {
+    public List<JobRecommendationDto> getRecommendations(String userId) {
         if (cache.containsKey(userId)) return cache.get(userId);
 
-        Profile profile = profileRepository.getProfileByUserId(userId);
+        Profile profile = profileRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("Profile missing for userId: " + userId));
 
         List<JobListing> listings = jobListingRepository.findAll();
 

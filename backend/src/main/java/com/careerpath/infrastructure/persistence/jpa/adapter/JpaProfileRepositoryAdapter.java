@@ -8,6 +8,7 @@ import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataProfil
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -16,10 +17,15 @@ public class JpaProfileRepositoryAdapter implements ProfileRepositoryPort {
     private final SpringDataProfileRepository profileRepository;
 
     @Override
-    public Profile getProfileByUserId(UUID userId) {
-        ProfileEntity profile = profileRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Profile not found for userId: " + userId));
+    public Optional<Profile> findByUserId(String userId) {
+        return profileRepository.findByUserId(userId)
+                .map(ProfileEntityMapper::toDomain);
+    }
 
-        return ProfileEntityMapper.toDomain(profile);
+    @Override
+    public Profile save(Profile profile) {
+        ProfileEntity entity = ProfileEntityMapper.toEntity(profile);
+        ProfileEntity saved = profileRepository.save(entity);
+        return ProfileEntityMapper.toDomain(saved);
     }
 }

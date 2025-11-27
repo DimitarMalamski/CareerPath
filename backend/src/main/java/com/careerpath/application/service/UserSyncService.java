@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +16,7 @@ public class UserSyncService implements UserSyncPort {
     private final UserRepositoryPort userRepositoryPort;
 
     @Override
-    public void syncUserFromExternal(String externalId, String email, boolean emailVerified) {
+    public User syncUserFromExternal(String externalId, String email, boolean emailVerified) {
         User existing = userRepositoryPort.findByEmail(email);
 
         if (existing != null) {
@@ -33,7 +32,7 @@ public class UserSyncService implements UserSyncPort {
                 userRepositoryPort.save(existing);
             }
 
-            return;
+            return existing;
         }
 
         User newUser = User.builder()
@@ -45,6 +44,6 @@ public class UserSyncService implements UserSyncPort {
                 .updatedAt(OffsetDateTime.now())
                 .build();
 
-        userRepositoryPort.save(newUser);
+        return userRepositoryPort.save(newUser);
     }
 }

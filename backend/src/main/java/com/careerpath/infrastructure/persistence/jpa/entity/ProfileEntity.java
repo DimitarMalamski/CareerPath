@@ -18,7 +18,7 @@ public class ProfileEntity {
 
     @Id
     @Column(name = "user_id")
-    private UUID userId;
+    private String userId;
 
     @Type(JsonType.class)
     @Column(columnDefinition = "jsonb", name = "data")

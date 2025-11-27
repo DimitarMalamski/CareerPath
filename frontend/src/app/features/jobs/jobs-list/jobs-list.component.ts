@@ -4,6 +4,7 @@ import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {JobRecommendation} from '../../../core/models/job-recommendation';
 import {JobCardComponent} from '../job-card/job-card.component';
+import {UserSessionService} from '../../../core/services/user-session.service';
 
 @Component({
   selector: 'app-jobs-list',
@@ -19,10 +20,18 @@ export class JobsListComponent implements OnInit {
   private readonly jobsService = inject(JobsService);
 
   // Temporary user
-  private readonly userId = '2c0a4e2b-f76a-431d-a744-722ca9c5605a';
+  private readonly userSession = inject(UserSessionService);
 
   ngOnInit(): void {
-    this.jobsService.getRecommendedJobs(this.userId).subscribe({
+    const userId = this.userSession.getUserId();
+
+    if (!userId) {
+      console.error("No JWT user ID found!");
+      this.isLoading = false;
+      return;
+    }
+
+    this.jobsService.getRecommendedJobs(userId).subscribe({
       next: (data) => {
         this.jobs = data;
         this.isLoading = false;

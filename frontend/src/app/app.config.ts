@@ -6,7 +6,8 @@ import {
 }
   from '@angular/core';
 import { provideRouter } from '@angular/router';
-import {provideHttpClient, withFetch} from '@angular/common/http';
+import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
+import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { SUPABASE_CLIENT } from './core/supabase-client.token';
 import { routes } from './app.routes';
 import {createClient} from '@supabase/supabase-js';
@@ -18,7 +19,9 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withFetch()),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([jwtInterceptor])),
     {
       provide: SUPABASE_CLIENT,
       useFactory: () =>
