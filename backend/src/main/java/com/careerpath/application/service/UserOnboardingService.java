@@ -16,20 +16,21 @@ public class UserOnboardingService implements UserOnboardingPort {
 
     @Override
     public void ensureUserProfile(String userId) {
-        profileRepositoryPort.findByUserId(userId)
-                .orElseGet(() -> {
-                    Profile defaultProfile = Profile.builder()
-                            .userId(userId)
-                            .fullName("")
-                            .headline("")
-                            .about("")
-                            .location("")
-                            .skills(List.of())
-                            .experiences(List.of())
-                            .aiOptIn(true)
-                            .build();
+        if (profileRepositoryPort.existsByUserId(userId)) {
+            return;
+        }
 
-                    return profileRepositoryPort.save(defaultProfile);
-                });
+        Profile defaultProfile = Profile.builder()
+                .userId(userId)
+                .fullName("")
+                .headline("")
+                .about("")
+                .location("")
+                .skills(List.of())
+                .experiences(List.of())
+                .aiOptIn(true)
+                .build();
+
+        profileRepositoryPort.save(defaultProfile);
     }
 }

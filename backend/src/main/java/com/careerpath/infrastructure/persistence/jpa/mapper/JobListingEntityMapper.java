@@ -8,6 +8,11 @@ import com.careerpath.infrastructure.persistence.jpa.entity.JobSkillEntity;
 import java.util.List;
 
 public class JobListingEntityMapper {
+
+    private JobListingEntityMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static JobListing toDomain(JobListingEntity entity) {
         List<Skill> skills =
                 entity.getJobSkills() == null ? List.of() :

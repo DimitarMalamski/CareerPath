@@ -6,6 +6,10 @@ import com.careerpath.infrastructure.persistence.jpa.entity.UserSkillIdEntity;
 
 public class UserSkillEntityMapper {
 
+    private UserSkillEntityMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static UserSkill toDomain(UserSkillEntity entity, String skillName) {
         return UserSkill.builder()
                 .userId(entity.getId().getUserId())

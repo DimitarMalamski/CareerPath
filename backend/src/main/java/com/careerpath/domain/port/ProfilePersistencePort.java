@@ -8,4 +8,6 @@ public interface ProfilePersistencePort {
     Optional<Profile> findByUserId(String userId);
 
     Profile save(Profile profile);
+
+    boolean existsByUserId(String userId);
 }

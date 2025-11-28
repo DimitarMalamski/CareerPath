@@ -6,6 +6,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,15 +27,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         String header = request.getHeader("Authorization");
-
-        System.out.println("=== JWT FILTER HIT ===");
-        System.out.println("Request URI: " + request.getRequestURI());
-        System.out.println("Authorization Header: " + header);
 
         if (header == null || !header.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
@@ -47,12 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             Claims claims = jwtTokenProvider.validate(token);
 
             String userId = claims.getSubject();
-            String email = (String) claims.get("email");
             String role =  (String) claims.get("role");
-
-            System.out.println("JWT VALIDATED OK");
-            System.out.println("UserId extracted: " + userId);
-            System.out.println("Role extracted: " + role);
 
             userOnboardingPort.ensureUserProfile(userId);
 
@@ -69,8 +61,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
-            System.out.println("JWT VALIDATION FAILED:");
-            e.printStackTrace();
             SecurityContextHolder.clearContext();
         }
 

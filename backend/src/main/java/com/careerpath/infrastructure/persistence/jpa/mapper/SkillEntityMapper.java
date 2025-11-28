@@ -4,6 +4,11 @@ import com.careerpath.domain.model.Skill;
 import com.careerpath.infrastructure.persistence.jpa.entity.SkillEntity;
 
 public class SkillEntityMapper {
+
+    private SkillEntityMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static Skill toDomain(SkillEntity entity) {
         return Skill.builder()
                 .id(entity.getId())

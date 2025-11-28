@@ -9,6 +9,10 @@ import java.util.List;
 
 public class ProfileEntityMapper {
 
+    private ProfileEntityMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static Profile toDomain(ProfileEntity entity) {
         ProfileDataEmbeddable data = entity.getData();
 

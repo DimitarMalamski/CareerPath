@@ -6,6 +6,11 @@ import com.careerpath.domain.model.*;
 import java.util.List;
 
 public class ProfileMapper {
+
+    private ProfileMapper() {
+        throw new UnsupportedOperationException("Utility class");
+    }
+
     public static ProfileDto toDto(Profile domain) {
         return new ProfileDto(
                 domain.getFullName(),
@@ -44,9 +49,6 @@ public class ProfileMapper {
         );
     }
 
-    // -------------------------------------
-    // DTO → DOMAIN
-    // -------------------------------------
     public static Profile toDomain(String userId, ProfileDto dto) {
         return Profile.builder()
                 .userId(userId)
