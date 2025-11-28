@@ -24,7 +24,7 @@ public class JobListingEntity {
     private UUID id;
 
     @Column(name = "recruiter_id", nullable = false)
-    private UUID recruiterId;
+    private String recruiterId;
 
     @Column(nullable = false)
     private String title;

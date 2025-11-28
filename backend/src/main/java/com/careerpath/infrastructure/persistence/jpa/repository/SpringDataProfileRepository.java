@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface SpringDataProfileRepository extends JpaRepository<ProfileEntity, String> {
     Optional<ProfileEntity> findByUserId(String userId);
+    boolean existsByUserId(String userId);
 }

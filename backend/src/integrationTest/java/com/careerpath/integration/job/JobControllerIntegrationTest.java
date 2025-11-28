@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @Transactional
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 public class JobControllerIntegrationTest extends BaseIntegrationTest {
 
@@ -34,27 +34,17 @@ public class JobControllerIntegrationTest extends BaseIntegrationTest {
     @Autowired
     private SpringDataJobListingRepository jobRepo;
 
-    @Autowired
-    private SpringDataUserRepository userRepo;
-
     @MockitoBean
     private AiJobMatcherPort aiJobMatcherPort;
 
     @BeforeEach
     void setupData() {
         jobRepo.deleteAll();
-        userRepo.deleteAll();
 
-        UserEntity recruiter = userRepo.save(
-                UserEntity.builder()
-                        .email("recruiter@example.com")
-                        .passwordHash("hashedPassword123")
-                        .role(UserRole.RECRUITER)
-                        .build()
-        );
+        String recruiterId = "rest-recruiter-id-123";
 
         JobListingEntity job = JobListingEntity.builder()
-                .recruiterId(recruiter.getId())
+                .recruiterId(recruiterId)
                 .title("Backend Developer")
                 .company("CareerPath Inc.")
                 .location("Eindhoven, NL")

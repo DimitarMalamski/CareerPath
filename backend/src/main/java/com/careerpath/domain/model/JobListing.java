@@ -17,7 +17,7 @@ import java.util.UUID;
 public class JobListing {
 
     private UUID id;
-    private UUID recruiterId;
+    private String recruiterId;
 
     private String title;
     private String company;

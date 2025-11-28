@@ -27,4 +27,9 @@ public class JpaProfileRepositoryAdapter implements ProfilePersistencePort {
         ProfileEntity saved = profileRepository.save(entity);
         return ProfileEntityMapper.toDomain(saved);
     }
+
+    @Override
+    public boolean existsByUserId(String userId) {
+        return profileRepository.existsByUserId(userId);
+    }
 }
