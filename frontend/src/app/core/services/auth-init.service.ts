@@ -13,6 +13,6 @@ export class AuthInitService {
     const session = await this.supabase.getSession();
     if (!session) return;
 
-    localStorage.setItem("authToken", session.access_token);
+    localStorage.setItem("jwt_token", session.access_token);
   }
 }
