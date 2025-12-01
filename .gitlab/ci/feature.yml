@@ -9,6 +9,7 @@ stages:
   - analyze
   - integration
 
+
 # ---------- LINT ----------
 frontend-lint:
   stage: lint
