@@ -6,6 +6,6 @@ export interface ProfileExperience {
   location: string;
   startDate: string | null;
   endDate: string | null;
-  current: boolean;
+  isCurrent: boolean;
   description: string;
 }

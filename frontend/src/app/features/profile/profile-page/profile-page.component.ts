@@ -52,8 +52,6 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
-  // ---- Form Group Builders ----
-
   createSkillGroup(skill: ProfileSkill) {
     return this.fb.group({
       id: [skill.id],
@@ -71,12 +69,10 @@ export class ProfilePageComponent implements OnInit {
       location: [exp.location],
       startDate: [exp.startDate],
       endDate: [exp.endDate],
-      current: [exp.current],
+      isCurrent: [exp.isCurrent],
       description: [exp.description]
     });
   }
-
-  // ---- Getters ----
 
   get skills() {
     return this.form.get('skills') as FormArray;
@@ -85,8 +81,6 @@ export class ProfilePageComponent implements OnInit {
   get experiences() {
     return this.form.get('experiences') as FormArray;
   }
-
-  // ---- Skill Editing ----
 
   addSkill() {
     this.skills.push(this.createSkillGroup({
@@ -100,8 +94,6 @@ export class ProfilePageComponent implements OnInit {
     this.skills.removeAt(index);
   }
 
-  // ---- Experience Editing ----
-
   addExperience() {
     this.experiences.push(this.createExperienceGroup({
       id: null,
@@ -111,7 +103,7 @@ export class ProfilePageComponent implements OnInit {
       location: '',
       startDate: '',
       endDate: '',
-      current: false,
+      isCurrent: false,
       description: ''
     }));
   }
@@ -119,8 +111,6 @@ export class ProfilePageComponent implements OnInit {
   removeExperience(index: number) {
     this.experiences.removeAt(index);
   }
-
-  // ---- Save ----
 
   save() {
     const dto: ProfileDto = this.form.value;

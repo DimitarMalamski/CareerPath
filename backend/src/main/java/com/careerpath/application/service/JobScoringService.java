@@ -23,59 +23,10 @@ public class JobScoringService {
         List<String> matchedSkills = new ArrayList<>();
         List<String> missingSkills = new ArrayList<>();
 
-        for (ProfileSkill profileSkill : profile.getSkills()) {
-            for (Skill jobSkill : job.getSkills()) {
-
-                if (profileSkill.getName().equalsIgnoreCase(jobSkill.getName())) {
-                    score += 20;
-                    explanation.append("Matched skill: ")
-                            .append(profileSkill.getName()).append(". ");
-                    matchedSkills.add(jobSkill.getName());
-                }
-            }
-
-            if (job.getStackSummary() != null &&
-                    job.getStackSummary().toLowerCase().contains(profileSkill.getName().toLowerCase())) {
-                score += 10;
-                explanation.append("Stack summary contains ")
-                        .append(profileSkill.getName()).append(". ");
-            }
-        }
-
-        for (ProfileExperience exp : profile.getExperiences()) {
-
-            if (job.getTitle() != null &&
-                    exp.getTitle() != null &&
-                    job.getTitle().toLowerCase().contains(exp.getTitle().toLowerCase())) {
-
-                score += 10;
-                explanation.append("Experience title matches job title. ");
-            }
-
-            if (exp.getDescription() != null) {
-                for (Skill jobSkill : job.getSkills()) {
-                    if (exp.getDescription().toLowerCase().contains(jobSkill.getName().toLowerCase())) {
-                        score += 10;
-                        explanation.append("Experience includes ")
-                                .append(jobSkill.getName()).append(". ");
-                    }
-                }
-            }
-        }
-
-        for (Skill jobSkill : job.getSkills()) {
-            if (!matchedSkills.contains(jobSkill.getName())) {
-                missingSkills.add(jobSkill.getName());
-            }
-        }
-
-        if (profile.getLocation() != null &&
-                job.getLocation() != null &&
-                job.getLocation().toLowerCase().contains(profile.getLocation().toLowerCase())) {
-
-            score += 5;
-            explanation.append("Location matches. ");
-        }
+        score += scoreSkillMatches(profile, job, explanation, matchedSkills);
+        score += scoreExperienceMatches(profile, job, explanation);
+        fillMissingSkills(job, matchedSkills, missingSkills);
+        score += scoreLocation(profile, job, explanation);
 
         double normalized = Math.min(score / 100.0, 1.0);
 
@@ -91,4 +42,72 @@ public class JobScoringService {
                 .missingSkills(missingSkills)
                 .build();
     }
+
+    private int scoreSkillMatches(Profile profile, JobListing job,
+                                  StringBuilder explanation, List<String> matchedSkills) {
+
+        int score = 0;
+
+        for (ProfileSkill profileSkill : profile.getSkills()) {
+
+            for (Skill jobSkill : job.getSkills()) {
+                if (profileSkill.getName().equalsIgnoreCase(jobSkill.getName())) {
+                    score += 20;
+                    explanation.append("Matched skill: ").append(profileSkill.getName()).append(". ");
+                    matchedSkills.add(jobSkill.getName());
+                }
+            }
+
+            if (containsIgnoreCase(job.getStackSummary(), profileSkill.getName())) {
+                score += 10;
+                explanation.append("Stack summary contains ")
+                        .append(profileSkill.getName()).append(". ");
+            }
+        }
+        return score;
+    }
+
+    private int scoreExperienceMatches(Profile profile, JobListing job,
+                                       StringBuilder explanation) {
+
+        int score = 0;
+
+        for (ProfileExperience exp : profile.getExperiences()) {
+            if (containsIgnoreCase(job.getTitle(), exp.getTitle())) {
+                score += 10;
+                explanation.append("Experience title matches job title. ");
+            }
+            if (exp.getDescription() != null) {
+                for (Skill jobSkill : job.getSkills()) {
+                    if (containsIgnoreCase(exp.getDescription(), jobSkill.getName())) {
+                        score += 10;
+                        explanation.append("Experience includes ")
+                                .append(jobSkill.getName()).append(". ");
+                    }
+                }
+            }
+        }
+        return score;
+    }
+
+    private void fillMissingSkills(JobListing job, List<String> matchedSkills, List<String> missingSkills) {
+        for (Skill jobSkill : job.getSkills()) {
+            if (!matchedSkills.contains(jobSkill.getName())) {
+                missingSkills.add(jobSkill.getName());
+            }
+        }
+    }
+
+    private int scoreLocation(Profile profile, JobListing job, StringBuilder explanation) {
+        if (containsIgnoreCase(job.getLocation(), profile.getLocation())) {
+            explanation.append("Location matches. ");
+            return 5;
+        }
+        return 0;
+    }
+
+    private boolean containsIgnoreCase(String text, String value) {
+        return text != null && value != null && text.toLowerCase().contains(value.toLowerCase());
+    }
 }
+

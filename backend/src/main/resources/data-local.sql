@@ -14,11 +14,14 @@ INSERT INTO skills (name) VALUES
     ON CONFLICT DO NOTHING;
 
 
--- JOB LISTINGS -----------------------------------------------
+-- JOB LISTINGS ------------------------------------------------
 
-INSERT INTO job_listings (id, recruiter_id, title, company, location, type, status, stack_summary, description, created_at)
+INSERT INTO job_listings (
+    id, recruiter_id, title, company, location, type, status,
+    stack_summary, description, created_at
+)
 VALUES (
-           gen_random_uuid(),
+           '00000000-0000-0000-0000-000000000001',
            '11111111-2222-3333-4444-555555555555',
            'Java Backend Developer',
            'Google',
@@ -31,9 +34,13 @@ VALUES (
        )
     ON CONFLICT DO NOTHING;
 
-INSERT INTO job_listings (id, recruiter_id, title, company, location, type, status, stack_summary, description, created_at)
+
+INSERT INTO job_listings (
+    id, recruiter_id, title, company, location, type, status,
+    stack_summary, description, created_at
+)
 VALUES (
-           gen_random_uuid(),
+           '00000000-0000-0000-0000-000000000002',
            '11111111-2222-3333-4444-555555555555',
            'React Frontend Developer',
            'Meta',
@@ -46,9 +53,13 @@ VALUES (
        )
     ON CONFLICT DO NOTHING;
 
-INSERT INTO job_listings (id, recruiter_id, title, company, location, type, status, stack_summary, description, created_at)
+
+INSERT INTO job_listings (
+    id, recruiter_id, title, company, location, type, status,
+    stack_summary, description, created_at
+)
 VALUES (
-           gen_random_uuid(),
+           '00000000-0000-0000-0000-000000000003',
            '11111111-2222-3333-4444-555555555555',
            'DevOps Engineer',
            'AWS',
