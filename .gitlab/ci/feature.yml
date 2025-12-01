@@ -217,7 +217,7 @@ backend-sonarqube:
   before_script:
     - cd backend
   script:
-    - ./gradlew sonarqube -Dsonar.projectKey=careerpath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes/java/main -Dsonar.junit.reportPaths=build/test-results/test -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
+    - ./gradlew sonarqube -Dsonar.projectKey=careerPath-backend -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_BACKEND -Dsonar.java.binaries=build/classes/java/main -Dsonar.junit.reportPaths=build/test-results/test -Dsonar.coverage.jacoco.xmlReportPaths=build/reports/jacoco/test/jacocoTestReport.xml
   artifacts:
     when: always
     paths:
@@ -242,7 +242,7 @@ frontend-sonarqube:
   before_script:
     - cd frontend
   script:
-    - sonar-scanner -Dsonar.typescript.tsconfigPath=tsconfig.sonar.json -Dsonar.projectKey=careerpath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.junit.reportPaths=test-results.xml
+    - sonar-scanner -Dsonar.typescript.tsconfigPath=tsconfig.sonar.json -Dsonar.projectKey=careerPath-frontend -Dsonar.sources=src -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.token=$SONAR_TOKEN_FRONTEND -Dsonar.exclusions=**/node_modules/**,**/*.spec.ts -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.junit.reportPaths=test-results.xml
   artifacts:
     when: always
     paths:
