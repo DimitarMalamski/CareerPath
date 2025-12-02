@@ -13,9 +13,9 @@ import { ProfileSkill } from '../../../core/models/profile-skill';
 import {BasicInfoComponent} from '../sections/basic-info/basic-info.component';
 import {SkillsSectionComponent} from '../sections/skills/skills-section.component';
 import {ExperienceSectionComponent} from '../sections/experience/experience-section.component';
-import { ProfileFormModel } from '../../../core/models/forms/profile-form.model';
-import { SkillFormModel } from '../../../core/models/forms/skill-form.model';
-import { ExperienceFormModel } from '../../../core/models/forms/experience-form.model';
+import { ProfileFormModel } from '../../../core/models/forms/profile/profile-form.model';
+import { SkillFormModel } from '../../../core/models/forms/profile/skill-form.model';
+import { ExperienceFormModel } from '../../../core/models/forms/profile/experience-form.model';
 import * as AOS from 'aos';
 
 @Component({

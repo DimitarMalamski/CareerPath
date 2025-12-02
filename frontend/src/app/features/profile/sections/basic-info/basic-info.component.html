@@ -1,65 +1,57 @@
-<div [formGroup]="form" class="min-h-screen p-6 bg-black text-white">
+<div [formGroup]="form" class="space-y-10 text-white">
 
-  <section class="bg-[#111111] border border-gray-700 shadow-md rounded-xl p-8 space-y-10">
+  <div class="border-b border-gray-700 pb-3">
+    <h2 class="text-xl font-bold flex items-center gap-3">
+      <span class="w-2 h-6 bg-orange-500 rounded"></span>
+      Basic Information
+    </h2>
+  </div>
 
-    <div class="border-b border-gray-700 pb-3">
-      <h2 class="text-xl font-bold flex items-center gap-3">
-        <span class="w-2 h-6 bg-orange-500 rounded"></span>
-        Basic Information
-      </h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-      <div class="space-y-2">
-        <label for="fullName" class="font-medium text-gray-300">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          formControlName="fullName"
-          placeholder="Enter your full name"
-          class="w-full px-4 py-2 rounded-lg bg-[#1A1A1A] text-white
-                 border border-gray-600 placeholder-gray-400
-                 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-      </div>
-
-      <div class="space-y-2">
-        <label for="headline" class="font-medium text-gray-300">Headline</label>
-        <input
-          id="headline"
-          type="text"
-          formControlName="headline"
-          placeholder="Ex: Java Developer, Frontend Engineer"
-          class="w-full px-4 py-2 rounded-lg bg-[#1A1A1A] text-white
-                 border border-gray-600 placeholder-gray-400
-                 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
-      </div>
-
-    </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
     <div class="space-y-2">
-      <label for="location" class="font-medium text-gray-300">Location</label>
+      <label for="fullName" class="font-medium text-gray-300">Full Name</label>
       <input
-        id="location"
+        id="fullName"
         type="text"
-        formControlName="location"
-        placeholder="Your city or country"
-        class="w-full px-4 py-2 rounded-lg bg-[#1A1A1A] text-white
-               border border-gray-600 placeholder-gray-400
-               focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500">
+        formControlName="fullName"
+        placeholder="Enter your full name"
+        class="input-field"
+      />
     </div>
 
     <div class="space-y-2">
-      <label for="about" class="font-medium text-gray-300">About</label>
-      <textarea
-        id="about"
-        formControlName="about"
-        placeholder="Tell us something about yourself..."
-        class="w-full px-4 py-2 rounded-lg bg-[#1A1A1A] text-white
-               border border-gray-600 placeholder-gray-400 h-40 resize-none
-               focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"></textarea>
+      <label for="headline" class="font-medium text-gray-300">Headline</label>
+      <input
+        id="headline"
+        type="text"
+        formControlName="headline"
+        placeholder="Ex: Java Developer, Frontend Engineer"
+        class="input-field"
+      />
     </div>
 
-  </section>
+  </div>
+
+  <div class="space-y-2">
+    <label for="location" class="font-medium text-gray-300">Location</label>
+    <input
+      id="location"
+      type="text"
+      formControlName="location"
+      placeholder="Your city or country"
+      class="input-field"
+    />
+  </div>
+
+  <div class="space-y-2">
+    <label for="about" class="font-medium text-gray-300">About</label>
+    <textarea
+      id="about"
+      formControlName="about"
+      placeholder="Tell us something about yourself..."
+      class="input-field h-40 resize-none"
+    ></textarea>
+  </div>
 
 </div>

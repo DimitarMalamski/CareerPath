@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {BasicInfoFormModel} from '../../../../core/models/forms/profile/basic-info-form.model';
 
 @Component({
   selector: 'app-basic-info-section',
@@ -9,5 +10,5 @@ import { CommonModule } from '@angular/common';
   templateUrl: './basic-info.component.html'
 })
 export class BasicInfoComponent {
-  @Input({ required: true }) form!: FormGroup;
+  @Input({ required: true }) form!: BasicInfoFormModel;
 }
