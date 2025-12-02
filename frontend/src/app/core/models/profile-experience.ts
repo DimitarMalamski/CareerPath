@@ -1,11 +1,11 @@
 export interface ProfileExperience {
   id: number | null;
-  company: string;
-  title: string;
-  employmentType: string;
-  location: string;
+  company: string | null;
+  title: string | null;
+  employmentType: string | null;
+  location: string | null;
   startDate: string | null;
   endDate: string | null;
-  isCurrent: boolean;
-  description: string;
+  isCurrent: boolean | null;
+  description: string | null;
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { FormArray, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {ExperienceFormModel} from '../../../../core/models/forms/profile/experience-form.model';
 
 @Component({
   selector: 'app-experience-section',
@@ -9,10 +10,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './experience-section.component.html'
 })
 export class ExperienceSectionComponent {
-  @Input({ required: true }) form!: FormGroup;
-  @Input({ required: true }) createExperienceFn!: () => FormGroup;
+  @Input({ required: true }) form!: FormArray<ExperienceFormModel>;
+  @Input({ required: true }) createExperienceFn!: () => ExperienceFormModel;
 
-  get experiences(): FormArray {
-    return this.form.get('experiences') as FormArray;
+  get experiences(): FormArray<ExperienceFormModel> {
+    return this.form;
   }
 }

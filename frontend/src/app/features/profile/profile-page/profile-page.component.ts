@@ -1,6 +1,7 @@
 import {Component, OnInit, inject, DestroyRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  FormArray,
   FormBuilder,
   ReactiveFormsModule
 } from '@angular/forms';
@@ -17,6 +18,7 @@ import { ProfileFormModel } from '../../../core/models/forms/profile/profile-for
 import { SkillFormModel } from '../../../core/models/forms/profile/skill-form.model';
 import { ExperienceFormModel } from '../../../core/models/forms/profile/experience-form.model';
 import * as AOS from 'aos';
+import {BasicInfoFormModel} from '../../../core/models/forms/profile/basic-info-form.model';
 
 @Component({
   selector: 'app-profile-page',
@@ -67,23 +69,24 @@ export class ProfilePageComponent implements OnInit {
 
   createExperienceGroup(exp: ProfileExperience): ExperienceFormModel {
     return this.fb.group({
-      id: this.fb.control(exp.id),
-      company: this.fb.control(exp.company),
-      title: this.fb.control(exp.title),
-      employmentType: this.fb.control(exp.employmentType),
-      location: this.fb.control(exp.location),
-      startDate: this.fb.control(exp.startDate),
-      endDate: this.fb.control(exp.endDate),
-      isCurrent: this.fb.control(exp.isCurrent),
-      description: this.fb.control(exp.description)
-    });
+      id: this.fb.control<number | null>(exp.id),
+      company: this.fb.control<string>(exp.company ?? ''),
+      title: this.fb.control<string>(exp.title ?? ''),
+      employmentType: this.fb.control<string>(exp.employmentType ?? ''),
+      location: this.fb.control<string>(exp.location ?? ''),
+      startDate: this.fb.control<string>(exp.startDate ?? ''),
+      endDate: this.fb.control<string | null>(exp.endDate ?? null),
+      isCurrent: this.fb.control<boolean>(exp.isCurrent ?? false),
+      description: this.fb.control<string>(exp.description ?? '')
+    }) as ExperienceFormModel;
   }
 
   save() {
     if(this.saving || this.form.invalid) return;
     this.saving = true;
 
-    const dto: ProfileDto = this.form.getRawValue() as ProfileDto;
+    const raw = this.form.getRawValue();
+    const dto = this.mapFormToDto(raw);
 
     this.profileService.updateMyProfile(dto).subscribe({
       next: () => {
@@ -95,13 +98,29 @@ export class ProfilePageComponent implements OnInit {
     });
   }
 
+  // form getters
+  get basicInfoForm(): BasicInfoFormModel {
+    return this.form.get('basicInfo') as BasicInfoFormModel;
+  }
+
+  get skillsForm(): FormArray<SkillFormModel> {
+    return this.form.get('skills') as FormArray<SkillFormModel>;
+  }
+
+  get experiencesForm(): FormArray<ExperienceFormModel> {
+    return this.form.get('experiences') as FormArray<ExperienceFormModel>;
+  }
+
   private buildForm(profile: ProfileDto): ProfileFormModel {
     return this.fb.group({
-      fullName: this.fb.control(profile.fullName),
-      headline: this.fb.control(profile.headline),
-      about: this.fb.control(profile.about),
-      location: this.fb.control(profile.location),
-      aiOptIn: this.fb.control(profile.aiOptIn),
+      basicInfo: this.fb.group({
+        fullName: this.fb.control(profile.fullName),
+        headline: this.fb.control(profile.headline),
+        about: this.fb.control(profile.about),
+        location: this.fb.control(profile.location)
+      }),
+
+      aiOptIn: this.fb.control<boolean>(profile.aiOptIn ?? false),
 
       skills: this.fb.array(
         profile.skills.map(s => this.createSkillGroup(s))
@@ -110,6 +129,7 @@ export class ProfilePageComponent implements OnInit {
       experiences: this.fb.array(
         profile.experiences.map(e => this.createExperienceGroup(e))
       )
+
     }) as ProfileFormModel;
   }
 
@@ -130,4 +150,16 @@ export class ProfilePageComponent implements OnInit {
     isCurrent: false,
     description: ''
   };
+
+  private mapFormToDto(raw: ReturnType<ProfileFormModel['getRawValue']>): ProfileDto {
+    return {
+      fullName: raw.basicInfo.fullName ?? '',
+      headline: raw.basicInfo.headline ?? '',
+      about: raw.basicInfo.about ?? '',
+      location: raw.basicInfo.location ?? '',
+      aiOptIn: raw.aiOptIn ?? false,
+      skills: raw.skills,
+      experiences: raw.experiences
+    };
+  }
 }

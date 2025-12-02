@@ -13,7 +13,10 @@
       class="bg-[#1A1A1A] border border-gray-800 rounded-xl p-8 shadow-md"
       data-aos="fade-up"
     >
-      <app-basic-info-section [form]="form"></app-basic-info-section>
+      <app-basic-info-section
+        [form]="basicInfoForm"
+      >
+      </app-basic-info-section>
     </section>
 
     <section
@@ -22,7 +25,7 @@
       data-aos-delay="100"
     >
       <app-skills-section
-        [form]="form"
+        [form]="skillsForm"
         [createSkillFn]="createEmptySkillGroup.bind(this)">
       </app-skills-section>
     </section>
@@ -33,7 +36,7 @@
       data-aos-delay="200"
     >
       <app-experience-section
-        [form]="form"
+        [form]="experiencesForm"
         [createExperienceFn]="createEmptyExperienceGroup.bind(this)">
       </app-experience-section>
     </section>

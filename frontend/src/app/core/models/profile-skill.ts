@@ -1,5 +1,5 @@
 export interface ProfileSkill {
   id: number | null;
-  name: string;
-  level: string;
+  name: string | null;
+  level: string | null;
 }
