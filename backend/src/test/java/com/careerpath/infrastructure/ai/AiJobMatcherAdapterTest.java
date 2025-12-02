@@ -33,7 +33,7 @@ class AiJobMatcherAdapterTest {
         profile = Profile.builder()
                 .skills(List.of(
                         ProfileSkill.builder()
-                                .id(1L)
+                                .id("1L")
                                 .name("Java")
                                 .level("Expert")
                                 .build()

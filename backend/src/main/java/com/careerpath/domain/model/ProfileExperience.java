@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ProfileExperience {
-    private Long id;
+    private String id;
     private String company;
     private String title;
     private String employmentType;

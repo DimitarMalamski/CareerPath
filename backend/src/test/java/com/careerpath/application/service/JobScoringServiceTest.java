@@ -17,7 +17,7 @@ class JobScoringServiceTest {
 
         profile.setSkills(List.of(
                 ProfileSkill.builder()
-                        .id(1L)
+                        .id("1L")
                         .name("Java")
                         .level("EXPERT")
                         .build()

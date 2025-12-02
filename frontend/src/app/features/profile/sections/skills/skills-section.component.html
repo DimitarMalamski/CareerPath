@@ -19,7 +19,7 @@
     <div class="space-y-5">
 
       <div *ngFor="let group of skills.controls; let i = index"
-           [formGroupName]="i"
+           [formGroup]="group"
            class="relative bg-[#1A1A1A] border border-gray-700 rounded-lg p-6 space-y-4
                   hover:border-orange-500/40 transition">
 

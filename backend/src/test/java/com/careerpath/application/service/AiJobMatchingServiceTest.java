@@ -49,7 +49,7 @@ class AiJobMatchingServiceTest {
                 .userId(userId)
                 .skills(List.of(
                         ProfileSkill.builder()
-                                .id(1L)
+                                .id("1L")
                                 .name("Java")
                                 .level("EXPERT")
                                 .build()

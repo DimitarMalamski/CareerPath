@@ -4,6 +4,7 @@ import com.careerpath.application.dto.*;
 import com.careerpath.domain.model.*;
 
 import java.util.List;
+import java.util.UUID;
 
 public class ProfileMapper {
 
@@ -68,7 +69,7 @@ public class ProfileMapper {
 
     public static ProfileSkill toDomain(ProfileSkillDto dto) {
         return ProfileSkill.builder()
-                .id(dto.id())
+                .id(dto.id() != null ? dto.id() : UUID.randomUUID().toString())
                 .name(dto.name())
                 .level(dto.level())
                 .build();
@@ -76,7 +77,7 @@ public class ProfileMapper {
 
     public static ProfileExperience toDomain(ProfileExperienceDto dto) {
         return ProfileExperience.builder()
-                .id(dto.id())
+                .id(dto.id() != null ? dto.id() : UUID.randomUUID().toString())
                 .company(dto.company())
                 .title(dto.title())
                 .employmentType(dto.employmentType())

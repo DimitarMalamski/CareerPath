@@ -19,7 +19,7 @@
     <div class="space-y-6">
 
       <div *ngFor="let group of experiences.controls; let i = index"
-           [formGroupName]="i"
+           [formGroup]="group"
            class="relative bg-[#1A1A1A] border border-gray-700 rounded-lg p-6 space-y-5
                   hover:border-orange-500/40 transition">
 
@@ -37,20 +37,20 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm">Company</label>
-            <input class="input-field" formControlName="company" placeholder="Company">
+            <label class="text-gray-300 text-sm" for="company-{{i}}">Company</label>
+            <input id="company-{{i}}" class="input-field" formControlName="company" placeholder="Company">
           </div>
 
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm">Title</label>
-            <input class="input-field" formControlName="title" placeholder="Title">
+            <label class="text-gray-300 text-sm" for="title-{{i}}">Title</label>
+            <input id="title-{{i}}" class="input-field" formControlName="title" placeholder="Title">
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm">Employment Type</label>
-            <select class="input-field" formControlName="employmentType">
+            <label class="text-gray-300 text-sm" for="employmentType-{{i}}">Employment Type</label>
+            <select id="employmentType-{{i}}" class="input-field" formControlName="employmentType">
               <option value="">Select type</option>
               <option>Full-time</option>
               <option>Part-time</option>
@@ -62,25 +62,24 @@
           </div>
 
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm">Location</label>
-            <input class="input-field" formControlName="location" placeholder="City / Remote">
+            <label class="text-gray-300 text-sm" for="location-{{i}}">Location</label>
+            <input id="location-{{i}}" class="input-field" formControlName="location" placeholder="City / Remote">
           </div>
         </div>
 
-        <!-- Subheader -->
         <p class="text-gray-400 text-sm font-semibold uppercase tracking-wide">
           Dates & Description
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm">Start Date</label>
-            <input type="month" class="input-field" formControlName="startDate">
+            <label class="text-gray-300 text-sm" for="startDate-{{i}}">Start Date</label>
+            <input id="startDate-{{i}}" type="month" class="input-field" formControlName="startDate">
           </div>
 
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm">End Date</label>
-            <input type="month"
+            <label class="text-gray-300 text-sm" for="endDate-{{i}}">End Date</label>
+            <input id="endDate-{{i}}" type="month"
                    class="input-field"
                    formControlName="endDate"
                    [disabled]="!!group.get('isCurrent')?.value">
@@ -95,8 +94,8 @@
         </label>
 
         <div class="space-y-1">
-          <label class="text-gray-300 text-sm">Description</label>
-          <textarea class="input-field h-32 resize-none"
+          <label class="text-gray-300 text-sm" for="description-{{i}}">Description</label>
+          <textarea id="description-{{i}}" class="input-field h-32 resize-none"
                     formControlName="description"
                     placeholder="Describe your responsibilities..."></textarea>
         </div>

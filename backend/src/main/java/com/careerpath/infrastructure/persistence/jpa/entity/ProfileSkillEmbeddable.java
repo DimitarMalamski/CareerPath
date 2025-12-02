@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class ProfileSkillEmbeddable {
-    private Long id;
+    private String id;
     private String name;
     private String level;
 }

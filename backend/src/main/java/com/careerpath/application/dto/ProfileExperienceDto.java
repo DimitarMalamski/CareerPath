@@ -1,7 +1,7 @@
 package com.careerpath.application.dto;
 
 public record ProfileExperienceDto(
-        Long id,
+        String id,
         String company,
         String title,
         String employmentType,
