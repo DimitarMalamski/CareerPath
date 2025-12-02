@@ -1,32 +1,41 @@
-<div [formGroup]="form" class="space-y-10 text-white">
+<section
+  class="bg-[#111111] border border-gray-700 shadow-md rounded-xl p-8 space-y-10"
+  data-aos="fade-up"
+  [formGroup]="form"
+>
 
-  <div class="border-b border-gray-700 pb-3">
-    <h2 class="text-xl font-bold flex items-center gap-3">
-      <span class="w-2 h-6 bg-orange-500 rounded"></span>
-      Basic Information
-    </h2>
+  <div class="border-b border-gray-700 pb-4 flex items-center gap-3">
+    <span class="w-2 h-6 bg-orange-500 rounded"></span>
+    <h2 class="text-xl font-bold text-white">Basic Information</h2>
   </div>
+
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
     <div class="space-y-2">
-      <label for="fullName" class="font-medium text-gray-300">Full Name</label>
+      <label for="fullName" class="font-medium text-gray-300 flex items-center gap-2">
+        <i class="fa-solid fa-user text-orange-400"></i>
+        Full Name
+      </label>
       <input
         id="fullName"
         type="text"
         formControlName="fullName"
-        placeholder="Enter your full name"
+        placeholder="e.g. John Doe"
         class="input-field"
       />
     </div>
 
     <div class="space-y-2">
-      <label for="headline" class="font-medium text-gray-300">Headline</label>
+      <label for="headline" class="font-medium text-gray-300 flex items-center gap-2">
+        <i class="fa-solid fa-briefcase text-orange-400"></i>
+        Headline
+      </label>
       <input
         id="headline"
         type="text"
         formControlName="headline"
-        placeholder="Ex: Java Developer, Frontend Engineer"
+        placeholder="e.g. Backend Developer • Java • Spring Boot"
         class="input-field"
       />
     </div>
@@ -34,24 +43,36 @@
   </div>
 
   <div class="space-y-2">
-    <label for="location" class="font-medium text-gray-300">Location</label>
+    <label for="location" class="font-medium text-gray-300 flex items-center gap-2">
+      <i class="fa-solid fa-location-dot text-orange-400"></i>
+      Location
+    </label>
     <input
       id="location"
       type="text"
       formControlName="location"
-      placeholder="Your city or country"
+      placeholder="e.g. Eindhoven, Netherlands"
       class="input-field"
     />
   </div>
 
+
   <div class="space-y-2">
-    <label for="about" class="font-medium text-gray-300">About</label>
+    <label for="about" class="font-medium text-gray-300 flex items-center gap-2">
+      <i class="fa-solid fa-pen text-orange-400"></i>
+      About
+    </label>
+
     <textarea
       id="about"
       formControlName="about"
-      placeholder="Tell us something about yourself..."
-      class="input-field h-40 resize-none"
+      placeholder="Brief summary about your background, interests, or career goals..."
+      class="input-field min-h-40 resize-none"
     ></textarea>
+
+    <p class="text-gray-500 text-xs">
+      Tip: Keep it short and professional. Think 2–3 sentences.
+    </p>
   </div>
 
-</div>
+</section>

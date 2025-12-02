@@ -16,49 +16,43 @@
       </button>
     </div>
 
-    <!-- Skills List -->
-    <div class="space-y-4">
+    <div class="space-y-5">
 
       <div *ngFor="let group of skills.controls; let i = index"
            [formGroupName]="i"
-           class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end bg-[#1A1A1A]
-                  p-5 rounded-lg border border-gray-700 hover:border-orange-500/40 transition">
+           class="relative bg-[#1A1A1A] border border-gray-700 rounded-lg p-6 space-y-4
+                  hover:border-orange-500/40 transition">
 
-        <!-- Skill Name -->
+        <button type="button"
+                (click)="skills.removeAt(i)"
+                class="absolute top-3 right-3 h-8 w-8 flex items-center justify-center rounded-md
+                       bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-200
+                       transition shadow-inner">
+          ✕
+        </button>
+
         <div class="space-y-1">
-          <label class="text-gray-300 text-sm">Skill</label>
+          <label class="text-gray-300 text-sm" for="skill-name-{{i}}">Skill</label>
           <input
+            id="skill-name-{{i}}"
             type="text"
             formControlName="name"
             placeholder="e.g. Java, React, AWS"
             class="input-field">
         </div>
 
-        <!-- Skill Level -->
         <div class="space-y-1">
-          <label class="text-gray-300 text-sm">Level</label>
-          <input
-            type="text"
-            formControlName="level"
-            placeholder="Beginner / Intermediate / Expert"
-            class="input-field">
+          <label class="text-gray-300 text-sm" for="skill-level-{{i}}">Level</label>
+          <select id="skill-level-{{i}}"
+                  formControlName="level"
+                  class="input-field">
+            <option value="">Select level</option>
+            <option>Beginner</option>
+            <option>Intermediate</option>
+            <option>Expert</option>
+          </select>
         </div>
-
-        <!-- Remove Button -->
-        <div class="flex justify-end md:justify-start">
-          <button type="button"
-                  (click)="skills.removeAt(i)"
-                  class="h-[42px] w-[42px] flex items-center justify-center rounded-lg
-                         bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-200
-                         transition shadow-inner">
-            ✕
-          </button>
-        </div>
-
       </div>
-
     </div>
-
   </section>
-
 </div>

@@ -20,8 +20,20 @@
 
       <div *ngFor="let group of experiences.controls; let i = index"
            [formGroupName]="i"
-           class="bg-[#1A1A1A] border border-gray-700 rounded-lg p-6 space-y-4
+           class="relative bg-[#1A1A1A] border border-gray-700 rounded-lg p-6 space-y-5
                   hover:border-orange-500/40 transition">
+
+        <button type="button"
+                (click)="experiences.removeAt(i)"
+                class="absolute top-3 right-3 h-8 w-8 flex items-center justify-center rounded-md
+                       bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-200
+                       transition shadow-inner">
+          ✕
+        </button>
+
+        <p class="text-gray-400 text-sm font-semibold uppercase tracking-wide">
+          Job Overview
+        </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
@@ -38,7 +50,15 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
             <label class="text-gray-300 text-sm">Employment Type</label>
-            <input class="input-field" formControlName="employmentType" placeholder="Full-time, Internship, etc.">
+            <select class="input-field" formControlName="employmentType">
+              <option value="">Select type</option>
+              <option>Full-time</option>
+              <option>Part-time</option>
+              <option>Contract</option>
+              <option>Internship</option>
+              <option>Apprenticeship</option>
+              <option>Volunteer</option>
+            </select>
           </div>
 
           <div class="space-y-1">
@@ -47,15 +67,22 @@
           </div>
         </div>
 
+        <!-- Subheader -->
+        <p class="text-gray-400 text-sm font-semibold uppercase tracking-wide">
+          Dates & Description
+        </p>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
             <label class="text-gray-300 text-sm">Start Date</label>
-            <input class="input-field" formControlName="startDate" placeholder="Start Date">
+            <input type="month" class="input-field" formControlName="startDate">
           </div>
 
           <div class="space-y-1">
             <label class="text-gray-300 text-sm">End Date</label>
-            <input class="input-field" formControlName="endDate" placeholder="End Date"
+            <input type="month"
+                   class="input-field"
+                   formControlName="endDate"
                    [disabled]="!!group.get('isCurrent')?.value">
           </div>
         </div>
@@ -72,16 +99,6 @@
           <textarea class="input-field h-32 resize-none"
                     formControlName="description"
                     placeholder="Describe your responsibilities..."></textarea>
-        </div>
-
-        <div class="flex justify-end">
-          <button type="button"
-                  (click)="experiences.removeAt(i)"
-                  class="h-10 w-10 flex items-center justify-center rounded-lg
-                         bg-red-500/20 text-red-400 hover:bg-red-500/30 hover:text-red-200
-                         transition shadow-inner">
-            ✕
-          </button>
         </div>
       </div>
     </div>
