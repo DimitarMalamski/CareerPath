@@ -43,7 +43,7 @@ describe('ProfilePageComponent', () => {
   let fixture: ComponentFixture<ProfilePageComponent>;
   let component: ProfilePageComponent;
 
-  let profileServiceMock = {
+  const profileServiceMock = {
     getMyProfile: vi.fn().mockReturnValue(of(mockProfile)),
     updateMyProfile: vi.fn().mockReturnValue(of(null))
   };
