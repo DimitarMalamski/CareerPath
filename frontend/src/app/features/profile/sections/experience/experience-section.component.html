@@ -37,20 +37,20 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm" for="company-{{i}}">Company</label>
-            <input id="company-{{i}}" class="input-field" formControlName="company" placeholder="Company">
+            <label class="text-gray-300 text-sm" [for]="'company-' + i">Company</label>
+            <input [id]="'company-' + i" class="input-field" formControlName="company" placeholder="Company">
           </div>
 
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm" for="title-{{i}}">Title</label>
-            <input id="title-{{i}}" class="input-field" formControlName="title" placeholder="Title">
+            <label class="text-gray-300 text-sm" [for]="'title-' + i">Title</label>
+            <input [id]="'title-' + i" class="input-field" formControlName="title" placeholder="Title">
           </div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm" for="employmentType-{{i}}">Employment Type</label>
-            <select id="employmentType-{{i}}" class="input-field" formControlName="employmentType">
+            <label class="text-gray-300 text-sm" [for]="'employmentType-' + i">Employment Type</label>
+            <select [id]="'employmentType-' + i" class="input-field" formControlName="employmentType">
               <option value="">Select type</option>
               <option>Full-time</option>
               <option>Part-time</option>
@@ -62,8 +62,8 @@
           </div>
 
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm" for="location-{{i}}">Location</label>
-            <input id="location-{{i}}" class="input-field" formControlName="location" placeholder="City / Remote">
+            <label class="text-gray-300 text-sm" [for]="'location-' + i">Location</label>
+            <input [id]="'location-' + i" class="input-field" formControlName="location" placeholder="City / Remote">
           </div>
         </div>
 
@@ -73,16 +73,19 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm" for="startDate-{{i}}">Start Date</label>
-            <input id="startDate-{{i}}" type="month" class="input-field" formControlName="startDate">
+            <label class="text-gray-300 text-sm" [for]="'startDate-' + i">Start Date</label>
+            <input [id]="'startDate-' + i" type="month" class="input-field" formControlName="startDate">
           </div>
 
           <div class="space-y-1">
-            <label class="text-gray-300 text-sm" for="endDate-{{i}}">End Date</label>
-            <input id="endDate-{{i}}" type="month"
-                   class="input-field"
-                   formControlName="endDate"
-                   [disabled]="!!group.get('isCurrent')?.value">
+            <label class="text-gray-300 text-sm" [for]="'endDate-' + i">End Date</label>
+            <input
+              [id]="'endDate-' + i"
+              type="month"
+              class="input-field"
+              formControlName="endDate"
+              [disabled]="!!group.get('isCurrent')?.value"
+            >
           </div>
         </div>
 
@@ -94,10 +97,13 @@
         </label>
 
         <div class="space-y-1">
-          <label class="text-gray-300 text-sm" for="description-{{i}}">Description</label>
-          <textarea id="description-{{i}}" class="input-field h-32 resize-none"
-                    formControlName="description"
-                    placeholder="Describe your responsibilities..."></textarea>
+          <label class="text-gray-300 text-sm" [for]="'description-' + i">Description</label>
+          <textarea
+            [id]="'description-' + i"
+            class="input-field h-32 resize-none"
+            formControlName="description"
+            placeholder="Describe your responsibilities..."
+          ></textarea>
         </div>
       </div>
     </div>
