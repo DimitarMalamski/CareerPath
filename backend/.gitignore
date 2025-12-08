@@ -37,3 +37,6 @@ Thumbs.db
 # Test/report output
 test-output/
 *.swp
+
+# API keys
+src/main/resources/jwt-secret.properties

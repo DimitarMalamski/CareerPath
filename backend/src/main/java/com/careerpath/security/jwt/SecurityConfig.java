@@ -1,6 +1,8 @@
 package com.careerpath.security.jwt;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -13,6 +15,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtAuthFilter jwtAuthFilter;
+
+    @Value("${security.jwt.secret}")
+    private String secret;
+
+    @PostConstruct
+    public void debug2() {
+        System.out.println("APP SECRET = '" + secret + "'");
+    }
+
+    @PostConstruct
+    public void debug() {
+        System.out.println("JWT SECRET = '" + System.getenv("JWT_SECRET") + "'");
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
