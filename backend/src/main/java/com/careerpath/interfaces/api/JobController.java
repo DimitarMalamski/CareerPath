@@ -1,8 +1,10 @@
 package com.careerpath.interfaces.api;
 
+import com.careerpath.application.dto.JobDetailsDto;
 import com.careerpath.application.dto.JobListingDto;
 import com.careerpath.application.dto.JobRecommendationDto;
 import com.careerpath.application.service.AiJobMatchingService;
+import com.careerpath.application.service.JobDetailsApplicationService;
 import com.careerpath.application.service.JobListingApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +21,7 @@ import java.util.UUID;
 public class JobController {
     private final JobListingApplicationService jobListingService;
     private final AiJobMatchingService aiJobMatchingService;
+    private final JobDetailsApplicationService jobDetailsApplicationService;
 
     @GetMapping
     public List<JobListingDto> getAllJobListings() {
@@ -28,6 +31,14 @@ public class JobController {
     @GetMapping("/{id}")
     public JobListingDto getJobListing(@PathVariable UUID id) {
         return jobListingService.getJobListingById(id);
+    }
+
+    @GetMapping("/{jobId}/details/{userId}")
+    public JobDetailsDto getJobDetails(
+            @PathVariable UUID jobId,
+            @PathVariable String userId
+    ) {
+        return jobDetailsApplicationService.getJobDetails(jobId, userId);
     }
 
     @GetMapping("/recommendations/{userId}")

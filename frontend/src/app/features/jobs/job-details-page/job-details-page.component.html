@@ -1,0 +1,152 @@
+<!-- Loading State -->
+<div *ngIf="isLoading" class="min-h-screen bg-black text-gray-400 p-10">
+  Loading job details...
+</div>
+
+<!-- Main Job Details Page -->
+<div *ngIf="!isLoading && job as j" class="min-h-screen bg-black text-white py-12">
+  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+    <!-- LEFT COLUMN — MAIN CONTENT -->
+    <div class="lg:col-span-2 space-y-10">
+
+      <!-- Header -->
+      <div>
+        <button
+          class="mb-6 text-gray-300 hover:text-orange-400 transition"
+          routerLink="/jobs"
+        >
+          ← Back to Job Listings
+        </button>
+
+        <h1 class="text-4xl font-bold mb-2">{{ j.title }}</h1>
+        <p class="text-lg text-gray-300 font-medium">{{ j.company }}</p>
+
+        <div class="flex flex-wrap gap-3 mt-3 text-sm text-gray-400">
+          <span class="px-3 py-1 rounded-lg bg-gray-800/60">{{ j.location }}</span>
+          <span class="px-3 py-1 rounded-lg bg-gray-800/60">{{ j.type }}</span>
+          <span class="px-3 py-1 rounded-lg bg-gray-800/60">
+            Posted {{ j.createdAt | date:'mediumDate' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Job Description</h2>
+        <p class="text-gray-300 leading-relaxed whitespace-pre-line">{{ j.description }}</p>
+      </div>
+
+      <!-- Skills -->
+      <div>
+        <h2 class="text-xl font-semibold mb-3">Required Skills</h2>
+
+        <div
+          *ngIf="j.skills && j.skills.length > 0; else noSkills"
+          class="flex flex-wrap gap-2"
+        >
+          <span
+            *ngFor="let skill of j.skills"
+            class="px-3 py-1 rounded-lg bg-gray-800/70 text-sm text-gray-300"
+          >
+            {{ skill }}
+          </span>
+        </div>
+
+        <ng-template #noSkills>
+          <p class="text-gray-500 text-sm">No specific skills listed.</p>
+        </ng-template>
+      </div>
+
+      <!-- AI Insights -->
+      <div class="p-6 bg-gray-900/40 border border-gray-800 rounded-xl">
+        <h2 class="text-xl font-semibold mb-2">AI Match Insights</h2>
+
+        <p *ngIf="j.aiExplanation; else noAi" class="text-gray-300 leading-relaxed">
+          {{ j.aiExplanation }}
+        </p>
+
+        <ng-template #noAi>
+          <p class="text-gray-500 text-sm">
+            AI did not provide additional insights for this job.
+          </p>
+        </ng-template>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN — FLOATING JOB SUMMARY CARD -->
+    <div class="lg:col-span-1">
+      <div
+        class="sticky top-24 bg-black border border-gray-800 rounded-2xl p-6 shadow-xl shadow-black/30 backdrop-blur-md space-y-6"
+      >
+
+        <div>
+          <h3 class="text-lg font-semibold">Role Summary</h3>
+          <p class="text-gray-400 text-sm mt-1">
+            {{ j.stackSummary || 'No stack summary provided.' }}
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold">Match Score</h3>
+          <p class="text-orange-400 text-2xl font-bold">
+            {{ j.finalScore | number:'1.0-2' }}
+          </p>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Matched Skills</h3>
+
+          <div *ngIf="(j.matchedSkills ?? []).length > 0; else noMatched" class="flex flex-wrap gap-2">
+            <span
+              *ngFor="let skill of j.matchedSkills"
+              class="px-3 py-1 rounded-lg bg-green-700/40 text-sm text-green-300"
+            >
+              {{ skill }}
+            </span>
+          </div>
+
+          <ng-template #noMatched>
+            <p class="text-gray-500 text-sm">No matched skills.</p>
+          </ng-template>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-semibold mb-2">Missing Skills</h3>
+
+          <div *ngIf="(j.missingSkills ?? []).length > 0; else noMissing" class="flex flex-wrap gap-2">
+            <span
+              *ngFor="let skill of j.missingSkills"
+              class="px-3 py-1 rounded-lg bg-red-800/40 text-sm text-red-300"
+            >
+              {{ skill }}
+            </span>
+          </div>
+
+          <ng-template #noMissing>
+            <p class="text-gray-500 text-sm">No missing skills.</p>
+          </ng-template>
+        </div>
+
+        <div class="pt-4">
+          <a
+            [href]="j.applyUrl || '#'"
+            target="_blank"
+            class="block text-center bg-orange-500 hover:bg-orange-600 text-black font-semibold py-3 px-6 rounded-xl transition disabled:bg-gray-700 disabled:text-gray-400"
+            [class.pointer-events-none]="!j.applyUrl"
+          >
+            {{ j.applyUrl ? 'Apply Now' : 'Apply Link Unavailable' }}
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Fallback if job failed to load -->
+<div *ngIf="!isLoading && !job" class="min-h-screen bg-black text-red-400 p-10">
+  Failed to load job details.
+</div>

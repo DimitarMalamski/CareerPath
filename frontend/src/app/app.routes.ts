@@ -9,6 +9,7 @@ import {ForgotPasswordComponent} from './features/auth/forgot-password/forgot-pa
 import {ResetPasswordComponent} from './features/auth/reset-password/reset-password.component';
 import {authGuard} from './core/guards/auth.guard';
 import {ProfilePageComponent} from './features/profile/profile-page/profile-page.component';
+import {JobDetailsPageComponent} from './features/jobs/job-details-page/job-details-page.component';
 
 export const routes: Routes = [
   // AUTH LAYOUT (no navbar/footer)
@@ -31,6 +32,7 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'home', component: HomeComponent },
       { path: 'jobs', component: JobsListComponent, canActivate: [authGuard] },
+      { path: 'jobs/:jobId/details/:userId', component: JobDetailsPageComponent, canActivate: [authGuard] },
       { path: 'profile', component: ProfilePageComponent, canActivate: [authGuard] }
     ],
   },

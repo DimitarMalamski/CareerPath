@@ -6,6 +6,7 @@ import {JobAiPopupComponent} from './job-ai-popup/job-ai-popup.component';
 import {JobTagsComponent} from './job-tags/job-tags.component';
 import {JobSkillsComponent} from './job-skills/job-skills.component';
 import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-job-card',
@@ -16,18 +17,19 @@ import { TimeAgoPipe } from '../../../shared/pipes/time-ago.pipe';
     JobAiPopupComponent,
     JobTagsComponent,
     JobSkillsComponent,
-    TimeAgoPipe
+    TimeAgoPipe,
+    RouterLink
   ],
   templateUrl: 'job-card.component.html',
 })
 
 export class JobCardComponent {
   @Input() job!: JobRecommendation;
+  @Input() userId!: string | null;
 
   isPopupOpen = false;
 
   togglePopup() {
-    console.log("TOGGLE POPUP FIRED");
     this.isPopupOpen = !this.isPopupOpen;
   }
 

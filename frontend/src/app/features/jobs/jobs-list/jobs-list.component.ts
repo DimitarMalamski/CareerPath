@@ -16,6 +16,7 @@ export class JobsListComponent implements OnInit {
 
   jobs: JobRecommendation[] = [];
   isLoading = true;
+  userId: string | null = null;
 
   private readonly jobsService = inject(JobsService);
   private readonly identity = inject(UserIdentityService);
@@ -32,6 +33,8 @@ export class JobsListComponent implements OnInit {
       this.isLoading = false;
       return;
     }
+
+    this.userId = userId;
 
     this.jobsService.getRecommendedJobs(userId).subscribe({
       next: (data) => {

@@ -88,7 +88,9 @@
         <div *ngIf="!isLoading && jobs.length > 0" class="flex flex-col gap-8">
           <app-job-card
             *ngFor="let job of jobs"
-            [job]="job">
+            [job]="job"
+            [userId]="userId"
+          >
           </app-job-card>
         </div>
 
