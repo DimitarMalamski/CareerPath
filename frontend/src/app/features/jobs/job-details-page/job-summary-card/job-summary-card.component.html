@@ -1,0 +1,64 @@
+<div
+  class="bg-black border border-gray-800 rounded-2xl p-6 shadow-xl shadow-black/30 backdrop-blur-md space-y-6"
+>
+
+  <div>
+    <h3 class="text-lg font-semibold">Role Summary</h3>
+    <p class="text-gray-400 text-sm mt-1">
+      {{ job.stackSummary || 'No stack summary provided.' }}
+    </p>
+  </div>
+
+  <div>
+    <h3 class="text-lg font-semibold">Match Score</h3>
+    <p class="text-orange-400 text-2xl font-bold">
+      {{ job.finalScore | number:'1.0-2' }}
+    </p>
+  </div>
+
+  <div>
+    <h3 class="text-lg font-semibold mb-2">Matched Skills</h3>
+
+    <div *ngIf="(job.matchedSkills ?? []).length > 0; else noMatched" class="flex flex-wrap gap-2">
+      <span
+        *ngFor="let skill of job.matchedSkills"
+        class="px-3 py-1 rounded-lg bg-green-700/40 text-sm text-green-300"
+      >
+        {{ skill }}
+      </span>
+    </div>
+
+    <ng-template #noMatched>
+      <p class="text-gray-500 text-sm">No matched skills.</p>
+    </ng-template>
+  </div>
+
+  <div>
+    <h3 class="text-lg font-semibold mb-2">Missing Skills</h3>
+
+    <div *ngIf="(job.missingSkills ?? []).length > 0; else noMissing" class="flex flex-wrap gap-2">
+      <span
+        *ngFor="let skill of job.missingSkills"
+        class="px-3 py-1 rounded-lg bg-red-800/40 text-sm text-red-300"
+      >
+        {{ skill }}
+      </span>
+    </div>
+
+    <ng-template #noMissing>
+      <p class="text-gray-500 text-sm">No missing skills.</p>
+    </ng-template>
+  </div>
+
+  <div class="pt-4">
+    <a
+      [href]="job.applyUrl || '#'"
+      target="_blank"
+      class="block text-center bg-orange-500 hover:bg-orange-600 text-black font-semibold py-3 px-6 rounded-xl transition disabled:bg-gray-700 disabled:text-gray-400"
+      [class.pointer-events-none]="!job.applyUrl"
+    >
+      {{ job.applyUrl ? 'Apply Now' : 'Apply Link Unavailable' }}
+    </a>
+  </div>
+
+</div>
