@@ -6,27 +6,38 @@
   {{ state.error }}
 </div>
 
-<div *ngIf="!state.loading && state.job as j" class="min-h-screen bg-black text-white py-12">
-  <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-10">
-    <div class="lg:col-span-2 space-y-8">
+<div *ngIf="!state.loading && state.job as j" class="bg-black text-white py-12">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-10 items-start">
 
-      <app-job-header class="block" [job]="j"></app-job-header>
+    <div class="flex-1 space-y-8">
+      <app-job-header
+        class="block"
+        [job]="j">
+      </app-job-header>
 
-      <app-ai-insights-card class="block" [aiExplanation]="j.aiExplanation"></app-ai-insights-card>
+      <app-ai-insights-card
+        class="block"
+        [aiExplanation]="j.aiExplanation">
+      </app-ai-insights-card>
 
-      <app-job-skills-block class="block" [skills]="j.skills"></app-job-skills-block>
+      <app-job-skills-block
+        class="block"
+        [skills]="j.skills">
+      </app-job-skills-block>
 
-      <app-job-description class="block" [description]="j.description"></app-job-description>
+      <app-job-description
+        class="block"
+        [description]="j.description">
+      </app-job-description>
 
       <app-related-jobs
+        class="block"
         [relatedJobs]="relatedJobs"
         [loading]="relatedLoading">
       </app-related-jobs>
-
     </div>
 
-    <!-- STICKY SIDEBAR -->
-    <div class="lg:col-span-1">
+    <div class="w-full lg:w-80 flex-shrink-0">
       <div class="sticky top-24">
         <app-job-summary-card [job]="j"></app-job-summary-card>
       </div>
