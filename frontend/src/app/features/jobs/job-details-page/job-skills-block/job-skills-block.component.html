@@ -1,0 +1,16 @@
+<div>
+  <h2 class="text-xl font-semibold mb-3">Required Skills</h2>
+
+  <div *ngIf="skills && skills.length > 0; else noSkills" class="flex flex-wrap gap-2">
+    <span
+      *ngFor="let skill of skills"
+      class="px-3 py-1 rounded-lg bg-gray-800/70 text-sm text-gray-300"
+    >
+      {{ skill }}
+    </span>
+  </div>
+
+  <ng-template #noSkills>
+    <p class="text-gray-500 text-sm">No specific skills listed.</p>
+  </ng-template>
+</div>

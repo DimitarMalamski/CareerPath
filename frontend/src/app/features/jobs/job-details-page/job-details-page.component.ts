@@ -4,6 +4,7 @@ import { JobDetailsService } from '../../../core/services/job-details.service';
 import { JobDetails } from '../../../core/models/job-details';
 import {CommonModule} from '@angular/common';
 import {JobSummaryCardComponent} from './job-summary-card/job-summary-card.component';
+import {JobSkillsBlockComponent} from './job-skills-block/job-skills-block.component';
 
 @Component({
   selector: 'app-job-details-page',
@@ -11,7 +12,8 @@ import {JobSummaryCardComponent} from './job-summary-card/job-summary-card.compo
   imports: [
     CommonModule,
     RouterModule,
-    JobSummaryCardComponent
+    JobSummaryCardComponent,
+    JobSkillsBlockComponent
   ],
   templateUrl: './job-details-page.component.html',
 })
