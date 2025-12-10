@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {catchError, Observable, throwError} from 'rxjs';
 import { JobDetails } from '../models/job-details';
 import { environment } from '../../../environments/environment';
 
@@ -12,6 +12,10 @@ export class JobDetailsService {
   constructor(private readonly http: HttpClient) {}
 
   getJobDetails(jobId: string): Observable<JobDetails> {
-    return this.http.get<JobDetails>(`${this.apiUrl}/${jobId}/details`);
+    return this.http.get<JobDetails>(`${this.apiUrl}/${jobId}/details`).pipe(
+      catchError(err => {
+        return throwError(() => err);
+      })
+    );
   }
 }

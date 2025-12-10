@@ -20,21 +20,29 @@ export class JobDetailsPageComponent implements OnInit {
   state = {
     job: null as JobDetails | null,
     loading: true,
-    error: null as string | null
+    error: null as string | null,
   };
 
   constructor(private readonly route: ActivatedRoute) {}
 
   ngOnInit() {
-    const resolvedJob = this.route.snapshot.data['job'];
+    const data = this.route.snapshot.data;
 
-    if (!resolvedJob) {
+    if (data['error']) {
+      this.state.error = data['error'];
+      this.state.loading = false;
+      return;
+    }
+
+    const job = data['job'];
+
+    if (!job) {
       this.state.error = "Failed to load job details.";
       this.state.loading = false;
       return;
     }
 
-    this.state.job = resolvedJob;
+    this.state.job = job;
     this.state.loading = false;
   }
 }

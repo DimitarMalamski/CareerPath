@@ -10,10 +10,16 @@ export const jobDetailsResolver: ResolveFn<JobDetails | null> = (route: Activate
 
   const jobId = route.paramMap.get("jobId")!;
 
+  if (!jobId) {
+    router.navigate(['/not-found']);
+    return of(null);
+  }
+
   return jobDetailsService.getJobDetails(jobId).pipe(
     catchError(err => {
-      console.error("Resolver failed to load job:", err);
-      router.navigate(['/jobs'], { queryParams: { error: 'load_failed' } });
+      if (err.status === 404) {
+        router.navigate(['/not-found']);
+      }
       return of(null);
     })
   );
