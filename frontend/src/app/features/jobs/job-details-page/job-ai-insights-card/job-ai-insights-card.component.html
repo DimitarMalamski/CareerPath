@@ -1,0 +1,13 @@
+<div class="p-6 bg-gray-900/40 border border-gray-800 rounded-xl">
+  <h2 class="text-xl font-semibold mb-2">AI Match Insights</h2>
+
+  <p *ngIf="aiExplanation; else noAi" class="text-gray-300 leading-relaxed">
+    {{ aiExplanation }}
+  </p>
+
+  <ng-template #noAi>
+    <p class="text-gray-500 text-sm">
+      AI did not provide additional insights for this job.
+    </p>
+  </ng-template>
+</div>

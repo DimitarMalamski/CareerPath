@@ -9,4 +9,6 @@ public interface JobListingRepositoryPort {
     List<JobListing> findAll();
 
     JobListing findById(UUID id);
+
+    List<JobListing> findRelatedJobs(UUID jobId, int limit);
 }

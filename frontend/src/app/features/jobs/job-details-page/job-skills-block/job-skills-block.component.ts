@@ -8,5 +8,5 @@ import { CommonModule } from '@angular/common';
   templateUrl: './job-skills-block.component.html'
 })
 export class JobSkillsBlockComponent {
-  @Input() skills: string[] | null = null;
+  @Input() skills: string[] | null | undefined = [];
 }

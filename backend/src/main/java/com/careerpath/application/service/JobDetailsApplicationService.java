@@ -1,13 +1,16 @@
 package com.careerpath.application.service;
 
 import com.careerpath.application.dto.JobDetailsDto;
+import com.careerpath.application.dto.JobListingDto;
 import com.careerpath.application.mapper.JobDetailsMapper;
+import com.careerpath.application.mapper.JobListingDtoMapper;
 import com.careerpath.domain.model.JobListing;
 import com.careerpath.domain.model.JobMatchResult;
 import com.careerpath.domain.model.Profile;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.JobListingRepositoryPort;
 import com.careerpath.domain.port.ProfilePersistencePort;
+import com.careerpath.infrastructure.persistence.jpa.mapper.JobListingEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,14 @@ public class JobDetailsApplicationService {
         JobMatchResult enhanced = aiJobMatcherPort.enhanceMatches(profile, List.of(baseline)).get(0);
 
         return JobDetailsMapper.toDto(jobListing, enhanced);
+    }
+
+    public List<JobListingDto> getRelatedJobs(UUID jobId) {
+        List<JobListing> related = jobListingRepositoryPort.findRelatedJobs(jobId, 3);
+
+        return related.stream()
+                .map(JobListingDtoMapper::toDto)
+                .toList();
     }
 
 }

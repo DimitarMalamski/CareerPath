@@ -1,11 +1,9 @@
-<div>
+<div class="p-6 bg-gray-900/40 border border-gray-800 rounded-xl">
   <h2 class="text-xl font-semibold mb-3">Required Skills</h2>
 
-  <div *ngIf="skills && skills.length > 0; else noSkills" class="flex flex-wrap gap-2">
-    <span
-      *ngFor="let skill of skills"
-      class="px-3 py-1 rounded-lg bg-gray-800/70 text-sm text-gray-300"
-    >
+  <div *ngIf="skills?.length; else noSkills" class="flex flex-wrap gap-2">
+    <span class="px-3 py-1 bg-gray-800 text-sm rounded-lg text-gray-200 border border-gray-700"
+          *ngFor="let skill of skills">
       {{ skill }}
     </span>
   </div>

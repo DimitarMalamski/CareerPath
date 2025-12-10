@@ -44,6 +44,11 @@ public class JobController {
         return jobDetailsApplicationService.getJobDetails(jobId, userId);
     }
 
+    @GetMapping("/{jobId}/related")
+    public List<JobListingDto> getRelatedJobs(@PathVariable UUID jobId) {
+        return jobDetailsApplicationService.getRelatedJobs(jobId);
+    }
+
     @GetMapping("/recommendations/{userId}")
     public List<JobRecommendationDto> recommendJobsListings(@PathVariable String userId) {
         return aiJobMatchingService.getRecommendations(userId);
