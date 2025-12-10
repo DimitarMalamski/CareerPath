@@ -11,7 +11,7 @@ export class JobDetailsService {
 
   constructor(private readonly http: HttpClient) {}
 
-  getJobDetails(jobId: string, userId: string): Observable<JobDetails> {
-    return this.http.get<JobDetails>(`${this.apiUrl}/${jobId}/details/${userId}`);
+  getJobDetails(jobId: string): Observable<JobDetails> {
+    return this.http.get<JobDetails>(`${this.apiUrl}/${jobId}/details`);
   }
 }

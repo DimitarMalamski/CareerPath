@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, RouterModule} from '@angular/router';
-import { JobDetailsService } from '../../../core/services/job-details.service';
 import { JobDetails } from '../../../core/models/job-details';
 import {CommonModule} from '@angular/common';
 import {JobSummaryCardComponent} from './job-summary-card/job-summary-card.component';
@@ -13,33 +12,29 @@ import {JobSkillsBlockComponent} from './job-skills-block/job-skills-block.compo
     CommonModule,
     RouterModule,
     JobSummaryCardComponent,
-    JobSkillsBlockComponent
+    JobSkillsBlockComponent,
   ],
   templateUrl: './job-details-page.component.html',
 })
 export class JobDetailsPageComponent implements OnInit {
+  state = {
+    job: null as JobDetails | null,
+    loading: true,
+    error: null as string | null
+  };
 
-  job!: JobDetails;
-  isLoading = true;
-
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly jobDetailsService: JobDetailsService
-  ) {}
+  constructor(private readonly route: ActivatedRoute) {}
 
   ngOnInit() {
-    const jobId = this.route.snapshot.paramMap.get("jobId")!;
-    const userId = this.route.snapshot.paramMap.get("userId")!;
+    const resolvedJob = this.route.snapshot.data['job'];
 
-    this.jobDetailsService.getJobDetails(jobId, userId).subscribe({
-      next: (response) => {
-        this.job = response;
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error("Failed to load job details:", err);
-        this.isLoading = false;
-      }
-    });
+    if (!resolvedJob) {
+      this.state.error = "Failed to load job details.";
+      this.state.loading = false;
+      return;
+    }
+
+    this.state.job = resolvedJob;
+    this.state.loading = false;
   }
 }

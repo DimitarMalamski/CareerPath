@@ -1,9 +1,12 @@
-<!-- Loading State -->
-<div *ngIf="isLoading" class="min-h-screen bg-black text-gray-400 p-10">
+<div *ngIf="state.loading" class="min-h-screen bg-black text-gray-400 p-10">
   Loading job details...
 </div>
 
-<div *ngIf="!isLoading && job as j" class="min-h-screen bg-black text-white py-12">
+<div *ngIf="!state.loading && state.error" class="min-h-screen bg-black text-red-400 p-10">
+  {{ state.error }}
+</div>
+
+<div *ngIf="!state.loading && state.job as j" class="min-h-screen bg-black text-white py-12">
   <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-10">
     <div class="lg:col-span-2 space-y-10">
 
@@ -55,10 +58,5 @@
         <app-job-summary-card [job]="j"></app-job-summary-card>
       </div>
     </div>
-
   </div>
-</div>
-
-<div *ngIf="!isLoading && !job" class="min-h-screen bg-black text-red-400 p-10">
-  Failed to load job details.
 </div>

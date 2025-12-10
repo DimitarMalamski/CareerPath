@@ -7,6 +7,7 @@ import com.careerpath.application.service.AiJobMatchingService;
 import com.careerpath.application.service.JobDetailsApplicationService;
 import com.careerpath.application.service.JobListingApplicationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,11 +34,13 @@ public class JobController {
         return jobListingService.getJobListingById(id);
     }
 
-    @GetMapping("/{jobId}/details/{userId}")
-    public JobDetailsDto getJobDetails(
-            @PathVariable UUID jobId,
-            @PathVariable String userId
-    ) {
+    @GetMapping("/{jobId}/details")
+    public JobDetailsDto getJobDetails(@PathVariable UUID jobId) {
+        String userId = (String) SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getPrincipal();
+
         return jobDetailsApplicationService.getJobDetails(jobId, userId);
     }
 

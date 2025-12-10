@@ -17,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -44,7 +45,30 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             Claims claims = jwtTokenProvider.validate(token);
 
             String userId = claims.getSubject();
-            String role =  (String) claims.get("role");
+
+            String role = null;
+
+            Object directRole = claims.get("role");
+            if (directRole != null) {
+                role = directRole.toString();
+            }
+
+            Object appMetaObj = claims.get("app_metadata");
+            if (role == null && appMetaObj instanceof Map<?, ?> appMeta) {
+                Object metaRole = appMeta.get("role");
+                if (metaRole != null) {
+                    role = metaRole.toString();
+                }
+
+                Object rolesObj = appMeta.get("roles");
+                if (role == null && rolesObj instanceof List<?> rolesList && !rolesList.isEmpty()) {
+                    role = rolesList.get(0).toString();
+                }
+            }
+
+            if (role == null) {
+                role = "authenticated";
+            }
 
             userOnboardingPort.ensureUserProfile(userId);
 

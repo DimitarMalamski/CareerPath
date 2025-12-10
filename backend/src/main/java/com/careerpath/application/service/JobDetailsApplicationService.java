@@ -23,9 +23,9 @@ public class JobDetailsApplicationService {
     private final JobScoringService jobScoringService;
     private final AiJobMatcherPort aiJobMatcherPort;
 
-    public JobDetailsDto getJobDetails(UUID jobId, String userId) {
-        Profile profile = profilePersistencePort.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("Profile not found for user: " + userId));
+    public JobDetailsDto getJobDetails(UUID jobId, String userIdFromJwt) {
+        Profile profile = profilePersistencePort.findByUserId(userIdFromJwt)
+                .orElseThrow(() -> new RuntimeException("Profile not found for user: " + userIdFromJwt));
 
         JobListing jobListing = jobListingRepositoryPort.findById(jobId);
 
