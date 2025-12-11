@@ -8,5 +8,5 @@ RUN npm run build
 
 # --- Run Stage ---
 FROM nginx:alpine
-COPY --from=builder /app/dist/frontend /usr/share/nginx/html
+COPY --from=builder /app/dist/careerpath-frontend /usr/share/nginx/html
 EXPOSE 80
