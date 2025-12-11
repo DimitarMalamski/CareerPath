@@ -2,6 +2,10 @@ default:
   tags:
     - docker
 
+variables:
+  FF_SCRIPT_SECTIONS: "true"
+  CI_DEBUG_TRACE: "true"
+
 stages:
   - docker
   - deploy
