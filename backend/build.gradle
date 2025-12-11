@@ -23,9 +23,23 @@ sourceSets {
         java.srcDir file('src/integrationTest/java')
         resources.srcDir file('src/integrationTest/resources')
 
-        compileClasspath += sourceSets.main.output + configurations.integrationTestCompileClasspath
-        runtimeClasspath += sourceSets.main.output + output + configurations.integrationTestRuntimeClasspath
+        compileClasspath += sourceSets.main.output + sourceSets.test.output + configurations.testRuntimeClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output + output + configurations.testRuntimeClasspath
     }
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    useJUnitPlatform()
+    shouldRunAfter test
+}
+
+tasks.named('integrationTest') {
+    systemProperty "spring.profiles.active", "test"
+    useJUnitPlatform()
 }
 
 tasks.processIntegrationTestResources {
@@ -38,15 +52,6 @@ configurations {
 	}
     integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-}
-
-tasks.register('integrationTest', Test) {
-    description = 'Runs integration tests.'
-    group = 'verification'
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
-    useJUnitPlatform()
-    shouldRunAfter test
 }
 
 // check.dependsOn integrationTest

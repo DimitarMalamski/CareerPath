@@ -19,7 +19,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "ai.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "ai.enabled", havingValue = "true")
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private final OpenAiService openAiService;
