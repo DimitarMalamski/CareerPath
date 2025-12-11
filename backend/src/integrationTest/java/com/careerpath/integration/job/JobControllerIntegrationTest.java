@@ -5,6 +5,7 @@ import com.careerpath.domain.model.enums.JobStatus;
 import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.model.enums.UserRole;
 import com.careerpath.domain.port.AiJobMatcherPort;
+import com.careerpath.domain.port.UserOnboardingPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
 
@@ -36,6 +37,9 @@ public class JobControllerIntegrationTest extends BaseIntegrationTest {
 
     @MockitoBean
     private AiJobMatcherPort aiJobMatcherPort;
+
+    @MockitoBean
+    private UserOnboardingPort userOnboardingPort;
 
     @BeforeEach
     void setupData() {
