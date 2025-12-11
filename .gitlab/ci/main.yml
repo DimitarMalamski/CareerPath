@@ -22,12 +22,13 @@ docker-build-backend:
     - docker run --privileged --rm tonistiigi/binfmt --install all
     - docker buildx create --use --name builder || docker buildx use builder
 
-    - docker buildx build \
-      --platform linux/amd64,linux/arm64/v8 \
-      -t "$DOCKERHUB_USERNAME/careerpath-backend:main" \
-      -t "$DOCKERHUB_USERNAME/careerpath-backend:$CI_COMMIT_SHORT_SHA" \
-      backend \
-      --push
+    - |
+      docker buildx build \
+        --platform linux/amd64,linux/arm64/v8 \
+        -t "$DOCKERHUB_USERNAME/careerpath-backend:main" \
+        -t "$DOCKERHUB_USERNAME/careerpath-backend:$CI_COMMIT_SHORT_SHA" \
+        backend \
+        --push
 
 # -------------------- FRONTEND DOCKER BUILD (CD) --------------------
 docker-build-frontend:
