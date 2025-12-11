@@ -34,14 +34,6 @@ docker-build-backend:
 docker-build-frontend:
   stage: docker
   image: docker:24
-  services:
-    - name: docker:24-dind
-      alias: docker
-      command: ["--tls=false", "--host=tcp://0.0.0.0:2375"]
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-    DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_DRIVER: overlay2
   only:
     - main
   script:
@@ -50,13 +42,14 @@ docker-build-frontend:
     - docker run --privileged --rm tonistiigi/binfmt --install all
     - docker buildx create --use --name builder || docker buildx use builder
 
-    - docker buildx build \
-      --platform linux/amd64,linux/arm64/v8 \
-      -t "$DOCKERHUB_USERNAME/careerpath-frontend:main" \
-      -t "$DOCKERHUB_USERNAME/careerpath-frontend:$CI_COMMIT_SHORT_SHA" \
-      --build-arg API_URL="$API_URL_PROD" \
-      frontend \
-      --push
+    - |
+      docker buildx build \
+        --platform linux/amd64,linux/arm64/v8 \
+        -t "$DOCKERHUB_USERNAME/careerpath-frontend:main" \
+        -t "$DOCKERHUB_USERNAME/careerpath-frontend:$CI_COMMIT_SHORT_SHA" \
+        --build-arg API_URL="$API_URL_PROD" \
+        frontend \
+        --push
 
 # ------------------------- DEPLOY TO RASPBERRY PI -------------------------
 deploy-to-raspberry:
