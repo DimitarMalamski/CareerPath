@@ -81,7 +81,7 @@ deploy-to-raspberry:
     - echo "Deploying to Raspberry Pi…"
     - |
       ssh "$PI_USER@$PI_HOST" << 'EOF'
-      cd /home/pi/careerpath-prod
+      cd /home/pi/apps/careerpath
       echo "Pulling latest images…"
       docker compose pull
       echo "Starting updated containers…"
