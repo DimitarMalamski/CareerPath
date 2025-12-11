@@ -3,12 +3,12 @@ package com.careerpath.integration.job;
 import com.careerpath.BaseIntegrationTest;
 import com.careerpath.domain.model.enums.JobStatus;
 import com.careerpath.domain.model.enums.JobType;
-import com.careerpath.domain.model.enums.UserRole;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.UserOnboardingPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
 
+import com.careerpath.security.jwt.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +28,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 public class JobControllerIntegrationTest extends BaseIntegrationTest {
+    static {
+        System.setProperty("debug", "true");
+    }
+
+    @MockitoBean
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private MockMvc mockMvc;
