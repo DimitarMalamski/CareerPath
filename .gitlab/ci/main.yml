@@ -1,0 +1,91 @@
+stages:
+  - docker
+  - deploy
+
+# -------------------- BACKEND DOCKER BUILD (CD) --------------------
+docker-build-backend:
+  stage: docker
+  image: docker:24
+  services:
+    - name: docker:24-dind
+      alias: docker
+      command: ["--tls=false", "--host=tcp://0.0.0.0:2375"]
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_DRIVER: overlay2
+  only:
+    - main
+  script:
+    - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+    - docker buildx create --use --name builder || docker buildx use builder
+
+    - docker buildx build \
+      --platform linux/amd64,linux/arm64/v8 \
+      -t "$DOCKERHUB_USERNAME/careerpath-backend:main" \
+      -t "$DOCKERHUB_USERNAME/careerpath-backend:$CI_COMMIT_SHORT_SHA" \
+      backend \
+      --push
+
+# -------------------- FRONTEND DOCKER BUILD (CD) --------------------
+docker-build-frontend:
+  stage: docker
+  image: docker:24
+  services:
+    - name: docker:24-dind
+      alias: docker
+      command: ["--tls=false", "--host=tcp://0.0.0.0:2375"]
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_HOST: "tcp://docker:2375"
+    DOCKER_DRIVER: overlay2
+  only:
+    - main
+  script:
+    - echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+    - docker buildx create --use --name builder || docker buildx use builder
+
+    - docker buildx build \
+      --platform linux/amd64,linux/arm64/v8 \
+      -t "$DOCKERHUB_USERNAME/careerpath-frontend:main" \
+      -t "$DOCKERHUB_USERNAME/careerpath-frontend:$CI_COMMIT_SHORT_SHA" \
+      --build-arg API_URL="$API_URL_PROD" \
+      frontend \
+      --push
+
+# ------------------------- DEPLOY TO RASPBERRY PI -------------------------
+deploy-to-raspberry:
+  stage: deploy
+  image: alpine:3.20
+  needs:
+    - docker-build-backend
+    - docker-build-frontend
+  only:
+    - main
+  before_script:
+    - echo "Installing SSH client…"
+    - apk add --no-cache openssh-client
+
+    - echo "Setting up SSH key…"
+    - mkdir -p ~/.ssh
+    - echo "$PI_SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+
+    - echo "Adding Raspberry Pi SSH fingerprint…"
+    - ssh-keyscan -H "$PI_HOST" >> ~/.ssh/known_hosts
+  script:
+    - echo "Deploying to Raspberry Pi…"
+    - |
+      ssh "$PI_USER@$PI_HOST" << 'EOF'
+      cd /home/pi/careerpath-prod
+      echo "Pulling latest images…"
+      docker compose pull
+      echo "Starting updated containers…"
+      docker compose up -d --remove-orphans
+      echo "Cleaning unused Docker resources…"
+      docker system prune -f
+      EOF
