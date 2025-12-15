@@ -1,7 +1,7 @@
 export interface JobSummary {
-  stackSummary?: string;
+  stackSummary?: string | null;
   finalScore: number;
-  matchedSkills?: string[];
-  missingSkills?: string[];
+  matchedSkills?: string[] | null;
+  missingSkills?: string[] | null;
   applyUrl?: string | null;
 }
