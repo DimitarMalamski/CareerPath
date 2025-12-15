@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, RouterModule} from '@angular/router';
 import { JobDetails } from '../../../core/models/job-details';
 import { JobListing } from '../../../core/models/job-listing';
@@ -37,10 +37,8 @@ export class JobDetailsPageComponent implements OnInit {
   relatedJobs: JobListing[] = [];
   relatedLoading = true;
 
-  constructor(
-    private readonly route: ActivatedRoute,
-    private readonly jobDetailsService: JobDetailsService
-  ) {}
+  private readonly route = inject(ActivatedRoute);
+  private readonly jobDetailsService = inject(JobDetailsService);
 
   ngOnInit() {
     const data = this.route.snapshot.data;

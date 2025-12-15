@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import {RouterLink} from '@angular/router';
 import {CommonModule} from '@angular/common';
+import {RelatedJob} from '../../../../core/models/related-job';
 
 @Component({
   selector: 'app-related-jobs',
@@ -12,6 +13,6 @@ import {CommonModule} from '@angular/common';
   ]
 })
 export class RelatedJobsComponent {
-  @Input() relatedJobs: any[] = [];
-  @Input() loading: boolean = false;
+  @Input() relatedJobs: RelatedJob[] = [];
+  @Input() loading = false;
 }

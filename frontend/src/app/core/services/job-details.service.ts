@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 import { JobDetails } from '../models/job-details';
@@ -10,7 +10,7 @@ export class JobDetailsService {
 
   private readonly apiUrl = environment.apiUrl + "/jobs";
 
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
 
   getJobDetails(jobId: string): Observable<JobDetails> {
     return this.http.get<JobDetails>(`${this.apiUrl}/${jobId}/details`).pipe(

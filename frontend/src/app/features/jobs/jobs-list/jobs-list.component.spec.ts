@@ -51,7 +51,7 @@ describe('JobsListComponent', () => {
 
     fixture.detectChanges();
     await fixture.whenStable();
-    await vi.runAllTimersAsync(); // <-- ensures subscribe runs
+    await vi.runAllTimersAsync();
 
     expect(component.isLoading).toBe(false);
     expect(component.jobs.length).toBe(2);

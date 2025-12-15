@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {JobSummary} from '../../../../core/models/job-summary';
 
 @Component({
   selector: 'app-job-summary-card',
@@ -8,5 +9,5 @@ import { CommonModule } from '@angular/common';
   templateUrl: './job-summary-card.component.html'
 })
 export class JobSummaryCardComponent {
-  @Input() job: any;
+  @Input() job!: JobSummary;
 }
