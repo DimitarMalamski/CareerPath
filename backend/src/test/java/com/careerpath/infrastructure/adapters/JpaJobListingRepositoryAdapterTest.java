@@ -129,4 +129,98 @@ class JpaJobListingRepositoryAdapterTest {
         verify(jobListingRepository).findById(jobId);
         verify(jobSkillRepository, never()).findByJob(any());
     }
+
+    @Test
+    void findRelatedJobs_shouldReturnJobsInCorrectOrder() {
+        UUID jobId = UUID.randomUUID();
+
+        UUID id1 = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
+        UUID id3 = UUID.randomUUID();
+
+        List<UUID> relatedIds = List.of(id2, id1, id3);
+
+        JobListingEntity e1 = JobListingEntity.builder().id(id1).title("First").build();
+        JobListingEntity e2 = JobListingEntity.builder().id(id2).title("Second").build();
+        JobListingEntity e3 = JobListingEntity.builder().id(id3).title("Third").build();
+
+        when(jobListingRepository.findRelatedJobIds(eq(jobId), any()))
+                .thenReturn(relatedIds);
+
+        when(jobListingRepository.findAllById(relatedIds))
+                .thenReturn(List.of(e1, e2, e3));
+
+        when(jobSkillRepository.findByJob(any()))
+                .thenReturn(List.of());
+
+        // Act
+        List<JobListing> results = adapter.findRelatedJobs(jobId, 3);
+
+        assertThat(results)
+                .extracting(JobListing::getId)
+                .containsExactly(id2, id1, id3);
+
+        verify(jobListingRepository).findRelatedJobIds(eq(jobId), any());
+        verify(jobListingRepository).findAllById(relatedIds);
+    }
+
+    @Test
+    void findRelatedJobs_shouldSkipMissingEntities() {
+        UUID jobId = UUID.randomUUID();
+
+        UUID id1 = UUID.randomUUID();
+        UUID id2 = UUID.randomUUID();
+
+        when(jobListingRepository.findRelatedJobIds(eq(jobId), any()))
+                .thenReturn(List.of(id1, id2));
+
+        JobListingEntity e1 = JobListingEntity.builder().id(id1).title("Only exists").build();
+
+        when(jobListingRepository.findAllById(List.of(id1, id2)))
+                .thenReturn(List.of(e1));
+
+        when(jobSkillRepository.findByJob(e1)).thenReturn(List.of());
+
+        List<JobListing> results = adapter.findRelatedJobs(jobId, 2);
+
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getId()).isEqualTo(id1);
+    }
+
+    @Test
+    void findRelatedJobs_shouldIncludeSkills() {
+        UUID jobId = UUID.randomUUID();
+        UUID relatedId = UUID.randomUUID();
+
+        when(jobListingRepository.findRelatedJobIds(eq(jobId), any()))
+                .thenReturn(List.of(relatedId));
+
+        JobListingEntity jobEntity = JobListingEntity.builder()
+                .id(relatedId)
+                .title("DevOps Engineer")
+                .build();
+
+        SkillEntity skillEntity = SkillEntity.builder()
+                .id(10)
+                .name("Docker")
+                .build();
+
+        JobSkillEntity jobSkill = JobSkillEntity.builder()
+                .job(jobEntity)
+                .skill(skillEntity)
+                .build();
+
+        when(jobListingRepository.findAllById(List.of(relatedId)))
+                .thenReturn(List.of(jobEntity));
+
+        when(jobSkillRepository.findByJob(jobEntity))
+                .thenReturn(List.of(jobSkill));
+
+        List<JobListing> results = adapter.findRelatedJobs(jobId, 1);
+
+        assertThat(results).hasSize(1);
+        assertThat(results.get(0).getSkills())
+                .extracting(Skill::getName)
+                .containsExactly("Docker");
+    }
 }

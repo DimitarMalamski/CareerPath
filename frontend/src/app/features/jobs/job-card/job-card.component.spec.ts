@@ -4,6 +4,7 @@ import { expect } from 'vitest';
 
 import { JobCardComponent } from './job-card.component';
 import { JobRecommendation } from '../../../core/models/job-recommendation';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('JobCardComponent', () => {
   let fixture: ComponentFixture<JobCardComponent>;
@@ -26,7 +27,10 @@ describe('JobCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JobCardComponent],
+      imports: [
+        JobCardComponent,
+        RouterTestingModule
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(JobCardComponent);

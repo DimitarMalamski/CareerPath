@@ -1,8 +1,10 @@
 package com.careerpath.interfaces.api;
 
+import com.careerpath.application.dto.JobDetailsDto;
 import com.careerpath.application.dto.JobListingDto;
 import com.careerpath.application.dto.JobRecommendationDto;
 import com.careerpath.application.service.AiJobMatchingService;
+import com.careerpath.application.service.JobDetailsApplicationService;
 import com.careerpath.application.service.JobListingApplicationService;
 import com.careerpath.domain.model.enums.JobStatus;
 import com.careerpath.domain.model.enums.JobType;
@@ -27,6 +29,7 @@ class JobControllerTest {
         // Arrange
         JobListingApplicationService mockListingService = mock(JobListingApplicationService.class);
         AiJobMatchingService mockAiService = mock(AiJobMatchingService.class);
+        JobDetailsApplicationService mockJobDetailsService = mock(JobDetailsApplicationService.class);
 
         JobListingDto jobListingDto = new JobListingDto(
                 UUID.randomUUID(),
@@ -42,7 +45,7 @@ class JobControllerTest {
 
         when(mockListingService.getAllJobListings()).thenReturn(List.of(jobListingDto));
 
-        JobController controller = new JobController(mockListingService, mockAiService);
+        JobController controller = new JobController(mockListingService, mockAiService, mockJobDetailsService);
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         // Act & Assert
@@ -59,6 +62,7 @@ class JobControllerTest {
         // Arrange
         JobListingApplicationService mockListingService = mock(JobListingApplicationService.class);
         AiJobMatchingService mockAiService = mock(AiJobMatchingService.class);
+        JobDetailsApplicationService mockJobDetailsService = mock(JobDetailsApplicationService.class);
 
         UUID jobId = UUID.randomUUID();
 
@@ -76,7 +80,7 @@ class JobControllerTest {
 
         when(mockListingService.getJobListingById(jobId)).thenReturn(jobListingDto);
 
-        JobController controller = new JobController(mockListingService, mockAiService);
+        JobController controller = new JobController(mockListingService, mockAiService, mockJobDetailsService);
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         // Act & Assert
@@ -94,6 +98,7 @@ class JobControllerTest {
         // Arrange
         JobListingApplicationService mockListingService = mock(JobListingApplicationService.class);
         AiJobMatchingService mockAiService = mock(AiJobMatchingService.class);
+        JobDetailsApplicationService mockJobDetailsService = mock(JobDetailsApplicationService.class);
 
         String userId = "test-user-id-123";
 
@@ -114,7 +119,7 @@ class JobControllerTest {
 
         when(mockAiService.getRecommendations(userId)).thenReturn(List.of(recommendation));
 
-        JobController controller = new JobController(mockListingService, mockAiService);
+        JobController controller = new JobController(mockListingService, mockAiService, mockJobDetailsService);
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         // Act & Assert
@@ -125,5 +130,94 @@ class JobControllerTest {
                 .andExpect(jsonPath("$[0].finalScore").value(0.85));
 
         verify(mockAiService, times(1)).getRecommendations(userId);
+    }
+
+    @Test
+    void getJobDetails_shouldReturnDetailsForUser() throws Exception {
+        // Arrange
+        JobListingApplicationService mockListingService = mock(JobListingApplicationService.class);
+        AiJobMatchingService mockAiService = mock(AiJobMatchingService.class);
+        JobDetailsApplicationService mockDetailsService = mock(JobDetailsApplicationService.class);
+
+        UUID jobId = UUID.randomUUID();
+        String userId = "test-user-123";
+
+        JobDetailsDto detailsDto = new JobDetailsDto(
+                jobId.toString(),
+                "Senior Backend Engineer",
+                "Google",
+                "Berlin",
+                "FULL_TIME",
+                "Great job",
+                "Java, Cloud",
+                0.92,
+                "Strong match",
+                "2024-01-01",
+                "2024-01-02",
+                "2024-03-01",
+                List.of("Java"),
+                List.of("Java"),
+                List.of("Docker"),
+                null
+        );
+
+        when(mockDetailsService.getJobDetails(jobId, userId))
+                .thenReturn(detailsDto);
+
+        var authentication = mock(org.springframework.security.core.Authentication.class);
+        when(authentication.getPrincipal()).thenReturn(userId);
+
+        var securityContext = mock(org.springframework.security.core.context.SecurityContext.class);
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        org.springframework.security.core.context.SecurityContextHolder.setContext(securityContext);
+
+        JobController controller = new JobController(mockListingService, mockAiService, mockDetailsService);
+
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        // Act & Assert
+        mockMvc.perform(get("/api/jobs/" + jobId + "/details")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Senior Backend Engineer"))
+                .andExpect(jsonPath("$.company").value("Google"))
+                .andExpect(jsonPath("$.finalScore").value(0.92));
+
+        verify(mockDetailsService).getJobDetails(jobId, userId);
+    }
+
+    @Test
+    void getRelatedJobs_shouldReturnRelatedListings() throws Exception {
+        JobListingApplicationService mockListingService = mock(JobListingApplicationService.class);
+        AiJobMatchingService mockAiService = mock(AiJobMatchingService.class);
+        JobDetailsApplicationService mockDetailsService = mock(JobDetailsApplicationService.class);
+
+        UUID jobId = UUID.randomUUID();
+
+        JobListingDto related = new JobListingDto(
+                jobId,
+                "React Developer",
+                "Netflix",
+                "Remote",
+                "React, TS",
+                JobType.FULL_TIME,
+                JobStatus.PUBLISHED,
+                LocalDate.now().plusMonths(3),
+                List.of("React")
+        );
+
+        when(mockDetailsService.getRelatedJobs(jobId))
+                .thenReturn(List.of(related));
+
+        JobController controller = new JobController(mockListingService, mockAiService, mockDetailsService);
+        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        mockMvc.perform(get("/api/jobs/" + jobId + "/related")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title").value("React Developer"))
+                .andExpect(jsonPath("$[0].company").value("Netflix"));
+
+        verify(mockDetailsService).getRelatedJobs(jobId);
     }
 }
