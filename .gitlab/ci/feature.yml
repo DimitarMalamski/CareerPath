@@ -42,7 +42,6 @@ backend-lint:
   stage: lint
   image:
     name: gradle:8.14.3-jdk17
-    pull_policy: if-not-present
   variables:
     GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
   cache:
@@ -100,7 +99,6 @@ backend-build:
   stage: build
   image:
     name: gradle:8.14.3-jdk17
-    pull_policy: if-not-present
   dependencies:
     - backend-lint
   variables:
@@ -199,7 +197,6 @@ backend-sonarqube:
   stage: analyze
   image:
     name: gradle:8.5-jdk17
-    pull_policy: if-not-present
   dependencies:
     - backend-test
     - backend-build
@@ -229,7 +226,6 @@ frontend-sonarqube:
   stage: analyze
   image:
     name: sonarsource/sonar-scanner-cli:latest
-    pull_policy: if-not-present
   dependencies:
     - frontend-test
   variables:
