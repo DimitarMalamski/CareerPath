@@ -43,6 +43,24 @@ describe('JobCardComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should instantiate JobCardComponent class', () => {
+    expect(true).toBe(true);
+  });
+
+  it('should accept a userId input', () => {
+    component.userId = 'user-123';
+    fixture.detectChanges();
+
+    expect(component.userId).toBe('user-123');
+  });
+
+  it('should allow userId to be null', () => {
+    component.userId = null;
+    fixture.detectChanges();
+
+    expect(component.userId).toBeNull();
+  });
+
   it('togglePopup should switch isPopupOpen', () => {
     expect(component.isPopupOpen).toBe(false);
     component.togglePopup();

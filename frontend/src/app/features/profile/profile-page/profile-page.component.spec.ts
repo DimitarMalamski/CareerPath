@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { expect, vi } from 'vitest';
-import { of } from 'rxjs';
+import {of, throwError} from 'rxjs';
 
 import { ProfilePageComponent } from './profile-page.component';
 import { ProfileService } from '../../../core/services/profile.service';
@@ -142,5 +142,75 @@ describe('ProfilePageComponent', () => {
     fixture.detectChanges();
 
     expect(profileServiceMock.updateMyProfile).toHaveBeenCalledTimes(0);
+  });
+
+  it('should handle missing location when building form', async () => {
+    profileServiceMock.getMyProfile.mockReturnValueOnce(of({
+      ...mockProfile,
+      location: null
+    }));
+
+    TestBed.resetTestingModule();
+
+    await TestBed.configureTestingModule({
+      imports: [ProfilePageComponent],
+      providers: [{ provide: ProfileService, useValue: profileServiceMock }]
+    }).compileComponents();
+
+    const f = TestBed.createComponent(ProfilePageComponent);
+    const c = f.componentInstance;
+
+    f.detectChanges();
+    await f.whenStable();
+
+    expect(c.basicInfoForm.get('location')?.value).toBeNull();
+  });
+
+  it('should NOT save if already saving', async () => {
+    await flushDOM();
+
+    component.saving = true;
+    component.save();
+
+    expect(profileServiceMock.updateMyProfile).not.toHaveBeenCalled();
+  });
+
+  it('should reset saving flag when save fails', async () => {
+    profileServiceMock.updateMyProfile.mockReturnValueOnce(
+      throwError(() => new Error('fail'))
+    );
+
+    await flushDOM();
+
+    component.save();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(component.saving).toBe(false);
+  });
+
+  it('should map form to DTO with null-safe values', async () => {
+    await flushDOM();
+
+    component.basicInfoForm.patchValue({
+      fullName: null,
+      headline: null,
+      about: null,
+      location: null
+    });
+
+    component.form.patchValue({
+      aiOptIn: null
+    });
+
+    component.save();
+
+    const dto = profileServiceMock.updateMyProfile.mock.calls[0][0];
+
+    expect(dto.fullName).toBe('');
+    expect(dto.headline).toBe('');
+    expect(dto.about).toBe('');
+    expect(dto.location).toBe('');
+    expect(dto.aiOptIn).toBe(false);
   });
 });

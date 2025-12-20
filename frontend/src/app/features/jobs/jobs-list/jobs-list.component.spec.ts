@@ -77,4 +77,42 @@ describe('JobsListComponent', () => {
 
     consoleSpy.mockRestore();
   });
+
+  it('should stop loading when no userId is returned', async () => {
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    identityMock.getUserId.mockResolvedValue(null);
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await vi.runAllTimersAsync();
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'No authenticated user (Supabase session missing)'
+    );
+
+    expect(component.isLoading).toBe(false);
+    expect(component.jobs.length).toBe(0);
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it('should load jobs on init and update the state', async () => {
+    const mockJobs = [
+      { id: '1', title: 'Backend Dev' },
+      { id: '2', title: 'Frontend Dev' }
+    ];
+
+    jobsServiceMock.getRecommendedJobs.mockReturnValue(of(mockJobs));
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+    await vi.runAllTimersAsync();
+
+    expect(component.userId).toBe('test-user-id');
+    expect(jobsServiceMock.getRecommendedJobs).toHaveBeenCalledWith('test-user-id');
+
+    expect(component.isLoading).toBe(false);
+    expect(component.jobs.length).toBe(2);
+  });
 });

@@ -133,4 +133,37 @@ describe('JobDetailsPageComponent', () => {
     expect(component.relatedLoading).toBe(false);
     expect(component.relatedJobs.length).toBe(0);
   });
+
+  it('should handle missing job without resolver error', async () => {
+    TestBed.resetTestingModule();
+
+    await TestBed.configureTestingModule({
+      imports: [JobDetailsPageComponent],
+      providers: [
+        provideMockSupabase(),
+        { provide: JobDetailsService, useValue: jobDetailsServiceMock },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              data: {
+                job: null,
+                error: null
+              }
+            }
+          }
+        }
+      ]
+    }).compileComponents();
+
+    const missingJobFixture = TestBed.createComponent(JobDetailsPageComponent);
+    const missingJobComp = missingJobFixture.componentInstance;
+
+    missingJobFixture.detectChanges();
+    await missingJobFixture.whenStable();
+
+    expect(missingJobComp.state.error).toBe('Failed to load job details.');
+    expect(missingJobComp.state.loading).toBe(false);
+    expect(jobDetailsServiceMock.getRelatedJobs).not.toHaveBeenCalled();
+  });
 });
