@@ -12,6 +12,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.List;
+import java.util.Map;
+
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -81,5 +84,69 @@ class JwtAuthFilterTest {
         verify(jwtTokenProvider).validate("invalid-token");
         verify(filterChain).doFilter(request, response);
         verifyNoInteractions(userOnboardingPort);
+    }
+
+    @Test
+    void doFilterInternal_shouldSkipWhenAuthorizationHeaderIsNotBearer() throws Exception {
+        JwtAuthFilter filter = new JwtAuthFilter(jwtTokenProvider, userOnboardingPort);
+
+        when(request.getHeader("Authorization")).thenReturn("Basic abc123");
+
+        filter.doFilterInternal(request, response, filterChain);
+
+        verify(filterChain).doFilter(request, response);
+        verifyNoInteractions(jwtTokenProvider, userOnboardingPort);
+    }
+
+    @Test
+    void doFilterInternal_shouldUseRoleFromAppMetadataRole() throws Exception {
+        JwtAuthFilter filter = new JwtAuthFilter(jwtTokenProvider, userOnboardingPort);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(jwtTokenProvider.validate("token")).thenReturn(claims);
+        when(claims.getSubject()).thenReturn("user-1");
+        when(claims.get("role")).thenReturn(null);
+        when(claims.get("app_metadata")).thenReturn(
+                Map.of("role", "admin")
+        );
+
+        filter.doFilterInternal(request, response, filterChain);
+
+        verify(userOnboardingPort).ensureUserProfile("user-1");
+        verify(filterChain).doFilter(request, response);
+    }
+
+    @Test
+    void doFilterInternal_shouldUseFirstRoleFromAppMetadataRolesList() throws Exception {
+        JwtAuthFilter filter = new JwtAuthFilter(jwtTokenProvider, userOnboardingPort);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(jwtTokenProvider.validate("token")).thenReturn(claims);
+        when(claims.getSubject()).thenReturn("user-2");
+        when(claims.get("role")).thenReturn(null);
+        when(claims.get("app_metadata")).thenReturn(
+                Map.of("roles", List.of("manager", "user"))
+        );
+
+        filter.doFilterInternal(request, response, filterChain);
+
+        verify(userOnboardingPort).ensureUserProfile("user-2");
+        verify(filterChain).doFilter(request, response);
+    }
+
+    @Test
+    void doFilterInternal_shouldFallbackToAuthenticatedRoleWhenNoRolePresent() throws Exception {
+        JwtAuthFilter filter = new JwtAuthFilter(jwtTokenProvider, userOnboardingPort);
+
+        when(request.getHeader("Authorization")).thenReturn("Bearer token");
+        when(jwtTokenProvider.validate("token")).thenReturn(claims);
+        when(claims.getSubject()).thenReturn("user-3");
+        when(claims.get("role")).thenReturn(null);
+        when(claims.get("app_metadata")).thenReturn(null);
+
+        filter.doFilterInternal(request, response, filterChain);
+
+        verify(userOnboardingPort).ensureUserProfile("user-3");
+        verify(filterChain).doFilter(request, response);
     }
 }
