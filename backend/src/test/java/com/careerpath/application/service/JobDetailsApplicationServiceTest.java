@@ -1,6 +1,7 @@
 package com.careerpath.application.service;
 
 import com.careerpath.application.dto.JobDetailsDto;
+import com.careerpath.application.dto.JobListingDto;
 import com.careerpath.domain.model.*;
 import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.port.AiJobMatcherPort;
@@ -123,5 +124,45 @@ class JobDetailsApplicationServiceTest {
 
         verify(profilePersistencePort).findByUserId(userId);
         verifyNoMoreInteractions(jobListingRepositoryPort, jobScoringService, aiJobMatcherPort);
+    }
+
+    @Test
+    void getRelatedJobs_shouldReturnMappedJobListingDtos() {
+        // -------- Arrange --------
+        UUID jobId = UUID.randomUUID();
+
+        JobListing job1 = JobListing.builder()
+                .id(UUID.randomUUID())
+                .title("Backend Engineer")
+                .company("Acme")
+                .location("Berlin")
+                .type(JobType.FULL_TIME)
+                .skills(List.of())
+                .build();
+
+        JobListing job2 = JobListing.builder()
+                .id(UUID.randomUUID())
+                .title("Frontend Engineer")
+                .company("Globex")
+                .location("Amsterdam")
+                .type(JobType.FULL_TIME)
+                .skills(List.of())
+                .build();
+
+        when(jobListingRepositoryPort.findRelatedJobs(jobId, 3))
+                .thenReturn(List.of(job1, job2));
+
+        List<JobListingDto> result = service.getRelatedJobs(jobId);
+
+        assertThat(result).hasSize(2);
+
+        assertThat(result.get(0).title()).isEqualTo("Backend Engineer");
+        assertThat(result.get(0).company()).isEqualTo("Acme");
+
+        assertThat(result.get(1).title()).isEqualTo("Frontend Engineer");
+        assertThat(result.get(1).company()).isEqualTo("Globex");
+
+        verify(jobListingRepositoryPort).findRelatedJobs(jobId, 3);
+        verifyNoMoreInteractions(jobListingRepositoryPort);
     }
 }
