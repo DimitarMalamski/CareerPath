@@ -10,7 +10,6 @@ import com.careerpath.domain.model.Profile;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.JobListingRepositoryPort;
 import com.careerpath.domain.port.ProfilePersistencePort;
-import com.careerpath.infrastructure.persistence.jpa.mapper.JobListingEntityMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
