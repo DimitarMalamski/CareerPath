@@ -3,16 +3,18 @@ package com.careerpath.integration.job;
 import com.careerpath.BaseIntegrationTest;
 import com.careerpath.domain.model.enums.JobStatus;
 import com.careerpath.domain.model.enums.JobType;
-import com.careerpath.domain.model.enums.UserRole;
 import com.careerpath.domain.port.AiJobMatcherPort;
+import com.careerpath.domain.port.UserOnboardingPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
 
+import com.careerpath.security.jwt.JwtTokenProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,7 +28,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
+@ActiveProfiles("test")
 public class JobControllerIntegrationTest extends BaseIntegrationTest {
+    static {
+        System.setProperty("debug", "true");
+    }
+
+    @MockitoBean
+    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     private MockMvc mockMvc;
@@ -36,6 +45,9 @@ public class JobControllerIntegrationTest extends BaseIntegrationTest {
 
     @MockitoBean
     private AiJobMatcherPort aiJobMatcherPort;
+
+    @MockitoBean
+    private UserOnboardingPort userOnboardingPort;
 
     @BeforeEach
     void setupData() {
