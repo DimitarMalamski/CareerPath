@@ -27,7 +27,6 @@ backend-ci-build:
       - backend/build/libs/
   only:
     - dev
-    - dev-test
 
 
 # ---------------- FRONTEND BUILD ----------------
@@ -49,7 +48,6 @@ frontend-build:
     expire_in: 1 week
   only:
     - dev
-    - dev-test
 
 
 
@@ -69,4 +67,3 @@ integration-test:
   allow_failure: false
   only:
     - dev
-    - dev-test

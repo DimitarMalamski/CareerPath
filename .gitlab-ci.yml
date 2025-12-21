@@ -1,13 +1,10 @@
-# .gitlab-ci.yml
 workflow:
   rules:
     - if: '$CI_COMMIT_BRANCH =~ /^feature\/.*$/'
       when: always
-#    - if: '$CI_COMMIT_BRANCH == "dev"'
-#      when: always
-    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "dev"'
       when: always
-    - if: '$CI_COMMIT_BRANCH == "dev-test"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
       when: always
     - when: never
 
@@ -18,11 +15,6 @@ include:
   - local: '.gitlab/ci/dev.yml'
     rules:
       - if: '$CI_COMMIT_BRANCH == "dev"'
-      - if: '$CI_COMMIT_BRANCH == "dev-test"'
-#  - local: '.gitlab/ci/dev.yml'
-#    rules:
-#      - if: '$CI_COMMIT_BRANCH == "dev"'
-
   - local: '.gitlab/ci/main.yml'
     rules:
       - if: '$CI_COMMIT_BRANCH == "main"'
