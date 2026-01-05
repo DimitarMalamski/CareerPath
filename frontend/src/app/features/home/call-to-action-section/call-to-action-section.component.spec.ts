@@ -33,7 +33,7 @@ describe('CallToActionSectionComponent', () => {
   });
 
   it('should render the call to action button', () => {
-    const button = element.querySelector('a[routerLink="/register"]');
+    const button = element.querySelector('a[routerLink="/auth/register"]');
     expect(button).toBeTruthy();
     expect(button?.textContent).toContain('Get Started');
   });

@@ -29,10 +29,10 @@ describe('NavbarComponent', () => {
     expect(logo.getAttribute('alt')).toBe('CareerPath logo');
   });
 
-  it('should have routerLink for Jobs, Dashboard, and Profile', () => {
+  it('should have routerLink for Jobs, and Profile', () => {
     const links = fixture.debugElement.queryAll(By.css('nav a'));
 
-    const linkTexts = ['Jobs', 'Dashboard', 'Profile'];
+    const linkTexts = ['Jobs', 'Profile'];
 
     linkTexts.forEach(text => {
       const link = links.find(link => link.nativeElement.textContent.includes(text));
