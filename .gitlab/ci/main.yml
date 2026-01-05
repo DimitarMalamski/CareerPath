@@ -10,6 +10,7 @@ stages:
   - docker
   - deploy
 
+
 # -------------------- BACKEND DOCKER BUILD (CD) --------------------
 docker-build-backend:
   stage: docker
