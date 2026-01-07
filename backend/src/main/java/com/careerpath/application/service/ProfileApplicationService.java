@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class ProfileApplicationService {
+
     private final ProfilePersistencePort profilePersistencePort;
+    private final AiJobMatchingService aiJobMatchingService;
 
     public ProfileDto getProfile(String userId) {
         Profile profile = profilePersistencePort.findByUserId(userId)
@@ -34,6 +36,8 @@ public class ProfileApplicationService {
         existing.setAiOptIn(updatedData.isAiOptIn());
 
         Profile saved = profilePersistencePort.save(existing);
+
+        aiJobMatchingService.invalidateCache(userId);
 
         return ProfileMapper.toDto(saved);
     }

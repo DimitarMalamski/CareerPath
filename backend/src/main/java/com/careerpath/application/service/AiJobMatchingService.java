@@ -60,4 +60,8 @@ public class AiJobMatchingService {
         cache.put(userId, recommendations);
         return recommendations;
     }
+
+    public void invalidateCache(String userId) {
+        cache.remove(userId);
+    }
 }
