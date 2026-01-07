@@ -5,25 +5,25 @@ import com.careerpath.domain.model.JobMatchResult;
 import com.careerpath.domain.model.Profile;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.theokanning.openai.completion.chat.ChatCompletionRequest;
-import com.theokanning.openai.completion.chat.ChatCompletionResult;
-import com.theokanning.openai.completion.chat.ChatMessage;
-import com.theokanning.openai.service.OpenAiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
 @ConditionalOnProperty(name = "ai.enabled", havingValue = "true")
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
-    private final OpenAiService openAiService;
     private static final String MODEL = "gpt-4o-mini";
+
+    private final WebClient openAiWebClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -55,21 +55,45 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
         try {
             String prompt = buildBatchPrompt(profile, topMatches);
 
-            ChatCompletionRequest request = ChatCompletionRequest.builder()
-                    .model(MODEL)
-                    .temperature(0.0)
-                    .maxTokens(500)
-                    .messages(List.of(new ChatMessage("user", prompt)))
-                    .build();
+            Map<String, Object> requestBody = Map.of(
+                    "model", MODEL,
+                    "input", List.of(
+                            Map.of(
+                                    "role", "user",
+                                    "content", List.of(
+                                            Map.of(
+                                                    "type", "input_text",
+                                                    "text", prompt
+                                            )
+                                    )
+                            )
+                    ),
+                    "max_output_tokens", 300
+            );
 
-            ChatCompletionResult result = openAiService.createChatCompletion(request);
-            String json = result.getChoices().get(0).getMessage().getContent()
-                    .replace("```json", "")
-                    .replace("```", "")
-                    .trim();
+            String response = openAiWebClient.post()
+                    .uri("/responses")
+                    .bodyValue(requestBody)
+                    .retrieve()
+                    .bodyToMono(String.class)
+                    .block();
 
-            return objectMapper.readValue(json, new TypeReference<>() {
-            });
+            JsonNode root = objectMapper.readTree(response);
+
+            // ✅ Only fail if error is NOT null
+            if (root.has("error") && !root.get("error").isNull()) {
+                throw new IllegalStateException(
+                        "OpenAI error: " + root.path("error").path("message").asText()
+                );
+            }
+
+            String content = extractOutputText(root);
+
+            return objectMapper.readValue(
+                    content,
+                    new TypeReference<List<AiEnhancementResult>>() {}
+            );
+
         } catch (Exception e) {
             System.err.println(">>> AI ENHANCEMENT FAILED");
             e.printStackTrace();
@@ -84,8 +108,26 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
         }
     }
 
-    private String buildBatchPrompt(Profile profile, List<JobMatchResult> jobs) {
+    /**
+     * Extracts the assistant text from OpenAI Responses API safely.
+     */
+    private String extractOutputText(JsonNode root) {
+        JsonNode output = root.path("output");
 
+        if (!output.isArray() || output.isEmpty()) {
+            throw new IllegalStateException("OpenAI response missing output array");
+        }
+
+        JsonNode content = output.get(0).path("content");
+
+        if (!content.isArray() || content.isEmpty()) {
+            throw new IllegalStateException("OpenAI response missing content array");
+        }
+
+        return content.get(0).path("text").asText();
+    }
+
+    private String buildBatchPrompt(Profile profile, List<JobMatchResult> jobs) {
         StringBuilder sb = new StringBuilder("""
             You are an AI job-matching engine.
             For each job, return a JSON array with:
@@ -96,7 +138,7 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             PROFILE:
         """);
 
-        sb.append(profile.toString()).append("\n\nJOBS:\n");
+        sb.append(profile).append("\n\nJOBS:\n");
 
         for (JobMatchResult job : jobs) {
             sb.append("""
@@ -114,13 +156,12 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             ));
         }
 
-        sb.append("""    
+        sb.append("""
             Return ONLY a valid JSON array.
-            Do not wrap it in ```json or any other markdown.
-            Do not include explanations, comments, or text outside the JSON.
+            Do not wrap it in markdown.
+            Do not include any text outside JSON.
             [
-              { "jobId": "...", "aiScore": 87, "aiExplanation": "..." },
-              ...
+              { "jobId": "...", "aiScore": 87, "aiExplanation": "..." }
             ]
         """);
 
