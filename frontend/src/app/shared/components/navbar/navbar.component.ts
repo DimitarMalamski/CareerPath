@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {Router, RouterModule} from '@angular/router';
 import {SupabaseService} from '../../../core/services/supabase.service';
 import { Session } from '@supabase/supabase-js';
+import { JobWebsocketService } from '../../../core/services/job-websocket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,6 +18,9 @@ export class NavbarComponent implements OnInit {
 
   private readonly supabase = inject(SupabaseService);
   private readonly router = inject(Router);
+  private readonly jobWs = inject(JobWebsocketService);
+
+  hasNewJobs$ = this.jobWs.newJob$;
 
   async ngOnInit() {
     this.session = await this.supabase.getSession();
@@ -33,5 +37,9 @@ export class NavbarComponent implements OnInit {
   async logout() {
     await this.supabase.signOut();
     await this.router.navigate(['/home']);
+  }
+
+  onJobsClick(): void {
+    this.jobWs.clearNewJobIndicator();
   }
 }
