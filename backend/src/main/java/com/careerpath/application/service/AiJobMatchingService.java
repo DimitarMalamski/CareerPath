@@ -6,6 +6,7 @@ import com.careerpath.domain.model.*;
 import com.careerpath.domain.port.AiJobMatcherPort;
 import com.careerpath.domain.port.JobListingRepositoryPort;
 import com.careerpath.domain.port.ProfilePersistencePort;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,19 @@ public class AiJobMatchingService {
     // Caching
     private final Map<String, List<JobRecommendationDto>> cache = new ConcurrentHashMap<>();
 
+    @PostConstruct
+    void debugInjectedPort() {
+        System.out.println(
+                ">>> Injected AiJobMatcherPort = " +
+                        aiJobMatcherPort.getClass().getName()
+        );
+    }
+
     public List<JobRecommendationDto> getRecommendations(String userId) {
-        if (cache.containsKey(userId)) return cache.get(userId);
+        System.out.println(">>> getRecommendations CALLED for user " + userId);
+        System.out.println(">>> cache hit: " + cache.containsKey(userId));
+
+        // if (cache.containsKey(userId)) return cache.get(userId);
 
         Profile profile = profileRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Profile missing for userId: " + userId));

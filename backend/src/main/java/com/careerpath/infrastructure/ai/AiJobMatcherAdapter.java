@@ -23,11 +23,12 @@ import java.util.List;
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private final OpenAiService openAiService;
-    private static final String MODEL = "gpt-4o-mini";
+    private static final String MODEL = "gpt-3.5-turbo";
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<JobMatchResult> enhanceMatches(Profile profile, List<JobMatchResult> matches) {
+        System.out.println(">>> AI enhanceMatches() ENTERED");
 
         List<JobMatchResult> topMatches = matches.stream()
                 .sorted(Comparator.comparingDouble(JobMatchResult::getScore).reversed())
