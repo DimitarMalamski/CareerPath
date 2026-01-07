@@ -22,14 +22,13 @@ import java.util.Map;
 public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private static final String MODEL = "gpt-4o-mini";
+    private static final String OPENAI_ERROR_FIELD = "error";
 
     private final WebClient openAiWebClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public List<JobMatchResult> enhanceMatches(Profile profile, List<JobMatchResult> matches) {
-        System.out.println(">>> AI enhanceMatches() ENTERED");
-
         List<JobMatchResult> topMatches = matches.stream()
                 .sorted(Comparator.comparingDouble(JobMatchResult::getScore).reversed())
                 .limit(5)
@@ -85,10 +84,10 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
             JsonNode root = objectMapper.readTree(response);
 
-            // ✅ Only fail if error is NOT null
-            if (root.has("error") && !root.get("error").isNull()) {
+            if (root.has(OPENAI_ERROR_FIELD) && !root.get(OPENAI_ERROR_FIELD).isNull()) {
                 throw new IllegalStateException(
-                        "OpenAI error: " + root.path("error").path("message").asText()
+                        "OpenAI error: " +
+                                root.path(OPENAI_ERROR_FIELD).path("message").asText()
                 );
             }
 
@@ -96,13 +95,10 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
             return objectMapper.readValue(
                     content,
-                    new TypeReference<List<AiEnhancementResult>>() {}
+                    new TypeReference<>() {}
             );
 
         } catch (Exception e) {
-            System.err.println(">>> AI ENHANCEMENT FAILED");
-            e.printStackTrace();
-
             return topMatches.stream()
                     .map(job -> new AiEnhancementResult(
                             job.getJobListingId(),
