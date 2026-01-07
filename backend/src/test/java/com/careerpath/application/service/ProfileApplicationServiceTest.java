@@ -23,6 +23,9 @@ class ProfileApplicationServiceTest {
     @Mock
     private ProfilePersistencePort profilePersistencePort;
 
+    @Mock
+    private AiJobMatchingService aiJobMatchingService;
+
     @InjectMocks
     private ProfileApplicationService profileApplicationService;
 
@@ -98,7 +101,23 @@ class ProfileApplicationServiceTest {
 
         when(profilePersistencePort.findByUserId(userId)).thenReturn(Optional.of(existing));
 
-        Profile saved = ProfileMapper.toDomain(userId, updateDto);
+        Profile saved = Profile.builder()
+                .userId(userId)
+                .fullName("New Name")
+                .headline("New Headline")
+                .about("New about")
+                .location("New City")
+                .skills(List.of(
+                        com.careerpath.domain.model.ProfileSkill.builder()
+                                .id("1")
+                                .name("Java")
+                                .level("advanced")
+                                .build()
+                ))
+                .experiences(List.of())
+                .aiOptIn(true)
+                .build();
+
         when(profilePersistencePort.save(any(Profile.class))).thenReturn(saved);
 
         // Act
@@ -116,6 +135,8 @@ class ProfileApplicationServiceTest {
 
         verify(profilePersistencePort).findByUserId(userId);
         verify(profilePersistencePort).save(any(Profile.class));
+
+        verify(aiJobMatchingService).invalidateCache(userId);
     }
 
     @Test

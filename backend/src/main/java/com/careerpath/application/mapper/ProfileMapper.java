@@ -18,10 +18,14 @@ public class ProfileMapper {
                 domain.getHeadline(),
                 domain.getAbout(),
                 domain.getLocation(),
-                domain.getSkills().stream()
+                domain.getSkills() == null
+                        ? List.of()
+                        : domain.getSkills().stream()
                         .map(ProfileMapper::toDto)
                         .toList(),
-                domain.getExperiences().stream()
+                domain.getExperiences() == null
+                        ? List.of()
+                        : domain.getExperiences().stream()
                         .map(ProfileMapper::toDto)
                         .toList(),
                 domain.isAiOptIn()

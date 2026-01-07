@@ -2,17 +2,12 @@ package com.careerpath.infrastructure.ai;
 
 import com.careerpath.domain.model.JobMatchResult;
 import com.careerpath.domain.model.Profile;
-import com.careerpath.domain.model.ProfileSkill;
-import com.theokanning.openai.completion.chat.ChatCompletionChoice;
-import com.theokanning.openai.completion.chat.ChatCompletionRequest;
-import com.theokanning.openai.completion.chat.ChatCompletionResult;
-import com.theokanning.openai.completion.chat.ChatMessage;
-import com.theokanning.openai.service.OpenAiService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -20,133 +15,136 @@ import static org.mockito.Mockito.*;
 
 class AiJobMatcherAdapterTest {
 
-    private OpenAiService openAiService;
-    private AiJobMatcherAdapter aiAdapter;
+    private WebClient webClient;
+    private WebClient.RequestBodyUriSpec requestBodyUriSpec;
+    private WebClient.RequestBodySpec requestBodySpec;
+    private WebClient.ResponseSpec responseSpec;
 
-    private Profile profile;
+    private AiJobMatcherAdapter adapter;
 
     @BeforeEach
     void setup() {
-        openAiService = mock(OpenAiService.class);
-        aiAdapter = new AiJobMatcherAdapter(openAiService);
+        webClient = mock(WebClient.class);
+        requestBodyUriSpec = mock(WebClient.RequestBodyUriSpec.class);
+        requestBodySpec = mock(WebClient.RequestBodySpec.class);
+        responseSpec = mock(WebClient.ResponseSpec.class);
 
-        profile = Profile.builder()
-                .skills(List.of(
-                        ProfileSkill.builder()
-                                .id("1L")
-                                .name("Java")
-                                .level("Expert")
-                                .build()
-                ))
-                .build();
+        adapter = new AiJobMatcherAdapter(webClient);
+
+        when(webClient.post()).thenReturn(requestBodyUriSpec);
+        when(requestBodyUriSpec.uri(any(String.class))).thenReturn(requestBodySpec);
+        doReturn(requestBodySpec)
+                .when(requestBodySpec)
+                .bodyValue(any());
+        when(requestBodySpec.retrieve()).thenReturn(responseSpec);
     }
 
     @Test
-    void enhanceMatches_shouldReturnEnhancedScores_andAiExplanation() {
+    void enhanceMatches_successfullyAppliesAiScore() {
         // Arrange
+        Profile profile = Profile.builder().build();
+
         JobMatchResult job = JobMatchResult.builder()
-                .jobListingId(UUID.randomUUID().toString())
-                .jobTitle("Backend Developer")
-                .description("Java API backend")
-                .score(0.6)
-                .finalScore(0.6)
-                .build();
-
-        String expectedJson = """
-            [
-              {
-                "jobId": "%s",
-                "aiScore": 90,
-                "aiExplanation": "Strong Java match"
-              }
-            ]
-        """.formatted(job.getJobListingId());
-
-        ChatMessage message = new ChatMessage("assistant", expectedJson);
-        ChatCompletionChoice choice = new ChatCompletionChoice();
-        choice.setMessage(message);
-
-        ChatCompletionResult result = new ChatCompletionResult();
-        result.setChoices(List.of(choice));
-
-        when(openAiService.createChatCompletion(any(ChatCompletionRequest.class)))
-                .thenReturn(result);
-
-        // Act
-        List<JobMatchResult> enhanced = aiAdapter.enhanceMatches(profile, List.of(job));
-
-        // Assert
-        assertThat(enhanced).hasSize(1);
-        JobMatchResult enhancedJob = enhanced.get(0);
-
-        assertThat(enhancedJob.getFinalScore()).isGreaterThan(job.getScore());
-        assertThat(enhancedJob.getAiExplanation()).isEqualTo("Strong Java match");
-
-        verify(openAiService, times(1)).createChatCompletion(any());
-    }
-
-    @Test
-    void enhanceMatches_shouldFallback_whenAiFails() {
-        // Arrange
-        JobMatchResult job = JobMatchResult.builder()
-                .jobListingId("123")
+                .jobListingId("job-1")
                 .score(0.5)
+                .finalScore(0.5)
+                .jobTitle("Backend Dev")
+                .description("Java")
                 .build();
 
-        when(openAiService.createChatCompletion(any(ChatCompletionRequest.class)))
-                .thenThrow(new RuntimeException("API offline"));
+        String aiResponse = """
+        {
+          "output": [
+            {
+              "content": [
+                {
+                  "type": "output_text",
+                  "text": "[{ \\"jobId\\": \\"job-1\\", \\"aiScore\\": 80, \\"aiExplanation\\": \\"Strong Java match\\" }]"
+                }
+              ]
+            }
+          ]
+        }
+        """;
+
+        when(responseSpec.bodyToMono(String.class))
+                .thenReturn(Mono.just(aiResponse));
 
         // Act
-        List<JobMatchResult> enhanced = aiAdapter.enhanceMatches(profile, List.of(job));
+        List<JobMatchResult> result =
+                adapter.enhanceMatches(profile, List.of(job));
 
         // Assert
-        JobMatchResult result = enhanced.get(0);
-        assertThat(result.getFinalScore()).isEqualTo(job.getScore());
-        assertThat(result.getAiExplanation()).contains("unavailable");
+        JobMatchResult enhanced = result.get(0);
 
-        verify(openAiService, times(1)).createChatCompletion(any());
+        assertThat(enhanced.getFinalScore()).isGreaterThan(0.5);
+        assertThat(enhanced.getAiExplanation()).isEqualTo("Strong Java match");
     }
 
     @Test
-    void enhanceMatches_shouldLimitToTop5Jobs() {
+    void enhanceMatches_fallsBackWhenAiFails() {
         // Arrange
+        Profile profile = Profile.builder().build();
+
+        JobMatchResult job = JobMatchResult.builder()
+                .jobListingId("job-1")
+                .score(0.4)
+                .finalScore(0.4)
+                .build();
+
+        when(responseSpec.bodyToMono(String.class))
+                .thenReturn(Mono.error(new RuntimeException("AI down")));
+
+        // Act
+        List<JobMatchResult> result =
+                adapter.enhanceMatches(profile, List.of(job));
+
+        // Assert
+        JobMatchResult fallback = result.get(0);
+
+        assertThat(fallback.getFinalScore()).isEqualTo(0.4);
+        assertThat(fallback.getAiExplanation()).contains("unavailable");
+    }
+
+    @Test
+    void enhanceMatches_onlyEnhancesTop5() {
+        // Arrange
+        Profile profile = Profile.builder().build();
+
         List<JobMatchResult> jobs = List.of(
                 job("1", 0.9),
-                job("2", 0.7),
-                job("3", 0.5),
-                job("4", 0.4),
-                job("5", 0.3),
+                job("2", 0.8),
+                job("3", 0.7),
+                job("4", 0.6),
+                job("5", 0.5),
                 job("6", 0.1)
         );
 
-        String json = """
-        [
-          {"jobId": "1", "aiScore": 10, "aiExplanation": "ok"},
-          {"jobId": "2", "aiScore": 10, "aiExplanation": "ok"},
-          {"jobId": "3", "aiScore": 10, "aiExplanation": "ok"},
-          {"jobId": "4", "aiScore": 10, "aiExplanation": "ok"},
-          {"jobId": "5", "aiScore": 10, "aiExplanation": "ok"}
-        ]
+        String aiResponse = """
+        {
+          "output": [
+            {
+              "content": [
+                {
+                  "type": "output_text",
+                  "text": "[{ \\"jobId\\": \\"1\\", \\"aiScore\\": 10, \\"aiExplanation\\": \\"ok\\" }]"
+                }
+              ]
+            }
+          ]
+        }
         """;
 
-        ChatMessage message = new ChatMessage("assistant", json);
-        ChatCompletionChoice choice = new ChatCompletionChoice();
-        choice.setMessage(message);
-
-        ChatCompletionResult result = new ChatCompletionResult();
-        result.setChoices(List.of(choice));
-
-        when(openAiService.createChatCompletion(any())).thenReturn(result);
+        when(responseSpec.bodyToMono(String.class))
+                .thenReturn(Mono.just(aiResponse));
 
         // Act
-        List<JobMatchResult> enhanced = aiAdapter.enhanceMatches(profile, jobs);
+        List<JobMatchResult> result =
+                adapter.enhanceMatches(profile, jobs);
 
         // Assert
-        assertThat(enhanced).hasSize(6);
-        assertThat(enhanced.get(5).getJobListingId()).isEqualTo("6");
-        assertThat(enhanced.get(5).getFinalScore()).isEqualTo(0.1);
-
-        verify(openAiService, times(1)).createChatCompletion(any());
+        JobMatchResult untouched = result.get(5);
+        assertThat(untouched.getFinalScore()).isEqualTo(0.1);
     }
 
     private JobMatchResult job(String id, double score) {
@@ -155,10 +153,7 @@ class AiJobMatcherAdapterTest {
                 .score(score)
                 .finalScore(score)
                 .jobTitle("t")
-                .company("c")
                 .description("d")
-                .matchedSkills(List.of())
-                .missingSkills(List.of())
                 .build();
     }
 }

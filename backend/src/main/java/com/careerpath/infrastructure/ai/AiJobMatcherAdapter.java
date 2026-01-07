@@ -41,11 +41,16 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             aiResults.stream()
                     .filter(ai -> ai.jobId().equals(job.getJobListingId()))
                     .findFirst()
-                    .ifPresent(ai -> {
+                    .ifPresentOrElse(ai -> {
                         double finalScore = mergeScores(job.getScore(), ai.aiScore());
                         job.setFinalScore(finalScore);
                         job.setAiExplanation(ai.aiExplanation());
-                    });
+                    },
+                    () -> {
+                        job.setFinalScore(job.getScore());
+                        job.setAiExplanation(null);
+                    }
+            );
         }
 
         return matches;
