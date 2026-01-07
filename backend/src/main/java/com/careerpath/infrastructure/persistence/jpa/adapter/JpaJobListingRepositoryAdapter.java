@@ -2,6 +2,8 @@ package com.careerpath.infrastructure.persistence.jpa.adapter;
 
 import com.careerpath.domain.model.JobListing;
 import com.careerpath.domain.model.Skill;
+import com.careerpath.domain.model.enums.JobStatus;
+import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.port.JobListingRepositoryPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobSkillEntity;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -60,6 +63,23 @@ public class JpaJobListingRepositoryAdapter implements JobListingRepositoryPort 
         return ordered.stream()
                 .map(this::mapToDomainWithSkills)
                 .toList();
+    }
+
+    @Override
+    public JobListing save(String title, String company, String location) {
+        JobListingEntity entity = JobListingEntity.builder()
+                .title(title)
+                .company(company)
+                .location(location)
+                .recruiterId("system")
+                .type(JobType.FULL_TIME)
+                .status(JobStatus.PUBLISHED)
+                .createdAt(OffsetDateTime.now())
+                .build();
+
+        JobListingEntity saved = jobListingRepository.save(entity);
+
+        return mapToDomainWithSkills(saved);
     }
 
     private JobListing mapToDomainWithSkills(JobListingEntity entity) {

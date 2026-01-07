@@ -1,5 +1,6 @@
 package com.careerpath.interfaces.api;
 
+import com.careerpath.application.dto.CreateJobListingDto;
 import com.careerpath.application.dto.JobDetailsDto;
 import com.careerpath.application.dto.JobListingDto;
 import com.careerpath.application.dto.JobRecommendationDto;
@@ -10,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,5 +55,12 @@ public class JobController {
     @GetMapping("/recommendations/{userId}")
     public List<JobRecommendationDto> recommendJobsListings(@PathVariable String userId) {
         return aiJobMatchingService.getRecommendations(userId);
+    }
+
+    @PostMapping
+    public JobListingDto createJobListing(
+            @RequestBody CreateJobListingDto dto
+    ) {
+        return jobListingService.createJobListing(dto);
     }
 }

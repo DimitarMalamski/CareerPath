@@ -11,4 +11,6 @@ public interface JobListingRepositoryPort {
     JobListing findById(UUID id);
 
     List<JobListing> findRelatedJobs(UUID jobId, int limit);
+
+    JobListing save(String title, String company, String location);
 }
