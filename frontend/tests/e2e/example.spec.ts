@@ -1,11 +1,13 @@
 import { test, expect } from '@playwright/test'
 
-test('authenticated user can access jobs page', async ({ page }) => {
+test('authenticated user sees job recommendations', async ({ page }) => {
   await page.goto('/jobs')
 
-  await expect(page).toHaveURL(/\/jobs/)
+  await expect(
+    page.getByText('Junior Backend Developer')
+  ).toBeVisible()
 
   await expect(
-    page.getByTestId('jobs-title')
-  ).toBeAttached()
+    page.getByText('Frontend Engineer')
+  ).toBeVisible()
 })

@@ -1,175 +1,215 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites name="vitest tests" tests="181" failures="0" errors="0" time="9.6673729">
-    <testsuite name="src/app/app.spec.ts" timestamp="2026-01-08T16:12:49.380Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.1034568">
-        <testcase classname="src/app/app.spec.ts" name="App &gt; should create the app" time="0.0745139">
+<testsuites name="vitest tests" tests="181" failures="0" errors="0" time="9.460103">
+    <testsuite name="src/app/app.spec.ts" timestamp="2026-01-08T22:06:07.907Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.1195707">
+        <testcase classname="src/app/app.spec.ts" name="App &gt; should create the app" time="0.0894802">
         </testcase>
-        <testcase classname="src/app/app.spec.ts" name="App &gt; should render a router outlet" time="0.0153967">
+        <testcase classname="src/app/app.spec.ts" name="App &gt; should render a router outlet" time="0.0170828">
         </testcase>
-        <testcase classname="src/app/app.spec.ts" name="App &gt; should call AOS.init on ngOnInit" time="0.0097656">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/home/home.component.spec.ts" timestamp="2026-01-08T16:12:49.382Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.3812457">
-        <testcase classname="src/app/features/home/home.component.spec.ts" name="HomeComponent &gt; should create the component" time="0.289597">
-        </testcase>
-        <testcase classname="src/app/features/home/home.component.spec.ts" name="HomeComponent &gt; should render all homepage components" time="0.0858041">
+        <testcase classname="src/app/app.spec.ts" name="App &gt; should call AOS.init on ngOnInit" time="0.0100781">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/layout/auth-layout/auth-layout.component.spec.ts" timestamp="2026-01-08T16:12:49.382Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.0871886">
-        <testcase classname="src/app/layout/auth-layout/auth-layout.component.spec.ts" name="AuthLayoutComponent &gt; should create the layout component" time="0.0694751">
+    <testsuite name="src/app/layout/auth-layout/auth-layout.component.spec.ts" timestamp="2026-01-08T22:06:07.911Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.0995853">
+        <testcase classname="src/app/layout/auth-layout/auth-layout.component.spec.ts" name="AuthLayoutComponent &gt; should create the layout component" time="0.0773918">
         </testcase>
-        <testcase classname="src/app/layout/auth-layout/auth-layout.component.spec.ts" name="AuthLayoutComponent &gt; should render the container div with correct classes" time="0.0080307">
+        <testcase classname="src/app/layout/auth-layout/auth-layout.component.spec.ts" name="AuthLayoutComponent &gt; should render the container div with correct classes" time="0.0118289">
         </testcase>
-        <testcase classname="src/app/layout/auth-layout/auth-layout.component.spec.ts" name="AuthLayoutComponent &gt; should contain a router-outlet" time="0.0067469">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/layout/main-layout/main-layout.component.spec.ts" timestamp="2026-01-08T16:12:49.383Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.2404525">
-        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="MainLayoutComponent &gt; should create the layout component" time="0.213367">
-        </testcase>
-        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="MainLayoutComponent &gt; should render navbar, router-outlet, and footer" time="0.0246366">
+        <testcase classname="src/app/layout/auth-layout/auth-layout.component.spec.ts" name="AuthLayoutComponent &gt; should contain a router-outlet" time="0.0074316">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/shared/pipes/time-ago.pipe.spec.ts" timestamp="2026-01-08T16:12:49.383Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.007085">
-        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return empty string if no value is provided" time="0.0029368">
+    <testsuite name="src/app/features/home/home.component.spec.ts" timestamp="2026-01-08T22:06:07.916Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.4120863">
+        <testcase classname="src/app/features/home/home.component.spec.ts" name="HomeComponent &gt; should create the component" time="0.3002927">
         </testcase>
-        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return &quot;Just now&quot; when less than 1 minute ago" time="0.0005257">
-        </testcase>
-        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return minutes ago" time="0.0003356">
-        </testcase>
-        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return hours ago" time="0.0002809">
-        </testcase>
-        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return days ago" time="0.0002618">
+        <testcase classname="src/app/features/home/home.component.spec.ts" name="HomeComponent &gt; should render all homepage components" time="0.1095658">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/jobs.service.spec.ts" timestamp="2026-01-08T16:12:49.384Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.03673">
-        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; should fetch recommended jobs by userId" time="0.0243706">
+    <testsuite name="src/app/layout/main-layout/main-layout.component.spec.ts" timestamp="2026-01-08T22:06:07.919Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.2496996">
+        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="MainLayoutComponent &gt; should create the layout component" time="0.2263975">
         </testcase>
-        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; reload should do nothing if no userId is set" time="0.0034597">
-        </testcase>
-        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; reload should refetch jobs for last userId and update jobs$" time="0.0028394">
-        </testcase>
-        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; should merge fetched jobs with existing jobs without duplicates" time="0.0036038">
+        <testcase classname="src/app/layout/main-layout/main-layout.component.spec.ts" name="MainLayoutComponent &gt; should render navbar, router-outlet, and footer" time="0.0209805">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" timestamp="2026-01-08T16:12:49.385Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.0229103">
-        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should navigate to not-found when jobId is missing" time="0.0140214">
+    <testsuite name="src/app/features/jobs/jobs.service.spec.ts" timestamp="2026-01-08T22:06:07.921Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.0318392">
+        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; should fetch recommended jobs by userId" time="0.0201948">
         </testcase>
-        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should return job details when service succeeds" time="0.0030874">
+        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; reload should do nothing if no userId is set" time="0.0034446">
         </testcase>
-        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should navigate to not-found when service returns 404" time="0.0023391">
+        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; reload should refetch jobs for last userId and update jobs$" time="0.0026816">
         </testcase>
-        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should return null without redirect for non-404 errors" time="0.0019713">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/core/services/__test__/job-details.service.spec.ts" timestamp="2026-01-08T16:12:49.386Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.0545021">
-        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should be created" time="0.0259635">
-        </testcase>
-        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should fetch job details successfully" time="0.0104424">
-        </testcase>
-        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should propagate error when getJobDetails fails" time="0.004796">
-        </testcase>
-        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should fetch related jobs successfully" time="0.004088">
-        </testcase>
-        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should propagate error when getRelatedJobs fails" time="0.0065184">
+        <testcase classname="src/app/features/jobs/jobs.service.spec.ts" name="JobsService &gt; should merge fetched jobs with existing jobs without duplicates" time="0.0037051">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" timestamp="2026-01-08T16:12:49.388Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.2897458">
-        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should render the form" time="0.1839615">
+    <testsuite name="src/app/core/services/__test__/job-details.service.spec.ts" timestamp="2026-01-08T22:06:07.924Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.0547543">
+        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should be created" time="0.0221517">
         </testcase>
-        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should bind email input via ngModel" time="0.0209666">
+        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should fetch job details successfully" time="0.0141896">
         </testcase>
-        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should disable submit button when form is invalid" time="0.0246013">
+        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should propagate error when getJobDetails fails" time="0.0053423">
         </testcase>
-        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should show success message on valid reset request" time="0.0271584">
+        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should fetch related jobs successfully" time="0.004331">
         </testcase>
-        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should show error message when Supabase returns an error" time="0.0159838">
-        </testcase>
-        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should call supabase.resetPasswordForEmail with correct email" time="0.0145163">
+        <testcase classname="src/app/core/services/__test__/job-details.service.spec.ts" name="JobDetailsService &gt; should propagate error when getRelatedJobs fails" time="0.0062177">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/auth/register/register.component.spec.ts" timestamp="2026-01-08T16:12:49.389Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.4329337">
-        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should render the Create Account title" time="0.241909">
+    <testsuite name="src/app/shared/pipes/time-ago.pipe.spec.ts" timestamp="2026-01-08T22:06:07.927Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.0069643">
+        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return empty string if no value is provided" time="0.0031185">
         </testcase>
-        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should bind email, password, and confirmPassword inputs" time="0.044061">
+        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return &quot;Just now&quot; when less than 1 minute ago" time="0.0005526">
         </testcase>
-        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should disable register button when form is invalid" time="0.0319097">
+        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return minutes ago" time="0.000326">
         </testcase>
-        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should show an error when passwords do not match" time="0.0405626">
+        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return hours ago" time="0.000274">
         </testcase>
-        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should show Supabase error if signUp fails" time="0.0320746">
-        </testcase>
-        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should navigate to /check-email on successful registration" time="0.0397805">
+        <testcase classname="src/app/shared/pipes/time-ago.pipe.spec.ts" name="TimeAgoPipe &gt; should return days ago" time="0.0002454">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/auth/login/login.component.spec.ts" timestamp="2026-01-08T16:12:49.390Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.5043838">
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should render the login form title" time="0.2826875">
+    <testsuite name="src/app/features/auth/login/login.component.spec.ts" timestamp="2026-01-08T22:06:07.928Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.4164313">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should render the login form title" time="0.228994">
         </testcase>
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should bind email and password inputs with ngModel" time="0.0438775">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should bind email and password inputs with ngModel" time="0.0280252">
         </testcase>
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should disable submit button when form is invalid" time="0.0314735">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should disable submit button when form is invalid" time="0.0429278">
         </testcase>
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should show an error when login fails" time="0.0320758">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should show an error when login fails" time="0.0290187">
         </testcase>
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should show an error when no session is returned" time="0.0217393">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should show an error when no session is returned" time="0.0224716">
         </testcase>
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should navigate to /home after successful login" time="0.0532794">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should navigate to /home after successful login" time="0.0438597">
         </testcase>
-        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should call signInWithOAuth when Google login is clicked" time="0.0360972">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/auth/reset-password/reset-password.component.spec.ts" timestamp="2026-01-08T16:12:49.390Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.3561587">
-        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should render the title" time="0.2011629">
-        </testcase>
-        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should bind password and confirmPassword inputs" time="0.0301289">
-        </testcase>
-        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should disable button when form is invalid" time="0.0363249">
-        </testcase>
-        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should show an error when passwords do not match" time="0.0255075">
-        </testcase>
-        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should show Supabase error when updateUser fails" time="0.0141956">
-        </testcase>
-        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should navigate to /login on successful password update" time="0.0447538">
+        <testcase classname="src/app/features/auth/login/login.component.spec.ts" name="LoginComponent &gt; should call signInWithOAuth when Google login is clicked" time="0.0174953">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" timestamp="2026-01-08T16:12:49.392Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.1302684">
-        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; it should create the component" time="0.0883654">
+    <testsuite name="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" timestamp="2026-01-08T22:06:07.929Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.2810818">
+        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should render the form" time="0.1607239">
         </testcase>
-        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the title" time="0.01015">
+        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should bind email input via ngModel" time="0.018588">
         </testcase>
-        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the description" time="0.0082232">
+        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should disable submit button when form is invalid" time="0.0206018">
         </testcase>
-        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the call to action button" time="0.0125092">
+        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should show success message on valid reset request" time="0.0226808">
         </testcase>
-        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the background visual elements" time="0.0081756">
+        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should show error message when Supabase returns an error" time="0.0310449">
         </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/home/carousel-section/carousel-section.component.spec.ts" timestamp="2026-01-08T16:12:49.393Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2827935">
-        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should create the component" time="0.1669439">
-        </testcase>
-        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should have 5 testmonials defined" time="0.0196722">
-        </testcase>
-        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should render all testimonials twice for seamless loop" time="0.0356427">
-        </testcase>
-        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should render testimonial name and role correctly" time="0.0575971">
+        <testcase classname="src/app/features/auth/forgot-password/forgot-password.component.spec.ts" name="ForgotPasswordComponent &gt; should call supabase.resetPasswordForEmail with correct email" time="0.0218002">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/home/hero-section/hero-section.component.spec.ts" timestamp="2026-01-08T16:12:49.393Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.1652749">
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should create the component" time="0.0790756">
+    <testsuite name="src/app/features/auth/reset-password/reset-password.component.spec.ts" timestamp="2026-01-08T22:06:07.931Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.3462976">
+        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should render the title" time="0.2077182">
         </testcase>
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render correct heading text" time="0.0184221">
+        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should bind password and confirmPassword inputs" time="0.027541">
         </testcase>
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render subtext correctly" time="0.0109804">
+        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should disable button when form is invalid" time="0.0335344">
         </testcase>
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should have &quot;Explore Jobs&quot; with correct routerLink" time="0.0156161">
+        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should show an error when passwords do not match" time="0.0197104">
         </testcase>
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should have &quot;Create Profile&quot; link with correct routerLink" time="0.0103339">
+        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should show Supabase error when updateUser fails" time="0.0173017">
         </testcase>
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render hero image with alt text and src" time="0.0138303">
-        </testcase>
-        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should call AOS.init on ngOnInit" time="0.0138865">
+        <testcase classname="src/app/features/auth/reset-password/reset-password.component.spec.ts" name="ResetPasswordComponent &gt; should navigate to /login on successful password update" time="0.037429">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/profile/profile-page/profile-page.component.spec.ts" timestamp="2026-01-08T16:12:49.394Z" hostname="DESKTOP-9J60L9L" tests="10" failures="0" errors="0" skipped="0" time="1.2368064">
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should load the profile and build the form" time="0.4025205">
+    <testsuite name="src/app/features/auth/register/register.component.spec.ts" timestamp="2026-01-08T22:06:07.932Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.3960537">
+        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should render the Create Account title" time="0.2037417">
+        </testcase>
+        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should bind email, password, and confirmPassword inputs" time="0.0586808">
+        </testcase>
+        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should disable register button when form is invalid" time="0.0197032">
+        </testcase>
+        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should show an error when passwords do not match" time="0.0394616">
+        </testcase>
+        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should show Supabase error if signUp fails" time="0.0276256">
+        </testcase>
+        <testcase classname="src/app/features/auth/register/register.component.spec.ts" name="RegisterComponent &gt; should navigate to /check-email on successful registration" time="0.0435889">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" timestamp="2026-01-08T22:06:07.932Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.0254994">
+        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should navigate to not-found when jobId is missing" time="0.0160963">
+        </testcase>
+        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should return job details when service succeeds" time="0.0030664">
+        </testcase>
+        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should navigate to not-found when service returns 404" time="0.0024869">
+        </testcase>
+        <testcase classname="src/app/core/resolvers/__test__/job-details.resolver.spec.ts" name="jobDetailsResolver &gt; should return null without redirect for non-404 errors" time="0.0022513">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/home/hero-section/hero-section.component.spec.ts" timestamp="2026-01-08T22:06:07.933Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.1883485">
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should create the component" time="0.1103664">
+        </testcase>
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render correct heading text" time="0.011983">
+        </testcase>
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render subtext correctly" time="0.0084838">
+        </testcase>
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should have &quot;Explore Jobs&quot; with correct routerLink" time="0.0160851">
+        </testcase>
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should have &quot;Create Profile&quot; link with correct routerLink" time="0.0119366">
+        </testcase>
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should render hero image with alt text and src" time="0.0173085">
+        </testcase>
+        <testcase classname="src/app/features/home/hero-section/hero-section.component.spec.ts" name="HeroSectionComponent &gt; should call AOS.init on ngOnInit" time="0.009153">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/home/carousel-section/carousel-section.component.spec.ts" timestamp="2026-01-08T22:06:07.934Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2420952">
+        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should create the component" time="0.1551597">
+        </testcase>
+        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should have 5 testmonials defined" time="0.0314789">
+        </testcase>
+        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should render all testimonials twice for seamless loop" time="0.0220498">
+        </testcase>
+        <testcase classname="src/app/features/home/carousel-section/carousel-section.component.spec.ts" name="CarouselSectionComponent &gt; should render testimonial name and role correctly" time="0.0309716">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" timestamp="2026-01-08T22:06:07.935Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.1796075">
+        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; it should create the component" time="0.1027315">
+        </testcase>
+        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the title" time="0.0198312">
+        </testcase>
+        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the description" time="0.0167659">
+        </testcase>
+        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the call to action button" time="0.018316">
+        </testcase>
+        <testcase classname="src/app/features/home/call-to-action-section/call-to-action-section.component.spec.ts" name="CallToActionSectionComponent &gt; should render the background visual elements" time="0.0181769">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" timestamp="2026-01-08T22:06:07.936Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.2529646">
+        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should create the component" time="0.160478">
+        </testcase>
+        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should render 3 steps" time="0.0221118">
+        </testcase>
+        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should render correct titles and descriptions for each step" time="0.026468">
+        </testcase>
+        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should inject save SVG into each step" time="0.0164521">
+        </testcase>
+        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should set data-delay attribute on each step" time="0.0150712">
+        </testcase>
+        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should sanitize SVG string correctly" time="0.0097724">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/shared/components/footer/footer.component.spec.ts" timestamp="2026-01-08T22:06:07.936Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.2306416">
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should create the component" time="0.1096566">
+        </testcase>
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render current year correctly" time="0.0220755">
+        </testcase>
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render CareerPath brand section" time="0.0218912">
+        </testcase>
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render contact information" time="0.0150192">
+        </testcase>
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should have routerLink to /jobs and /profile" time="0.0116309">
+        </testcase>
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should scroll to top on logo button click" time="0.036421">
+        </testcase>
+        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render 3 social media icons with correct links" time="0.010852">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/shared/components/navbar/navbar.component.spec.ts" timestamp="2026-01-08T22:06:07.937Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2858379">
+        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should create the component" time="0.1695459">
+        </testcase>
+        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should display the logo image" time="0.0366041">
+        </testcase>
+        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should have routerLink for Jobs, and Profile" time="0.0138193">
+        </testcase>
+        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should toggle mobile menu visibility in the DOM" time="0.0632938">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/profile/profile-page/profile-page.component.spec.ts" timestamp="2026-01-08T22:06:07.938Z" hostname="DESKTOP-9J60L9L" tests="10" failures="0" errors="0" skipped="0" time="1.1500264">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should load the profile and build the form" time="0.4197823">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -190,7 +230,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should hide loading spinner after profile is loaded" time="0.1150028">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should hide loading spinner after profile is loaded" time="0.1016929">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -211,7 +251,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should pass the correct skills FormArray to SkillsSectionComponent" time="0.0886135">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should pass the correct skills FormArray to SkillsSectionComponent" time="0.07618">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -232,7 +272,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should pass the correct experience FormArray to ExperienceSectionComponent" time="0.090012">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should pass the correct experience FormArray to ExperienceSectionComponent" time="0.0754514">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -253,7 +293,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should call updateMyProfile() with correct DTO when save is clicked" time="0.0988337">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should call updateMyProfile() with correct DTO when save is clicked" time="0.0874919">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -274,7 +314,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should NOT call updateMyProfile if form is invalid" time="0.0640698">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should NOT call updateMyProfile if form is invalid" time="0.0678429">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -295,7 +335,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should handle missing location when building form" time="0.1375798">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should handle missing location when building form" time="0.1132758">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -333,7 +373,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should NOT save if already saving" time="0.0819975">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should NOT save if already saving" time="0.0609366">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -354,7 +394,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should reset saving flag when save fails" time="0.0777862">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should reset saving flag when save fails" time="0.0735786">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -375,7 +415,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should map form to DTO with null-safe values" time="0.0758549">
+        <testcase classname="src/app/features/profile/profile-page/profile-page.component.spec.ts" name="ProfilePageComponent &gt; should map form to DTO with null-safe values" time="0.0699866">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -397,90 +437,50 @@
             </system-err>
         </testcase>
     </testsuite>
-    <testsuite name="src/app/shared/components/footer/footer.component.spec.ts" timestamp="2026-01-08T16:12:49.397Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.2107005">
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should create the component" time="0.1262454">
+    <testsuite name="src/app/features/jobs/job-card/job-card.component.spec.ts" timestamp="2026-01-08T22:06:07.944Z" hostname="DESKTOP-9J60L9L" tests="13" failures="0" errors="0" skipped="0" time="0.4807515">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should create component" time="0.2421114">
         </testcase>
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render current year correctly" time="0.0113101">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should instantiate JobCardComponent class" time="0.0237326">
         </testcase>
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render CareerPath brand section" time="0.0173265">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should accept a userId input" time="0.0195383">
         </testcase>
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render contact information" time="0.0097337">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should allow userId to be null" time="0.0185344">
         </testcase>
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should have routerLink to /jobs and /profile" time="0.0146045">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; togglePopup should switch isPopupOpen" time="0.0200933">
         </testcase>
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should scroll to top on logo button click" time="0.0162015">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; closePopup should set isPopupOpen to false" time="0.012945">
         </testcase>
-        <testcase classname="src/app/shared/components/footer/footer.component.spec.ts" name="FooterComponent &gt; should render 3 social media icons with correct links" time="0.0128302">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should show the AI popup when isPopupOpen = true" time="0.0255324">
         </testcase>
-    </testsuite>
-    <testsuite name="src/app/shared/components/navbar/navbar.component.spec.ts" timestamp="2026-01-08T16:12:49.398Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2821179">
-        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should create the component" time="0.1761499">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should hide the AI popup when isPopupOpen = false" time="0.0182406">
         </testcase>
-        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should display the logo image" time="0.0328764">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should close popup when clicking outside" time="0.0233836">
         </testcase>
-        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should have routerLink for Jobs, and Profile" time="0.0211584">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should NOT close popup when clicking inside popup" time="0.0210063">
         </testcase>
-        <testcase classname="src/app/shared/components/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should toggle mobile menu visibility in the DOM" time="0.0495972">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; getJobSummary should return the first sentence" time="0.016158">
         </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" timestamp="2026-01-08T16:12:49.398Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.2891404">
-        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should create the component" time="0.1834078">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; getJobSummary should truncate long sentences" time="0.0185034">
         </testcase>
-        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should render 3 steps" time="0.0304109">
-        </testcase>
-        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should render correct titles and descriptions for each step" time="0.0210963">
-        </testcase>
-        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should inject save SVG into each step" time="0.0284417">
-        </testcase>
-        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should set data-delay attribute on each step" time="0.0131421">
-        </testcase>
-        <testcase classname="src/app/features/home/how-it-works-section/how-it-works-section.component.spec.ts" name="HowItWorksSectionComponent &gt; should sanitize SVG string correctly" time="0.0091178">
+        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; getJobSummary should return empty string if no description" time="0.0177284">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-card/job-card.component.spec.ts" timestamp="2026-01-08T16:12:49.399Z" hostname="DESKTOP-9J60L9L" tests="13" failures="0" errors="0" skipped="0" time="0.536248">
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should create component" time="0.2346356">
+    <testsuite name="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" timestamp="2026-01-08T22:06:07.945Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.3995889">
+        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should create component" time="0.2163319">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should instantiate JobCardComponent class" time="0.0321822">
+        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should load job details from resolver on init" time="0.0770009">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should accept a userId input" time="0.0154407">
+        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should handle resolver error state" time="0.0190849">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should allow userId to be null" time="0.021737">
+        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should fetch related jobs after loading details" time="0.0326513">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; togglePopup should switch isPopupOpen" time="0.0355079">
+        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should handle error when related jobs request fails" time="0.036477">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; closePopup should set isPopupOpen to false" time="0.0211622">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should show the AI popup when isPopupOpen = true" time="0.0405899">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should hide the AI popup when isPopupOpen = false" time="0.0320286">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should close popup when clicking outside" time="0.0203155">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; should NOT close popup when clicking inside popup" time="0.0296829">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; getJobSummary should return the first sentence" time="0.0116982">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; getJobSummary should truncate long sentences" time="0.0165024">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-card.component.spec.ts" name="JobCardComponent &gt; getJobSummary should return empty string if no description" time="0.0195913">
+        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should handle missing job without resolver error" time="0.0154466">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" timestamp="2026-01-08T16:12:49.401Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.4502784">
-        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should create component" time="0.2347739">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should load job details from resolver on init" time="0.1085675">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should handle resolver error state" time="0.0239707">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should fetch related jobs after loading details" time="0.0418706">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should handle error when related jobs request fails" time="0.0236574">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-details-page.component.spec.ts" name="JobDetailsPageComponent &gt; should handle missing job without resolver error" time="0.0146541">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" timestamp="2026-01-08T16:12:49.401Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.3118908">
-        <testcase classname="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" name="JobsListComponent &gt; should load jobs on init and update the state" time="0.2647736">
+    <testsuite name="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" timestamp="2026-01-08T22:06:07.946Z" hostname="DESKTOP-9J60L9L" tests="3" failures="0" errors="0" skipped="0" time="0.31887">
+        <testcase classname="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" name="JobsListComponent &gt; should load jobs on init and update the state" time="0.2685327">
             <system-out>
 📦 Jobs loaded from backend
   { id: [32m&apos;1&apos;[39m, finalScore: [33m80[39m }
@@ -488,23 +488,23 @@
 
             </system-out>
         </testcase>
-        <testcase classname="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" name="JobsListComponent &gt; should log error and set isLoading=false when API fails" time="0.0222639">
+        <testcase classname="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" name="JobsListComponent &gt; should log error and set isLoading=false when API fails" time="0.0260167">
         </testcase>
-        <testcase classname="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" name="JobsListComponent &gt; should stop loading when no userId is returned" time="0.0217881">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" timestamp="2026-01-08T16:12:49.402Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2619492">
-        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should render section title" time="0.1629439">
-        </testcase>
-        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should bind form controls to inputs" time="0.0448306">
-        </testcase>
-        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should populate UI with initial form values" time="0.0242431">
-        </testcase>
-        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should throw an error if the required form Input is missing" time="0.0270155">
+        <testcase classname="src/app/features/jobs/jobs-list/jobs-list.component.spec.ts" name="JobsListComponent &gt; should stop loading when no userId is returned" time="0.0212171">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/profile/sections/experience/experience-section.component.spec.ts" timestamp="2026-01-08T16:12:49.403Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.60264">
-        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should render the Experience title" time="0.2970293">
+    <testsuite name="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" timestamp="2026-01-08T22:06:07.947Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2719013">
+        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should render section title" time="0.1643418">
+        </testcase>
+        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should bind form controls to inputs" time="0.0401102">
+        </testcase>
+        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should populate UI with initial form values" time="0.0286242">
+        </testcase>
+        <testcase classname="src/app/features/profile/sections/basic-info/basic-info.component.spec.ts" name="BasicInfoComponent &gt; should throw an error if the required form Input is missing" time="0.0360235">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/profile/sections/experience/experience-section.component.spec.ts" timestamp="2026-01-08T22:06:07.947Z" hostname="DESKTOP-9J60L9L" tests="6" failures="0" errors="0" skipped="0" time="0.5703387">
+        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should render the Experience title" time="0.2977412">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -525,7 +525,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should render one experience block initially" time="0.0525237">
+        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should render one experience block initially" time="0.0555525">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -546,7 +546,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should add a new experience when + Add Experience is clicked" time="0.1089901">
+        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should add a new experience when + Add Experience is clicked" time="0.0683667">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -584,7 +584,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should remove an experience when ✕ button is clicked" time="0.0568397">
+        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should remove an experience when ✕ button is clicked" time="0.0569003">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -605,7 +605,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should bind company input to form control" time="0.0423339">
+        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should bind company input to form control" time="0.0464295">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -626,7 +626,7 @@
 
             </system-err>
         </testcase>
-        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should throw if form input is missing" time="0.0425587">
+        <testcase classname="src/app/features/profile/sections/experience/experience-section.component.spec.ts" name="ExperienceSectionComponent &gt; should throw if form input is missing" time="0.0422381">
             <system-err>
 
   It looks like you&apos;re using the disabled attribute with a reactive form directive. If you set disabled to true
@@ -648,132 +648,132 @@
             </system-err>
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/profile/sections/skills/skills-section.component.spec.ts" timestamp="2026-01-08T16:12:49.404Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.4708277">
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should render the Skills title" time="0.2321631">
+    <testsuite name="src/app/features/profile/sections/skills/skills-section.component.spec.ts" timestamp="2026-01-08T22:06:07.949Z" hostname="DESKTOP-9J60L9L" tests="7" failures="0" errors="0" skipped="0" time="0.4710944">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should render the Skills title" time="0.2359287">
         </testcase>
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should render one skill block initially" time="0.0411726">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should render one skill block initially" time="0.0437433">
         </testcase>
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should add a skill when + Add Skill is clicked" time="0.0463971">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should add a skill when + Add Skill is clicked" time="0.0449377">
         </testcase>
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should remove a skill when the ✕ button is clicked" time="0.0430134">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should remove a skill when the ✕ button is clicked" time="0.0352605">
         </testcase>
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should bind skill name input to form control" time="0.0345098">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should bind skill name input to form control" time="0.0473676">
         </testcase>
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should bind skill level select to form control" time="0.0342621">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should bind skill level select to form control" time="0.0368789">
         </testcase>
-        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should throw if form input is missing" time="0.03656">
-        </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" timestamp="2026-01-08T16:12:49.405Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.1983032">
-        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should display the score as a percentage" time="0.1375884">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should apply green color when score &gt;= 0.75" time="0.0151366">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should apply yellow color when 0.4 &lt;= score &lt; 0.75" time="0.009389">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should apply red color when score &lt; 0.4" time="0.0084139">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should emit infoClick when AI icon is clicked" time="0.023183">
+        <testcase classname="src/app/features/profile/sections/skills/skills-section.component.spec.ts" name="SkillsSectionComponent &gt; should throw if form input is missing" time="0.0239472">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-card/job-ai-popup/job-ai-popup.component.spec.ts" timestamp="2026-01-08T16:12:49.405Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.1204056">
-        <testcase classname="src/app/features/jobs/job-card/job-ai-popup/job-ai-popup.component.spec.ts" name="JobAiPopupComponent &gt; should display the explanation text" time="0.1074789">
+    <testsuite name="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" timestamp="2026-01-08T22:06:07.949Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.2046019">
+        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should display the score as a percentage" time="0.146776">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-ai-popup/job-ai-popup.component.spec.ts" name="JobAiPopupComponent &gt; should emit close event when clicking the button" time="0.010615">
+        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should apply green color when score &gt;= 0.75" time="0.012294">
         </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" timestamp="2026-01-08T16:12:49.406Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.18788">
-        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should display matched skills" time="0.1540551">
+        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should apply yellow color when 0.4 &lt;= score &lt; 0.75" time="0.0082218">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should display missing skills" time="0.0114212">
+        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should apply red color when score &lt; 0.4" time="0.0082917">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should show overflow text when skills &gt; 4" time="0.0120355">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should NOT show overflow text when skills &lt;= 4" time="0.0076835">
+        <testcase classname="src/app/features/jobs/job-card/job-score/job-score.component.spec.ts" name="JobScoreComponent &gt; should emit infoClick when AI icon is clicked" time="0.0259291">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" timestamp="2026-01-08T16:12:49.406Z" hostname="DESKTOP-9J60L9L" tests="8" failures="0" errors="0" skipped="0" time="0.2283804">
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should display location" time="0.1518408">
+    <testsuite name="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" timestamp="2026-01-08T22:06:07.950Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.2083027">
+        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should display matched skills" time="0.1594751">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should show &quot;Remote&quot; tag when type is REMOTE" time="0.0159158">
+        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should display missing skills" time="0.0207228">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should show &quot;Hybrid&quot; tag when type is HYBRID" time="0.0110147">
+        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should show overflow text when skills &gt; 4" time="0.0151591">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should show formatted job type when not remote/hybrid" time="0.0090855">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; isRemote should correctly detect REMOTE" time="0.0087084">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; isHybrid should correctly detect HYBRID" time="0.0064274">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; formatJobType should format strings correctly" time="0.006048">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; formatJobType should return empty string when type is null/undefined" time="0.0155959">
+        <testcase classname="src/app/features/jobs/job-card/job-skills/job-skills.component.spec.ts" name="JobSkillsComponent &gt; should NOT show overflow text when skills &lt;= 4" time="0.0095664">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" timestamp="2026-01-08T16:12:49.407Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.1357242">
-        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should create component" time="0.0949007">
+    <testsuite name="src/app/features/jobs/job-card/job-ai-popup/job-ai-popup.component.spec.ts" timestamp="2026-01-08T22:06:07.951Z" hostname="DESKTOP-9J60L9L" tests="2" failures="0" errors="0" skipped="0" time="0.1559182">
+        <testcase classname="src/app/features/jobs/job-card/job-ai-popup/job-ai-popup.component.spec.ts" name="JobAiPopupComponent &gt; should display the explanation text" time="0.1334181">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should display AI explanation when provided" time="0.0160573">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should show fallback text when aiExplanation is null" time="0.0141077">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should show fallback text when aiExplanation is an empty string" time="0.0081567">
+        <testcase classname="src/app/features/jobs/job-card/job-ai-popup/job-ai-popup.component.spec.ts" name="JobAiPopupComponent &gt; should emit close event when clicking the button" time="0.0190676">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" timestamp="2026-01-08T16:12:49.408Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.140055">
-        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should create the component" time="0.0957519">
+    <testsuite name="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" timestamp="2026-01-08T22:06:07.951Z" hostname="DESKTOP-9J60L9L" tests="8" failures="0" errors="0" skipped="0" time="0.2514039">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should display location" time="0.1848845">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should render the description text when provided" time="0.0190824">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should show &quot;Remote&quot; tag when type is REMOTE" time="0.0156998">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should render nothing when description is null" time="0.0102985">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should show &quot;Hybrid&quot; tag when type is HYBRID" time="0.0102729">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should support multiline text (whitespace preserved)" time="0.0081916">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; should show formatted job type when not remote/hybrid" time="0.0094965">
         </testcase>
-    </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" timestamp="2026-01-08T16:12:49.408Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.1997835">
-        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; renders all provided skills" time="0.1348395">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; isRemote should correctly detect REMOTE" time="0.0071969">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; shows fallback text when skills list is empty" time="0.0252424">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; isHybrid should correctly detect HYBRID" time="0.0080038">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; shows fallback text when skills is null" time="0.0264033">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; formatJobType should format strings correctly" time="0.0064155">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; shows fallback text when skills is undefined" time="0.0103639">
+        <testcase classname="src/app/features/jobs/job-card/job-tags/job-tags.component.spec.ts" name="JobTagsComponent &gt; formatJobType should return empty string when type is null/undefined" time="0.0061449">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" timestamp="2026-01-08T16:12:49.409Z" hostname="DESKTOP-9J60L9L" tests="9" failures="0" errors="0" skipped="0" time="0.3925226">
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders role summary when provided" time="0.2176243">
+    <testsuite name="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" timestamp="2026-01-08T22:06:07.952Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.1308204">
+        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should create component" time="0.0938036">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders fallback role summary when missing" time="0.0266703">
+        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should display AI explanation when provided" time="0.015308">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; formats and displays the match score" time="0.0187948">
+        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should show fallback text when aiExplanation is null" time="0.0067146">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders matched skills when present" time="0.0319858">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; shows fallback when no matched skills" time="0.016412">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders missing skills when present" time="0.0223893">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; shows fallback when no missing skills" time="0.0132258">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; enables apply link when applyUrl exists" time="0.0306935">
-        </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; disables apply link when applyUrl is missing" time="0.0110917">
+        <testcase classname="src/app/features/jobs/job-details-page/job-ai-insights-card/job-ai-insights-card.component.spec.ts" name="AiInsightsCardComponent &gt; should show fallback text when aiExplanation is an empty string" time="0.0123356">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/job-header/job-header.component.spec.ts" timestamp="2026-01-08T16:12:49.410Z" hostname="DESKTOP-9J60L9L" tests="1" failures="0" errors="0" skipped="0" time="0.0983725">
-        <testcase classname="src/app/features/jobs/job-details-page/job-header/job-header.component.spec.ts" name="JobHeaderComponent &gt; should link back to /jobs" time="0.0961053">
+    <testsuite name="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" timestamp="2026-01-08T22:06:07.953Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.1709056">
+        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; renders all provided skills" time="0.1478483">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; shows fallback text when skills list is empty" time="0.007882">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; shows fallback text when skills is null" time="0.0064433">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-skills-block/job-skills-block.component.spec.ts" name="JobSkillsBlockComponent &gt; shows fallback text when skills is undefined" time="0.006345">
         </testcase>
     </testsuite>
-    <testsuite name="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" timestamp="2026-01-08T16:12:49.410Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.2182168">
-        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; shows loading skeleton when loading is true" time="0.1203177">
+    <testsuite name="src/app/features/jobs/job-details-page/job-header/job-header.component.spec.ts" timestamp="2026-01-08T22:06:07.953Z" hostname="DESKTOP-9J60L9L" tests="1" failures="0" errors="0" skipped="0" time="0.1460242">
+        <testcase classname="src/app/features/jobs/job-details-page/job-header/job-header.component.spec.ts" name="JobHeaderComponent &gt; should link back to /jobs" time="0.1435672">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; renders related job cards when loading is false and jobs exist" time="0.039735">
+    </testsuite>
+    <testsuite name="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" timestamp="2026-01-08T22:06:07.954Z" hostname="DESKTOP-9J60L9L" tests="4" failures="0" errors="0" skipped="0" time="0.1575106">
+        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should create the component" time="0.1202345">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; limits displayed skills to maximum of 3 per job" time="0.0253545">
+        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should render the description text when provided" time="0.0168399">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; generates correct job links" time="0.0192397">
+        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should render nothing when description is null" time="0.0075848">
         </testcase>
-        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; renders nothing when not loading and no related jobs exist" time="0.0090986">
+        <testcase classname="src/app/features/jobs/job-details-page/job-description/job-description.component.spec.ts" name="JobDescriptionComponent &gt; should support multiline text (whitespace preserved)" time="0.0093749">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" timestamp="2026-01-08T22:06:07.954Z" hostname="DESKTOP-9J60L9L" tests="5" failures="0" errors="0" skipped="0" time="0.2220735">
+        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; shows loading skeleton when loading is true" time="0.1190218">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; renders related job cards when loading is false and jobs exist" time="0.0528084">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; limits displayed skills to maximum of 3 per job" time="0.0215522">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; generates correct job links" time="0.0176397">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/related-jobs/related-jobs.component.spec.ts" name="RelatedJobsComponent &gt; renders nothing when not loading and no related jobs exist" time="0.0081995">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" timestamp="2026-01-08T22:06:07.955Z" hostname="DESKTOP-9J60L9L" tests="9" failures="0" errors="0" skipped="0" time="0.330612">
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders role summary when provided" time="0.1987891">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders fallback role summary when missing" time="0.0121959">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; formats and displays the match score" time="0.0135287">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders matched skills when present" time="0.023504">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; shows fallback when no matched skills" time="0.0100798">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; renders missing skills when present" time="0.0193244">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; shows fallback when no missing skills" time="0.0151773">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; enables apply link when applyUrl exists" time="0.0131513">
+        </testcase>
+        <testcase classname="src/app/features/jobs/job-details-page/job-summary-card/job-summary-card.component.spec.ts" name="JobSummaryCardComponent &gt; disables apply link when applyUrl is missing" time="0.0215297">
         </testcase>
     </testsuite>
 </testsuites>
