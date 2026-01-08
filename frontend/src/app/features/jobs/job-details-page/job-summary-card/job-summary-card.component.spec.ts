@@ -9,7 +9,7 @@ describe('JobSummaryCardComponent', () => {
 
   const baseJob = {
     stackSummary: 'Java, Spring Boot, PostgreSQL',
-    finalScore: 87.456,
+    finalScore: 0.87456,
     matchedSkills: ['Java', 'Spring Boot'],
     missingSkills: ['AWS'],
     applyUrl: 'https://example.com/apply',
@@ -54,7 +54,7 @@ describe('JobSummaryCardComponent', () => {
       By.css('p.text-orange-400')
     ).nativeElement.textContent.trim();
 
-    expect(score).toBe('87.46');
+    expect(score).toBe('87%');
   });
 
   it('renders matched skills when present', () => {

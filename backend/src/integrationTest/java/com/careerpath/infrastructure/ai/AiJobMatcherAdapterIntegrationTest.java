@@ -128,9 +128,9 @@ class AiJobMatcherAdapterIntegrationTest extends BaseIntegrationTest {
 
         // Assert
         assertThat(result.get(0).getAiExplanation())
-                .isEqualTo("AI enhancement unavailable.");
+                .isEqualTo("AI explanation unavailable (fallback).");
         assertThat(result.get(1).getAiExplanation())
-                .isEqualTo("AI enhancement unavailable.");
+                .isEqualTo("AI explanation unavailable (fallback).");
     }
 }
 

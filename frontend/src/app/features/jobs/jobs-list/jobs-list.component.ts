@@ -54,7 +54,16 @@ export class JobsListComponent implements OnInit {
     this.userId = userId;
 
     this.jobsService.getRecommendedJobs(userId).subscribe({
-      next: () => {
+      next: (jobs) => {
+        console.group('📦 Jobs loaded from backend');
+        jobs.forEach(job => {
+          console.log({
+            id: job.id,
+            finalScore: job.finalScore
+          });
+        });
+        console.groupEnd();
+
         this.isLoading = false;
       },
       error: err => {

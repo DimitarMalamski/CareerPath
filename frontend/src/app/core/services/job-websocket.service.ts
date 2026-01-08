@@ -4,7 +4,6 @@ import { BehaviorSubject } from 'rxjs';
 import type { Client } from '@stomp/stompjs';
 import {JobsService} from '../../features/jobs/jobs.service';
 import {Router} from '@angular/router';
-import {JobRecommendation} from '../models/job-recommendation';
 
 @Injectable({ providedIn: 'root' })
 export class JobWebsocketService {
