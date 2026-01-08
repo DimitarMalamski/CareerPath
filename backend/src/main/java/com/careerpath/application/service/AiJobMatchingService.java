@@ -46,9 +46,13 @@ public class AiJobMatchingService {
 
         List<JobListing> listings = jobListingRepository.findAll();
 
+        List<JobMatchResult> baselineResults =
+                scoringService.score(profile, listings);
+
+        baselineResults.forEach(r -> r.setFinalScore(r.getScore()));
+
         List<JobMatchResult> sortedBaseline =
-                scoringService.score(profile, listings).stream()
-                        .peek(r -> r.setFinalScore(r.getScore()))
+                baselineResults.stream()
                         .sorted(Comparator.comparingDouble(JobMatchResult::getScore).reversed())
                         .toList();
 

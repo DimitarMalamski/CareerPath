@@ -12,7 +12,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -81,10 +80,6 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
                     .bodyToMono(String.class)
                     .block();
 
-            System.out.println("====== RAW OPENAI RESPONSE ======");
-            System.out.println(response);
-            System.out.println("=================================");
-
             JsonNode root = objectMapper.readTree(response);
 
             if (root.has("status") && "incomplete".equals(root.get("status").asText())) {
@@ -101,16 +96,9 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
             String content = extractOutputText(root);
 
-            System.out.println("====== EXTRACTED AI TEXT ======");
-            System.out.println(content);
-            System.out.println("================================");
-
             return safeParseAiResponse(content, topMatches);
 
         } catch (Exception e) {
-            System.err.println("AI enhancement FAILED — using baseline scores only");
-            e.printStackTrace();
-
             return topMatches.stream()
                     .map(job -> new AiEnhancementResult(
                             job.getJobListingId(),
@@ -240,8 +228,6 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
                     }
             );
         } catch (Exception e) {
-            System.err.println("Invalid AI JSON, falling back to baseline: " + e.getMessage());
-
             return topMatches.stream()
                     .map(job -> new AiEnhancementResult(
                             job.getJobListingId(),

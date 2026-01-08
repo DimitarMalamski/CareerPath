@@ -1,6 +1,8 @@
 package com.careerpath.application.service;
 
+import com.careerpath.application.dto.CreateJobListingDto;
 import com.careerpath.application.dto.JobListingDto;
+import com.careerpath.application.event.NewJobListingCreatedEvent;
 import com.careerpath.domain.model.JobListing;
 import com.careerpath.domain.model.Skill;
 import com.careerpath.domain.port.JobListingRepositoryPort;
@@ -12,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -26,6 +29,9 @@ class JobListingApplicationServiceTest {
 
     @Mock
     private JobListingRepositoryPort jobListingRepository;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private JobListingApplicationService jobListingService;
@@ -99,5 +105,72 @@ class JobListingApplicationServiceTest {
                 .hasMessageContaining("Database error");
 
         verify(jobListingRepository).findAll();
+    }
+
+    @Test
+    void getJobListingById_shouldReturnMappedDto() {
+        UUID id = UUID.randomUUID();
+
+        JobListing job = JobListing.builder()
+                .id(id)
+                .title("Backend Developer")
+                .company("Google")
+                .skills(List.of())
+                .build();
+
+        when(jobListingRepository.findById(id)).thenReturn(job);
+
+        JobListingDto result = jobListingService.getJobListingById(id);
+
+        assertThat(result.title()).isEqualTo("Backend Developer");
+        verify(jobListingRepository).findById(id);
+    }
+
+    @Test
+    void createJobListing_shouldSaveJob_andPublishEvent() {
+        CreateJobListingDto dto = new CreateJobListingDto(
+                "Java Dev",
+                "Google",
+                "Eindhoven",
+                "FULL_TIME",
+                List.of("Java"),
+                "Desc"
+        );
+
+        JobListing savedJob = JobListing.builder()
+                .id(UUID.randomUUID())
+                .title("Java Dev")
+                .company("Google")
+                .skills(List.of())
+                .build();
+
+        when(jobListingRepository.save(
+                any(), any(), any(), any(), any(), any()
+        )).thenReturn(savedJob);
+
+        JobListingDto result = jobListingService.createJobListing(dto);
+
+        assertThat(result.title()).isEqualTo("Java Dev");
+
+        verify(jobListingRepository).save(
+                any(), any(), any(), any(), any(), any()
+        );
+        verify(eventPublisher).publishEvent(any(NewJobListingCreatedEvent.class));
+    }
+
+    @Test
+    void createJobListing_shouldThrowException_whenJobTypeInvalid() {
+        CreateJobListingDto dto = new CreateJobListingDto(
+                "Java Dev",
+                "Google",
+                "Eindhoven",
+                "NOT_A_TYPE",
+                List.of("Java"),
+                "Desc"
+        );
+
+        assertThatThrownBy(() -> jobListingService.createJobListing(dto))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Invalid job type");
     }
 }
