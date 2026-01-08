@@ -39,5 +39,3 @@ async function globalSetup(config: FullConfig) {
 
   await browser.close()
 }
-
-export default globalSetup
