@@ -64,6 +64,10 @@ describe('JobsService', () => {
     service.reload();
 
     httpMock.expectNone(`${environment.apiUrl}/jobs/recommendations/`);
+
+    service.jobs$.subscribe(jobs => {
+      expect(jobs).toEqual([]);
+    });
   });
 
   it('reload should refetch jobs for last userId and update jobs$', () => {

@@ -94,9 +94,11 @@ public class JpaJobListingRepositoryAdapter implements JobListingRepositoryPort 
         if (skills != null && !skills.isEmpty()) {
             for (Skill skill : skills) {
 
-                SkillEntity skillEntity = skillRepository.findByName(skill.getName())
+                String skillName = skill.getName();
+
+                SkillEntity skillEntity = skillRepository.findByName(skillName)
                         .orElseThrow(() ->
-                                new IllegalStateException("Skill not found: " + skill.getName())
+                                new IllegalStateException("Skill not found: " + skillName)
                         );
 
                 JobSkillIdEntity id = new JobSkillIdEntity(

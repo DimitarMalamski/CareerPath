@@ -324,16 +324,17 @@ class JpaJobListingRepositoryAdapterTest {
                 .name("NonExisting")
                 .build();
 
-        assertThatThrownBy(() ->
-                adapter.save(
-                        "Backend Dev",
-                        "Google",
-                        "Berlin",
-                        JobType.FULL_TIME,
-                        List.of(skill),
-                        "desc"
-                )
-        ).isInstanceOf(IllegalStateException.class)
+        List<Skill> skills = List.of(skill);
+
+        assertThatThrownBy(() -> adapter.save(
+                "Backend Dev",
+                "Google",
+                "Berlin",
+                JobType.FULL_TIME,
+                skills,
+                "desc"
+        ))
+                .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("Skill not found");
 
         verify(jobSkillRepository, never()).save(any());
