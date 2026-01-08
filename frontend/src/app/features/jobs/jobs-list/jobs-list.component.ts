@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { JobCardComponent } from '../job-card/job-card.component';
 import { UserIdentityService } from '../../../core/services/user-identity.service';
+import { map, Observable, BehaviorSubject, combineLatest } from 'rxjs';
+import { JobRecommendation } from '../../../core/models/job-recommendation';
 
 @Component({
   selector: 'app-jobs-list',
@@ -18,6 +20,23 @@ export class JobsListComponent implements OnInit {
   jobs$ = this.jobsService.jobs$;
   isLoading = true;
   userId: string | null = null;
+
+  readonly pageSize = 3;
+  readonly currentPage$ = new BehaviorSubject<number>(1);
+
+  readonly pagedJobs$: Observable<JobRecommendation[]> = combineLatest([
+    this.jobs$,
+    this.currentPage$
+  ]).pipe(
+    map(([jobs, page]) => {
+      const start = (page - 1) * this.pageSize;
+      return jobs.slice(start, start + this.pageSize);
+    })
+  );
+
+  readonly totalPages$: Observable<number> = this.jobs$.pipe(
+    map(jobs => Math.ceil(jobs.length / this.pageSize))
+  );
 
   ngOnInit(): void {
     this.loadUserAndJobs();
@@ -43,5 +62,23 @@ export class JobsListComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  goToPage(page: number): void {
+    this.currentPage$.next(page);
+  }
+
+  nextPage(totalPages: number): void {
+    const current = this.currentPage$.value;
+    if (current < totalPages) {
+      this.currentPage$.next(current + 1);
+    }
+  }
+
+  prevPage(): void {
+    const current = this.currentPage$.value;
+    if (current > 1) {
+      this.currentPage$.next(current - 1);
+    }
   }
 }
