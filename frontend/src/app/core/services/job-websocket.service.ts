@@ -36,14 +36,14 @@ export class JobWebsocketService {
     this.client.onConnect = () => {
       console.log('[STOMP] connected');
 
-      this.client?.subscribe('/topic/jobs', message => {
-        console.log('[STOMP] new job event received', message.body);
-        if (!this.router.url.startsWith('/jobs')) {
+      this.client?.subscribe('/topic/jobs', () => {
+        console.log('[STOMP] new job event received');
+
+        if (this.router.url.startsWith('/jobs')) {
+          this.jobsService.reload();
+        } else {
           this.newJobSubject.next(true);
         }
-
-        const job: JobRecommendation = JSON.parse(message.body);
-        this.jobsService.addJob(job);
       });
     };
 

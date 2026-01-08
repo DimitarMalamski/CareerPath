@@ -27,12 +27,17 @@ public class AiJobMatchingService {
     private final AiJobMatcherPort aiJobMatcherPort;
     private final JobRecommendationMapper jobRecommendationMapper;
 
+    private static final int AI_LIMIT = 3;
+
     private final Map<String, List<JobRecommendationDto>> cache = new ConcurrentHashMap<>();
 
     public List<JobRecommendationDto> getRecommendations(String userId) {
         log.info("Generating job recommendations for user {}", userId);
 
-        if (cache.containsKey(userId)) return cache.get(userId);
+        if (cache.containsKey(userId)) {
+            log.info("Returning cached job recommendations for user {}", userId);
+            return cache.get(userId);
+        }
 
         Profile profile = profileRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalStateException(
@@ -41,21 +46,29 @@ public class AiJobMatchingService {
 
         List<JobListing> listings = jobListingRepository.findAll();
 
-        List<JobMatchResult> baselineResults =
-                scoringService.score(profile, listings);
+        List<JobMatchResult> sortedBaseline =
+                scoringService.score(profile, listings).stream()
+                        .peek(r -> r.setFinalScore(r.getScore()))
+                        .sorted(Comparator.comparingDouble(JobMatchResult::getScore).reversed())
+                        .toList();
 
-        List<JobMatchResult> enhancedResults =
-                aiJobMatcherPort.enhanceMatches(profile, baselineResults);
+        List<JobMatchResult> aiCandidates =
+                sortedBaseline.stream()
+                        .limit(AI_LIMIT)
+                        .toList();
 
-        List<JobRecommendationDto> recommendations = enhancedResults.stream()
-                .sorted(Comparator.comparingDouble(JobMatchResult::getFinalScore).reversed())
-                .map(result -> {
-                    JobListing job = jobListingRepository.findById(
-                            UUID.fromString(result.getJobListingId())
-                    );
-                    return jobRecommendationMapper.toDto(result, job);
-                })
-                .toList();
+        aiJobMatcherPort.enhanceMatches(profile, aiCandidates);
+
+        List<JobRecommendationDto> recommendations =
+                sortedBaseline.stream()
+                        .sorted(Comparator.comparingDouble(JobMatchResult::getFinalScore).reversed())
+                        .map(result -> {
+                            JobListing job = jobListingRepository.findById(
+                                    UUID.fromString(result.getJobListingId())
+                            );
+                            return jobRecommendationMapper.toDto(result, job);
+                        })
+                        .toList();
 
         cache.put(userId, recommendations);
         return recommendations;
@@ -63,5 +76,10 @@ public class AiJobMatchingService {
 
     public void invalidateCache(String userId) {
         cache.remove(userId);
+    }
+
+    public void invalidateAll() {
+        log.info("Invalidating ALL job recommendation caches");
+        cache.clear();
     }
 }

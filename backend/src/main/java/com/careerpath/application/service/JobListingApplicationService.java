@@ -4,6 +4,9 @@ import com.careerpath.application.dto.CreateJobListingDto;
 import com.careerpath.application.dto.JobListingDto;
 import com.careerpath.application.event.NewJobListingCreatedEvent;
 import com.careerpath.application.mapper.JobListingDtoMapper;
+import com.careerpath.domain.model.JobListing;
+import com.careerpath.domain.model.Skill;
+import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.port.JobListingRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -32,18 +35,41 @@ public class JobListingApplicationService {
     }
 
     public JobListingDto createJobListing(CreateJobListingDto dto) {
-        var job = jobListingRepository.save(
+        // Convert skills from DTO → domain
+        List<Skill> skills =
+                dto.skills() == null
+                        ? List.of()
+                        : dto.skills().stream()
+                        .map(name -> Skill.builder().name(name).build())
+                        .toList();
+
+        JobType type;
+        try {
+            type = dto.type() == null
+                    ? JobType.FULL_TIME
+                    : JobType.valueOf(dto.type().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalStateException("Invalid job type: " + dto.type());
+        }
+
+        String description =
+                dto.description() == null ? "" : dto.description();
+
+        JobListing job = jobListingRepository.save(
                 dto.title(),
                 dto.company(),
-                dto.location()
+                dto.location(),
+                type,
+                skills,
+                description
         );
 
-        var jobDto = JobListingDtoMapper.toDto(job);
+        JobListingDto jobDto = JobListingDtoMapper.toDto(job);
 
         eventPublisher.publishEvent(
                 new NewJobListingCreatedEvent(jobDto)
         );
 
-        return JobListingDtoMapper.toDto(job);
+        return jobDto;
     }
 }

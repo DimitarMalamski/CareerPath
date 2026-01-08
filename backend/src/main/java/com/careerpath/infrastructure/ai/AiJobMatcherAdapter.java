@@ -30,8 +30,7 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
     @Override
     public List<JobMatchResult> enhanceMatches(Profile profile, List<JobMatchResult> matches) {
         List<JobMatchResult> topMatches = matches.stream()
-                .sorted(Comparator.comparingDouble(JobMatchResult::getScore).reversed())
-                .limit(5)
+                .limit(3)
                 .toList();
 
         List<AiEnhancementResult> aiResults = batchAiEnhance(profile, topMatches);
@@ -72,7 +71,7 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
                                     )
                             )
                     ),
-                    "max_output_tokens", 300
+                    "max_output_tokens", 500
             );
 
             String response = openAiWebClient.post()
@@ -82,7 +81,16 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
                     .bodyToMono(String.class)
                     .block();
 
+            System.out.println("====== RAW OPENAI RESPONSE ======");
+            System.out.println(response);
+            System.out.println("=================================");
+
             JsonNode root = objectMapper.readTree(response);
+
+            if (root.has("status") && "incomplete".equals(root.get("status").asText())) {
+                String reason = root.path("incomplete_details").path("reason").asText("unknown");
+                throw new IllegalStateException("OpenAI response incomplete: " + reason);
+            }
 
             if (root.has(OPENAI_ERROR_FIELD) && !root.get(OPENAI_ERROR_FIELD).isNull()) {
                 throw new IllegalStateException(
@@ -93,13 +101,14 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
             String content = extractOutputText(root);
 
-            return objectMapper.readValue(
-                    content,
-                    new TypeReference<>() {}
-            );
+            System.out.println("====== EXTRACTED AI TEXT ======");
+            System.out.println(content);
+            System.out.println("================================");
+
+            return safeParseAiResponse(content, topMatches);
 
         } catch (Exception e) {
-            System.err.println("AI enhancement FAILED: " + e.getMessage());
+            System.err.println("AI enhancement FAILED — using baseline scores only");
             e.printStackTrace();
 
             return topMatches.stream()
@@ -122,13 +131,30 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             throw new IllegalStateException("OpenAI response missing output array");
         }
 
-        JsonNode content = output.get(0).path("content");
+        StringBuilder sb = new StringBuilder();
 
-        if (!content.isArray() || content.isEmpty()) {
-            throw new IllegalStateException("OpenAI response missing content array");
+        for (JsonNode message : output) {
+            JsonNode contentArray = message.path("content");
+
+            if (!contentArray.isArray()) continue;
+
+            for (JsonNode content : contentArray) {
+                if (content.has("text")) {
+                    sb.append(content.get("text").asText());
+                }
+                if (content.has("output_text")) {
+                    sb.append(content.get("output_text").asText());
+                }
+            }
         }
 
-        return content.get(0).path("text").asText();
+        String result = sb.toString().trim();
+
+        if (result.isEmpty()) {
+            throw new IllegalStateException("OpenAI response contained no text");
+        }
+
+        return result;
     }
 
     private String buildBatchPrompt(Profile profile, List<JobMatchResult> jobs) {
@@ -137,35 +163,51 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             For each job, return a JSON array with:
             - jobId
             - aiScore (0–100)
-            - aiExplanation (1–2 short sentences)
+            - aiExplanation (ONE short sentence, max 20 words)
 
             PROFILE:
         """);
 
         sb.append(profile).append("\n\nJOBS:\n");
 
-        for (JobMatchResult job : jobs) {
+        for (int i = 0; i < jobs.size(); i++) {
+            JobMatchResult job = jobs.get(i);
+
             sb.append("""
-            {
-              "jobId": "%s",
-              "title": "%s",
-              "description": "%s",
-              "baselineScore": %.2f
-            },
-            """.formatted(
+                {
+                  "jobId": "%s",
+                  "title": "%s",
+                  "description": "%s",
+                  "baselineScore": %.2f
+                }
+                """.formatted(
                     job.getJobListingId(),
                     safe(job.getJobTitle()),
-                    safe(job.getDescription()),
+                    safe(job.getDescription()).substring(0, Math.min(300, job.getDescription().length())),
                     job.getScore()
             ));
+
+            if (i < jobs.size() - 1) {
+                sb.append(",\n");
+            }
         }
 
         sb.append("""
-            Return ONLY a valid JSON array.
-            Do not wrap it in markdown.
-            Do not include any text outside JSON.
+            You MUST return a valid JSON array.
+            Rules:
+            - Use double quotes only
+            - Escape all quotes inside text
+            - Do not break lines inside strings
+            - Do not include trailing commas
+            - Do not include any text outside JSON
+        
+            Valid example:
             [
-              { "jobId": "...", "aiScore": 87, "aiExplanation": "..." }
+              {
+                "jobId": "uuid",
+                "aiScore": 85,
+                "aiExplanation": "Strong match due to Java and Spring experience."
+              }
             ]
         """);
 
@@ -183,5 +225,30 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
 
     private double normalizeScore(double score) {
         return Math.max(0, Math.min(1, score));
+    }
+
+    private List<AiEnhancementResult> safeParseAiResponse(
+            String content,
+            List<JobMatchResult> topMatches
+    ) {
+        try {
+            objectMapper.readTree(content);
+
+            return objectMapper.readValue(
+                    content,
+                    new TypeReference<>() {
+                    }
+            );
+        } catch (Exception e) {
+            System.err.println("Invalid AI JSON, falling back to baseline: " + e.getMessage());
+
+            return topMatches.stream()
+                    .map(job -> new AiEnhancementResult(
+                            job.getJobListingId(),
+                            (int) (job.getScore() * 100),
+                            "AI explanation unavailable (fallback)."
+                    ))
+                    .toList();
+        }
     }
 }

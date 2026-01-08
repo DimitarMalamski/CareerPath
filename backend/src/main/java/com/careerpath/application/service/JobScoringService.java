@@ -54,7 +54,7 @@ public class JobScoringService {
                 if (profileSkill.getName().equalsIgnoreCase(jobSkill.getName())) {
                     score += 20;
                     explanation.append("Matched skill: ").append(profileSkill.getName()).append(". ");
-                    matchedSkills.add(jobSkill.getName());
+                    matchedSkills.add(jobSkill.getName().toLowerCase().trim());
                 }
             }
 
@@ -92,7 +92,7 @@ public class JobScoringService {
 
     private void fillMissingSkills(JobListing job, List<String> matchedSkills, List<String> missingSkills) {
         for (Skill jobSkill : job.getSkills()) {
-            if (!matchedSkills.contains(jobSkill.getName())) {
+            if (!matchedSkills.contains(jobSkill.getName().toLowerCase().trim())) {
                 missingSkills.add(jobSkill.getName());
             }
         }

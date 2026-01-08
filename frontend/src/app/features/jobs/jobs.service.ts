@@ -24,7 +24,18 @@ export class JobsService {
     return this.http
       .get<JobRecommendation[]>(`${this.apiUrl}/recommendations/${userId}`)
       .pipe(
-          tap(jobs => this.jobsSubject.next(jobs))
+        tap(fetchedJobs => {
+          const existing = this.jobsSubject.value;
+
+          const merged = [
+            ...fetchedJobs,
+            ...existing.filter(
+              wsJob => !fetchedJobs.some(apiJob => apiJob.id === wsJob.id)
+            )
+          ];
+
+          this.jobsSubject.next(merged);
+        })
       );
   }
 
@@ -33,11 +44,17 @@ export class JobsService {
 
     this.http
       .get<JobRecommendation[]>(`${this.apiUrl}/recommendations/${this.lastUserId}`)
-      .subscribe(jobs => this.jobsSubject.next(jobs));
-  }
+      .subscribe(fetchedJobs => {
+        const existing = this.jobsSubject.value;
 
-  addJob(job: JobRecommendation): void {
-    const currentJobs = this.jobsSubject.value;
-    this.jobsSubject.next([job, ...currentJobs]);
+        const merged = [
+          ...fetchedJobs,
+          ...existing.filter(
+            wsJob => !fetchedJobs.some(apiJob => apiJob.id === wsJob.id)
+          )
+        ];
+
+        this.jobsSubject.next(merged);
+      });
   }
 }

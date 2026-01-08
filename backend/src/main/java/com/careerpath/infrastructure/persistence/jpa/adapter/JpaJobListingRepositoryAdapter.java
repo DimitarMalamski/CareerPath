@@ -7,10 +7,13 @@ import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.domain.port.JobListingRepositoryPort;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobSkillEntity;
+import com.careerpath.infrastructure.persistence.jpa.entity.JobSkillIdEntity;
+import com.careerpath.infrastructure.persistence.jpa.entity.SkillEntity;
 import com.careerpath.infrastructure.persistence.jpa.mapper.JobListingEntityMapper;
 import com.careerpath.infrastructure.persistence.jpa.mapper.SkillEntityMapper;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobSkillRepository;
+import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataSkillRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
@@ -26,6 +29,7 @@ public class JpaJobListingRepositoryAdapter implements JobListingRepositoryPort 
 
     private final SpringDataJobListingRepository jobListingRepository;
     private final SpringDataJobSkillRepository jobSkillRepository;
+    private final SpringDataSkillRepository skillRepository;
 
     @Override
     public List<JobListing> findAll() {
@@ -66,18 +70,48 @@ public class JpaJobListingRepositoryAdapter implements JobListingRepositoryPort 
     }
 
     @Override
-    public JobListing save(String title, String company, String location) {
+    public JobListing save(
+            String title,
+            String company,
+            String location,
+            JobType type,
+            List<Skill> skills,
+            String description
+    ) {
         JobListingEntity entity = JobListingEntity.builder()
                 .title(title)
                 .company(company)
                 .location(location)
                 .recruiterId("system")
-                .type(JobType.FULL_TIME)
+                .type(type)
                 .status(JobStatus.PUBLISHED)
+                .description(description)
                 .createdAt(OffsetDateTime.now())
                 .build();
 
         JobListingEntity saved = jobListingRepository.save(entity);
+
+        if (skills != null && !skills.isEmpty()) {
+            for (Skill skill : skills) {
+
+                SkillEntity skillEntity = skillRepository.findByName(skill.getName())
+                        .orElseThrow(() ->
+                                new IllegalStateException("Skill not found: " + skill.getName())
+                        );
+
+                JobSkillIdEntity id = new JobSkillIdEntity(
+                        saved.getId(),
+                        skillEntity.getId()
+                );
+
+                JobSkillEntity js = new JobSkillEntity();
+                js.setId(id);
+                js.setJob(saved);
+                js.setSkill(skillEntity);
+
+                jobSkillRepository.save(js);
+            }
+        }
 
         return mapToDomainWithSkills(saved);
     }
