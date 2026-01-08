@@ -28,6 +28,12 @@ export class NavbarComponent implements OnInit {
     this.supabase.getClient().auth.onAuthStateChange((_event, session) => {
       this.session = session;
     });
+
+    this.router.events.subscribe(() => {
+      if (this.router.url === '/jobs') {
+        this.jobWs.clearNewJobIndicator();
+      }
+    });
   }
 
   private async loadSession(): Promise<void> {

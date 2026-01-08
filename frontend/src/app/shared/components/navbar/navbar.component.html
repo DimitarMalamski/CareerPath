@@ -9,7 +9,12 @@
 
     <!-- Desktop Nav -->
     <nav class="hidden md:flex gap-6 text-white font-medium" aria-label="Navigation Bar">
-      <a routerLink="/jobs" (click)="onJobsClick()" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">
+      <a
+        routerLink="/jobs"
+        (click)="onJobsClick()"
+        routerLinkActive="text-orange-400"
+        class="relative inline-flex items-center hover:text-orange-400 transition"
+      >
         Jobs
 
         <span
@@ -62,7 +67,12 @@
 
     <!-- Mobile Nav -->
     <nav class="flex flex-col gap-3" aria-label="Navigation Bar">
-      <a routerLink="/jobs" (click)="onJobsClick()" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">
+      <a
+        routerLink="/jobs"
+        (click)="onJobsClick()"
+        routerLinkActive="text-orange-400"
+        class="relative inline-flex items-center hover:text-orange-400 transition"
+      >
         Jobs
 
         <span

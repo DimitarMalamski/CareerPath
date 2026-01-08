@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { JobCardComponent } from '../job-card/job-card.component';
 import { UserIdentityService } from '../../../core/services/user-identity.service';
-import { Observable } from 'rxjs';
-import { JobRecommendation } from '../../../core/models/job-recommendation';
 
 @Component({
   selector: 'app-jobs-list',

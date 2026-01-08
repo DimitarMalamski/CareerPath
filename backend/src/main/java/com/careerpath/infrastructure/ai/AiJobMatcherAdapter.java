@@ -99,6 +99,9 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             );
 
         } catch (Exception e) {
+            System.err.println("AI enhancement FAILED: " + e.getMessage());
+            e.printStackTrace();
+
             return topMatches.stream()
                     .map(job -> new AiEnhancementResult(
                             job.getJobListingId(),
