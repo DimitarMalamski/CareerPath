@@ -1,7 +1,7 @@
 package com.careerpath.application.event;
 
-import java.util.UUID;
+import com.careerpath.application.dto.JobListingDto;
 
 public record NewJobListingCreatedEvent(
-    UUID jobId
+    JobListingDto job
 ) { }

@@ -1,10 +1,11 @@
-import {Component, inject, OnInit} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { JobsService } from '../jobs.service';
-import {RouterModule} from '@angular/router';
-import {CommonModule} from '@angular/common';
-import {JobRecommendation} from '../../../core/models/job-recommendation';
-import {JobCardComponent} from '../job-card/job-card.component';
-import {UserIdentityService} from '../../../core/services/user-identity.service';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { JobCardComponent } from '../job-card/job-card.component';
+import { UserIdentityService } from '../../../core/services/user-identity.service';
+import { Observable } from 'rxjs';
+import { JobRecommendation } from '../../../core/models/job-recommendation';
 
 @Component({
   selector: 'app-jobs-list',
@@ -13,23 +14,22 @@ import {UserIdentityService} from '../../../core/services/user-identity.service'
   templateUrl: './jobs-list.component.html'
 })
 export class JobsListComponent implements OnInit {
-
-  jobs: JobRecommendation[] = [];
-  isLoading = true;
-  userId: string | null = null;
-
   private readonly jobsService = inject(JobsService);
   private readonly identity = inject(UserIdentityService);
+
+  jobs$ = this.jobsService.jobs$;
+  isLoading = true;
+  userId: string | null = null;
 
   ngOnInit(): void {
     this.loadUserAndJobs();
   }
 
-  private async loadUserAndJobs() {
+  private async loadUserAndJobs(): Promise<void> {
     const userId = await this.identity.getUserId();
 
     if (!userId) {
-      console.error("No authenticated user (Supabase session missing)");
+      console.error('No authenticated user (Supabase session missing)');
       this.isLoading = false;
       return;
     }
@@ -37,12 +37,11 @@ export class JobsListComponent implements OnInit {
     this.userId = userId;
 
     this.jobsService.getRecommendedJobs(userId).subscribe({
-      next: (data) => {
-        this.jobs = data;
+      next: () => {
         this.isLoading = false;
       },
-      error: (err) => {
-        console.log('Error loading jobs:', err);
+      error: err => {
+        console.error('Error loading jobs:', err);
         this.isLoading = false;
       }
     });

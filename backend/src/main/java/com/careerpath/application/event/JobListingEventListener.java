@@ -15,11 +15,11 @@ public class JobListingEventListener {
 
     @EventListener
     public void onNewJobListingCreated(NewJobListingCreatedEvent event) {
-        log.info("New job listing created with id: {}", event.jobId());
+        log.info("New job listing created with id: {}", event.job().id());
 
         messagingTemplate.convertAndSend(
                 "/topic/jobs",
-                event.jobId()
+                event.job()
         );
     }
 }

@@ -38,8 +38,10 @@ public class JobListingApplicationService {
                 dto.location()
         );
 
+        var jobDto = JobListingDtoMapper.toDto(job);
+
         eventPublisher.publishEvent(
-                new NewJobListingCreatedEvent(job.getId())
+                new NewJobListingCreatedEvent(jobDto)
         );
 
         return JobListingDtoMapper.toDto(job);

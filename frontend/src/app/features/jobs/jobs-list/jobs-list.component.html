@@ -1,12 +1,14 @@
 <div class="min-h-screen bg-hero-gradient text-white py-12">
   <div class="max-w-7xl mx-auto px-6">
     <!-- Page Header -->
-    <section class="text-center mb-12">
-      <h1 class="text-5xl text-black font-extrabold mb-3">Discover Your Career Path</h1>
-      <p class="text-lg text-black">
-        Browse {{ jobs.length }} AI-matched opportunities that align with your goals.
-      </p>
-    </section>
+    <ng-container *ngIf="jobs$ | async as jobs">
+      <section class="text-center mb-12">
+        <h1 class="text-5xl text-black font-extrabold mb-3">Discover Your Career Path</h1>
+        <p class="text-lg text-black">
+          Browse {{ (jobs$ | async)?.length ?? 0 }} AI-matched opportunities that align with your goals.
+        </p>
+      </section>
+    </ng-container>
 
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-10 overflow-visible">
       <aside class="bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 lg:col-span-1">
@@ -81,19 +83,20 @@
           </div>
         </div>
 
-        <div *ngIf="!isLoading && jobs.length === 0" class="text-center text-gray-400 py-10">
-          No jobs found.
-        </div>
+        <ng-container *ngIf="jobs$ | async as jobs">
+          <div *ngIf="!isLoading && (jobs$ | async)?.length === 0" class="text-center text-gray-400 py-10">
+            No jobs found.
+          </div>
 
-        <div *ngIf="!isLoading && jobs.length > 0" class="flex flex-col gap-8">
-          <app-job-card
-            *ngFor="let job of jobs"
-            [job]="job"
-            [userId]="userId"
-          >
-          </app-job-card>
-        </div>
-
+          <div *ngIf="!isLoading && (jobs$ | async)?.length" class="flex flex-col gap-8">
+            <app-job-card
+              *ngFor="let job of (jobs$ | async)!"
+              [job]="job"
+              [userId]="userId"
+            >
+            </app-job-card>
+          </div>
+        </ng-container>
         <div class="flex justify-center items-center mt-10 gap-2">
           <button class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition">
             Previous

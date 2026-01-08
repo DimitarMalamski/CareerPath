@@ -20,26 +20,31 @@ export class NavbarComponent implements OnInit {
   private readonly router = inject(Router);
   private readonly jobWs = inject(JobWebsocketService);
 
-  hasNewJobs$ = this.jobWs.newJob$;
+  readonly hasNewJobs$ = this.jobWs.newJob$;
 
-  async ngOnInit() {
-    this.session = await this.supabase.getSession();
+  ngOnInit(): void {
+    this.loadSession();
 
     this.supabase.getClient().auth.onAuthStateChange((_event, session) => {
       this.session = session;
     });
   }
 
-  toggleMenu() {
+  private async loadSession(): Promise<void> {
+    this.session = await this.supabase.getSession();
+  }
+
+  toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     await this.supabase.signOut();
     await this.router.navigate(['/home']);
   }
 
   onJobsClick(): void {
     this.jobWs.clearNewJobIndicator();
+    this.menuOpen = false;
   }
 }
