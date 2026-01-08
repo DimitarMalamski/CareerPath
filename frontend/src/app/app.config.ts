@@ -13,28 +13,25 @@ import { routes } from './app.routes';
 import {createClient} from '@supabase/supabase-js';
 import {environment} from '../environments/environment';
 import {AuthInitService} from './core/services/auth-init.service';
+import {supabaseClientE2eProvider} from './core/supabase/supabase-client.e2e.provider';
+import {supabaseClientProvider} from './core/supabase-client.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    environment.e2e
+      ? supabaseClientE2eProvider
+      : supabaseClientProvider,
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
       withInterceptors([jwtInterceptor])),
     {
-      provide: SUPABASE_CLIENT,
-      useFactory: () =>
-        createClient(
-          environment.supabaseUrl,
-          environment.supabaseAnonKey
-        )
-    },
-
-    {
       provide: APP_INITIALIZER,
       multi: true,
       deps: [AuthInitService],
       useFactory: (authInit: AuthInitService) => () => authInit.init()
-    }
+    },
+
   ]
 };

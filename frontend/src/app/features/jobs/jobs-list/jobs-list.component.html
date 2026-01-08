@@ -1,5 +1,13 @@
 <div class="min-h-screen bg-hero-gradient text-white py-12">
   <div class="max-w-7xl mx-auto px-6">
+
+    <h1
+      data-testid="jobs-title"
+      class="sr-only"
+    >
+      Jobs
+    </h1>
+
     <!-- Page Header -->
     <ng-container *ngIf="jobs$ | async as jobs">
       <section class="text-center mb-12">

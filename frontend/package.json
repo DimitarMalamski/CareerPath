@@ -8,7 +8,10 @@
     "watch": "ng build --watch --configuration development",
     "test": "vitest run --coverage --config vitest.config.mts",
     "test:watch": "vitest --watch",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "start:e2e": "ng serve --configuration=e2e"
   },
   "prettier": {
     "printWidth": 100,
@@ -47,6 +50,7 @@
     "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^20.3.0",
     "@angular/platform-browser-dynamic": "^20.3.4",
+    "@playwright/test": "^1.57.0",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/express": "^5.0.1",
     "@types/jsdom": "^27.0.0",
@@ -56,6 +60,7 @@
     "@vitest/coverage-v8": "^4.0.2",
     "angular-eslint": "20.4.0",
     "autoprefixer": "^10.4.21",
+    "dotenv": "^17.2.3",
     "eslint": "^9.37.0",
     "jsdom": "^27.0.1",
     "postcss": "^8.5.6",
