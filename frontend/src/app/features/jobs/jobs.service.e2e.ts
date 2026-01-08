@@ -24,4 +24,8 @@ export class JobsServiceE2e {
   ])
 
   jobs$ = this._jobs$.asObservable()
+
+  getRecommendedJobs() {
+    return this.jobs$
+  }
 }

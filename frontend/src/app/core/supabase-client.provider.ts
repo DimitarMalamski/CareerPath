@@ -6,10 +6,9 @@ import { SUPABASE_CLIENT } from './supabase-client.token'
 export const supabaseClientProvider: Provider = {
   provide: SUPABASE_CLIENT,
   useFactory: (): SupabaseClient => {
-    console.error('REAL SUPABASE PROVIDER LOADED')
     return createClient(
       environment.supabaseUrl,
       environment.supabaseAnonKey
-    )
+    ) as SupabaseClient
   },
 }
