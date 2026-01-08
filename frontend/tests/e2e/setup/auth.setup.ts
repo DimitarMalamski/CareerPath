@@ -1,7 +1,7 @@
-import { chromium, FullConfig } from '@playwright/test'
+import { chromium } from '@playwright/test'
 import { createClient } from '@supabase/supabase-js'
 
-async function globalSetup(config: FullConfig) {
+async function globalSetup() {
   const supabase = createClient(
     process.env.SUPABASE_URL!,
     process.env.SUPABASE_ANON_KEY!
