@@ -27,6 +27,17 @@ public class OpenAiHttpClientConfig {
     private String organizationId;
 
     @PostConstruct
+    void debug() {
+        log.info("ENV OPENAI_API_KEY present: {}", System.getenv("OPENAI_API_KEY") != null);
+
+        if (apiKey != null && apiKey.length() >= 6) {
+            log.info("Injected apiKey prefix: {}", apiKey.substring(0, 6));
+        } else {
+            log.warn("Injected apiKey is EMPTY or NULL");
+        }
+    }
+
+    @PostConstruct
     void logConfigStatus() {
         log.info("OpenAI client enabled");
         log.debug("OpenAI apiKey present: {}", apiKey != null && !apiKey.isBlank());

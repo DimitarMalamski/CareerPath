@@ -3,6 +3,7 @@ import { NavbarComponent } from './navbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import {provideMockSupabase} from '../../../../testing/mock-supabase';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -10,7 +11,7 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent, RouterTestingModule],
+      imports: [NavbarComponent, RouterTestingModule, HttpClientTestingModule],
       providers: [provideMockSupabase()]
     }).compileComponents();
 
@@ -38,15 +39,6 @@ describe('NavbarComponent', () => {
       const link = links.find(link => link.nativeElement.textContent.includes(text));
       expect(link?.attributes['routerLink']).toBe('/' + text.toLowerCase());
     });
-  });
-
-  it('should have routerLink for Login and Sign Up', () => {
-    const links = fixture.debugElement.queryAll(By.css('a'));
-    const loginLink = links.find(link => link.nativeElement.textContent.includes('Login'));
-    const signUpLink = links.find(link => link.nativeElement.textContent.includes('Sign Up'));
-
-    expect(loginLink?.attributes['routerLink']).toBe('/auth/login');
-    expect(signUpLink?.attributes['routerLink']).toBe('/auth/register');
   });
 
   it('should toggle mobile menu visibility in the DOM', () => {

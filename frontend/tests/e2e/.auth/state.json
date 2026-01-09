@@ -1,0 +1,18 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:4200",
+      "localStorage": [
+        {
+          "name": "sb-krzmufhvwxianhyawvwm.supabase.co-auth-token",
+          "value": "{\"access_token\":\"eyJhbGciOiJIUzI1NiIsImtpZCI6IkIzWGtsRXZtN1pScTF2QjUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2tyem11Zmh2d3hpYW5oeWF3dndtLnN1cGFiYXNlLmNvL2F1dGgvdjEiLCJzdWIiOiJjMDA0YTEyMy0yMjZkLTRjMTktYjQ0ZS01YjcyNTFmMDkyODIiLCJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNzY3OTE3MDg3LCJpYXQiOjE3Njc5MTM0ODcsImVtYWlsIjoiZTJlQHRlc3QuY2FyZWVycGF0aC5kZXYiLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7ImVtYWlsX3ZlcmlmaWVkIjp0cnVlfSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJwYXNzd29yZCIsInRpbWVzdGFtcCI6MTc2NzkxMzQ4N31dLCJzZXNzaW9uX2lkIjoiOTJmZDQwODMtODk0ZC00OGZhLTkxN2ItMTYxMThmZGVkYzg3IiwiaXNfYW5vbnltb3VzIjpmYWxzZX0.UYAHbVl7JVS1OHJ3s0k_M2tdJxiASv4W9GVvfJwZnRM\",\"token_type\":\"bearer\",\"expires_in\":3600,\"expires_at\":1767917087,\"refresh_token\":\"w37hjrnbduhc\",\"user\":{\"id\":\"c004a123-226d-4c19-b44e-5b7251f09282\",\"aud\":\"authenticated\",\"role\":\"authenticated\",\"email\":\"e2e@test.careerpath.dev\",\"email_confirmed_at\":\"2026-01-08T20:04:10.970007Z\",\"phone\":\"\",\"confirmed_at\":\"2026-01-08T20:04:10.970007Z\",\"last_sign_in_at\":\"2026-01-08T23:04:47.559379052Z\",\"app_metadata\":{\"provider\":\"email\",\"providers\":[\"email\"]},\"user_metadata\":{\"email_verified\":true},\"identities\":[{\"identity_id\":\"810e99dd-5fe4-4b19-93ad-1650ec417f7a\",\"id\":\"c004a123-226d-4c19-b44e-5b7251f09282\",\"user_id\":\"c004a123-226d-4c19-b44e-5b7251f09282\",\"identity_data\":{\"email\":\"e2e@test.careerpath.dev\",\"email_verified\":false,\"phone_verified\":false,\"sub\":\"c004a123-226d-4c19-b44e-5b7251f09282\"},\"provider\":\"email\",\"last_sign_in_at\":\"2026-01-08T20:04:10.96176Z\",\"created_at\":\"2026-01-08T20:04:10.961832Z\",\"updated_at\":\"2026-01-08T20:04:10.961832Z\",\"email\":\"e2e@test.careerpath.dev\"}],\"created_at\":\"2026-01-08T20:04:10.940268Z\",\"updated_at\":\"2026-01-08T23:04:47.593933Z\",\"is_anonymous\":false},\"weak_password\":null}"
+        },
+        {
+          "name": "jwt_token",
+          "value": "undefined"
+        }
+      ]
+    }
+  ]
+}

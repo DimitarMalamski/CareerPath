@@ -9,7 +9,19 @@
 
     <!-- Desktop Nav -->
     <nav class="hidden md:flex gap-6 text-white font-medium" aria-label="Navigation Bar">
-      <a routerLink="/jobs" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Jobs</a>
+      <a
+        routerLink="/jobs"
+        (click)="onJobsClick()"
+        routerLinkActive="text-orange-400"
+        class="relative inline-flex items-center hover:text-orange-400 transition"
+      >
+        Jobs
+
+        <span
+          *ngIf="hasNewJobs$ | async"
+          class="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full">
+        </span>
+      </a>
       <a routerLink="/profile" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Profile</a>
     </nav>
 
@@ -55,7 +67,19 @@
 
     <!-- Mobile Nav -->
     <nav class="flex flex-col gap-3" aria-label="Navigation Bar">
-      <a routerLink="/jobs" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Jobs</a>
+      <a
+        routerLink="/jobs"
+        (click)="onJobsClick()"
+        routerLinkActive="text-orange-400"
+        class="relative inline-flex items-center hover:text-orange-400 transition"
+      >
+        Jobs
+
+        <span
+          *ngIf="hasNewJobs$ | async"
+          class="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full">
+        </span>
+      </a>
       <a routerLink="/profile" routerLinkActive="text-orange-400" class="hover:text-orange-400 transition">Profile</a>
     </nav>
 

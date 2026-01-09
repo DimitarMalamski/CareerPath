@@ -15,7 +15,7 @@
   <div>
     <h3 class="text-lg font-semibold mb-1">Match Score</h3>
     <p class="text-orange-400 text-3xl font-bold leading-tight">
-      {{ j.finalScore | number:'1.0-2' }}
+      {{ job.finalScore * 100 | number: '1.0-0' }}%
     </p>
   </div>
 

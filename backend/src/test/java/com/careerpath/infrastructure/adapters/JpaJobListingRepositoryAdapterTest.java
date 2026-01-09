@@ -2,6 +2,7 @@ package com.careerpath.infrastructure.adapters;
 
 import com.careerpath.domain.model.JobListing;
 import com.careerpath.domain.model.Skill;
+import com.careerpath.domain.model.enums.JobType;
 import com.careerpath.infrastructure.persistence.jpa.adapter.JpaJobListingRepositoryAdapter;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobListingEntity;
 import com.careerpath.infrastructure.persistence.jpa.entity.JobSkillEntity;
@@ -10,6 +11,7 @@ import com.careerpath.infrastructure.persistence.jpa.entity.SkillEntity;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobListingRepository;
 import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataJobSkillRepository;
 
+import com.careerpath.infrastructure.persistence.jpa.repository.SpringDataSkillRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +33,9 @@ class JpaJobListingRepositoryAdapterTest {
 
     @Mock
     private SpringDataJobSkillRepository jobSkillRepository;
+
+    @Mock
+    private SpringDataSkillRepository skillRepository;
 
     @InjectMocks
     private JpaJobListingRepositoryAdapter adapter;
@@ -222,5 +227,116 @@ class JpaJobListingRepositoryAdapterTest {
         assertThat(results.get(0).getSkills())
                 .extracting(Skill::getName)
                 .containsExactly("Docker");
+    }
+
+    @Test
+    void save_shouldPersistJobWithoutSkills() {
+        JobListingEntity savedEntity = JobListingEntity.builder()
+                .id(UUID.randomUUID())
+                .title("Backend Dev")
+                .company("Google")
+                .build();
+
+        when(jobListingRepository.save(any()))
+                .thenReturn(savedEntity);
+
+        when(jobSkillRepository.findByJob(savedEntity))
+                .thenReturn(List.of());
+
+        JobListing result = adapter.save(
+                "Backend Dev",
+                "Google",
+                "Berlin",
+                JobType.FULL_TIME,
+                List.of(),
+                "desc"
+        );
+
+        assertThat(result.getTitle()).isEqualTo("Backend Dev");
+        assertThat(result.getSkills()).isEmpty();
+
+        verify(jobListingRepository).save(any());
+        verify(jobSkillRepository, never()).save(any());
+    }
+
+    @Test
+    void save_shouldPersistJobWithSkills() {
+        UUID jobId = UUID.randomUUID();
+
+        JobListingEntity savedEntity = JobListingEntity.builder()
+                .id(jobId)
+                .title("Backend Dev")
+                .company("Google")
+                .build();
+
+        Skill skill = Skill.builder()
+                .name("Java")
+                .build();
+
+        SkillEntity skillEntity = SkillEntity.builder()
+                .id(1)
+                .name("Java")
+                .build();
+
+        when(jobListingRepository.save(any()))
+                .thenReturn(savedEntity);
+
+        when(skillRepository.findByName("Java"))
+                .thenReturn(Optional.of(skillEntity));
+
+        when(jobSkillRepository.findByJob(savedEntity))
+                .thenReturn(List.of(
+                        JobSkillEntity.builder()
+                                .job(savedEntity)
+                                .skill(skillEntity)
+                                .build()
+                ));
+
+        JobListing result = adapter.save(
+                "Backend Dev",
+                "Google",
+                "Berlin",
+                JobType.FULL_TIME,
+                List.of(skill),
+                "desc"
+        );
+
+        assertThat(result.getSkills())
+                .extracting(Skill::getName)
+                .containsExactly("Java");
+
+        verify(jobSkillRepository).save(any(JobSkillEntity.class));
+    }
+
+    @Test
+    void save_shouldThrowException_whenSkillNotFound() {
+        JobListingEntity savedEntity = JobListingEntity.builder()
+                .id(UUID.randomUUID())
+                .build();
+
+        when(jobListingRepository.save(any()))
+                .thenReturn(savedEntity);
+
+        when(skillRepository.findByName("NonExisting"))
+                .thenReturn(Optional.empty());
+
+        Skill skill = Skill.builder()
+                .name("NonExisting")
+                .build();
+
+        List<Skill> skills = List.of(skill);
+
+        assertThatThrownBy(() -> adapter.save(
+                "Backend Dev",
+                "Google",
+                "Berlin",
+                JobType.FULL_TIME,
+                skills,
+                "desc"
+        ))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("Skill not found");
+
+        verify(jobSkillRepository, never()).save(any());
     }
 }

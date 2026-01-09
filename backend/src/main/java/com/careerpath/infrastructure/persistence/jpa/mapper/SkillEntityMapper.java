@@ -15,4 +15,11 @@ public class SkillEntityMapper {
                 .name(entity.getName())
                 .build();
     }
+
+    public static SkillEntity toEntity(Skill skill) {
+        SkillEntity entity = new SkillEntity();
+        entity.setId(skill.getId());
+        entity.setName(skill.getName());
+        return entity;
+    }
 }

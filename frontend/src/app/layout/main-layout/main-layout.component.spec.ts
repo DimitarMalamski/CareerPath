@@ -4,6 +4,7 @@ import { NavbarComponent } from '../../shared/components/navbar/navbar.component
 import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import {provideMockSupabase} from '../../../testing/mock-supabase';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('MainLayoutComponent', () => {
   let component: MainLayoutComponent;
@@ -16,6 +17,7 @@ describe('MainLayoutComponent', () => {
         NavbarComponent,
         FooterComponent,
         RouterTestingModule,
+        HttpClientTestingModule,
       ],
       providers: [provideMockSupabase()]
     }).compileComponents();

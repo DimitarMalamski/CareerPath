@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {Router, RouterModule} from '@angular/router';
 import {SupabaseService} from '../../../core/services/supabase.service';
 import { Session } from '@supabase/supabase-js';
+import { JobWebsocketService } from '../../../core/services/job-websocket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,21 +18,39 @@ export class NavbarComponent implements OnInit {
 
   private readonly supabase = inject(SupabaseService);
   private readonly router = inject(Router);
+  private readonly jobWs = inject(JobWebsocketService);
 
-  async ngOnInit() {
-    this.session = await this.supabase.getSession();
+  readonly hasNewJobs$ = this.jobWs.newJob$;
+
+  ngOnInit(): void {
+    this.loadSession();
 
     this.supabase.getClient().auth.onAuthStateChange((_event, session) => {
       this.session = session;
     });
+
+    this.router.events.subscribe(() => {
+      if (this.router.url === '/jobs') {
+        this.jobWs.clearNewJobIndicator();
+      }
+    });
   }
 
-  toggleMenu() {
+  private async loadSession(): Promise<void> {
+    this.session = await this.supabase.getSession();
+  }
+
+  toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     await this.supabase.signOut();
     await this.router.navigate(['/home']);
+  }
+
+  onJobsClick(): void {
+    this.jobWs.clearNewJobIndicator();
+    this.menuOpen = false;
   }
 }
