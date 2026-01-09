@@ -1,6 +1,5 @@
 INSERT INTO skills (name) VALUES
       ('Java'),
-      ('Angular'),
       ('Spring Boot'),
       ('PostgreSQL'),
       ('React'),
