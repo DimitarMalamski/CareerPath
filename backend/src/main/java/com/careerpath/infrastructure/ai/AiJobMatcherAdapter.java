@@ -99,6 +99,8 @@ public class AiJobMatcherAdapter implements AiJobMatcherPort {
             return safeParseAiResponse(content, topMatches);
 
         } catch (Exception e) {
+            e.printStackTrace();
+
             return topMatches.stream()
                     .map(job -> new AiEnhancementResult(
                             job.getJobListingId(),
