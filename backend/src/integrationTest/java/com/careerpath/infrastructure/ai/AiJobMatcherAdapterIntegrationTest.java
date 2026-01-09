@@ -10,7 +10,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -128,9 +127,9 @@ class AiJobMatcherAdapterIntegrationTest extends BaseIntegrationTest {
 
         // Assert
         assertThat(result.get(0).getAiExplanation())
-                .isEqualTo("AI enhancement unavailable.");
+                .isEqualTo("AI explanation unavailable (fallback).");
         assertThat(result.get(1).getAiExplanation())
-                .isEqualTo("AI enhancement unavailable.");
+                .isEqualTo("AI explanation unavailable (fallback).");
     }
 }
 

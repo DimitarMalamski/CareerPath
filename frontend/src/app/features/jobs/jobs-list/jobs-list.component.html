@@ -1,65 +1,29 @@
 <div class="min-h-screen bg-hero-gradient text-white py-12">
   <div class="max-w-7xl mx-auto px-6">
+
+    <h1
+      data-testid="jobs-title"
+      class="sr-only"
+    >
+      Jobs
+    </h1>
+
     <!-- Page Header -->
-    <section class="text-center mb-12">
-      <h1 class="text-5xl text-black font-extrabold mb-3">Discover Your Career Path</h1>
-      <p class="text-lg text-black">
-        Browse {{ jobs.length }} AI-matched opportunities that align with your goals.
-      </p>
-    </section>
+    <ng-container *ngIf="jobs$ | async as jobs">
+      <section class="text-center mb-12">
+        <h1 class="text-5xl text-black font-extrabold mb-3">
+          Discover Your Career Path
+        </h1>
+        <p class="text-lg text-black">
+          Browse {{ jobs.length }} AI-matched opportunities that align with your goals.
+        </p>
+      </section>
+    </ng-container>
 
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-10 overflow-visible">
-      <aside class="bg-black backdrop-blur-md rounded-2xl p-6 border border-gray-800 lg:col-span-1">
-        <h2 class="text-lg font-semibold text-orange-400 mb-4">Filters</h2>
-        <div class="mb-6">
-          <input
-            type="text"
-            placeholder="Job title, keyword..."
-            class="w-full px-4 py-2 bg-black border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          />
-        </div>
-
-        <div class="mb-6">
-          <h3 class="text-sm font-semibold text-gray-300 mb-3">Job Type</h3>
-          <div class="space-y-2 text-sm text-gray-400">
-            <label class="flex items-center gap-2">
-              <input type="radio" name="jobType" class="text-orange-400" /> Full-time
-            </label>
-            <label class="flex items-center gap-2">
-              <input type="radio" name="jobType" class="text-orange-400" /> Internship
-            </label>
-            <label class="flex items-center gap-2">
-              <input type="radio" name="jobType" class="text-orange-400" /> Remote
-            </label>
-          </div>
-        </div>
-
-        <div class="mb-6">
-          <h3 class="text-sm font-semibold text-gray-300 mb-3">Location</h3>
-          <select
-            class="w-full px-3 py-2 bg-black border border-gray-700 rounded-lg text-sm text-gray-200 focus:outline-none focus:ring-2 focus:ring-orange-400"
-          >
-            <option>Select location</option>
-            <option>Eindhoven, NL</option>
-            <option>Amsterdam, NL</option>
-            <option>London, UK</option>
-            <option>Remote</option>
-          </select>
-        </div>
-
-        <div class="mb-8">
-          <h3 class="text-sm font-semibold text-gray-300 mb-3">Minimum Match Score</h3>
-          <input type="range" min="0" max="100" value="0" class="w-full accent-orange-400" />
-        </div>
-
-        <button
-          class="w-full bg-orange-500 hover:bg-orange-600 text-black text-sm font-semibold py-2 rounded-lg transition"
-        >
-          Apply Filters
-        </button>
-      </aside>
-
-      <section class="lg:col-span-3 overflow-visible">
+    <!-- Main Content -->
+    <div class="grid grid-cols-1 gap-10 overflow-visible">
+      <section class="overflow-visible">
+        <!-- Loading Skeleton -->
         <div *ngIf="isLoading" class="space-y-6 overflow-visible">
           <div
             *ngFor="let _ of [1, 2, 3]"
@@ -81,42 +45,53 @@
           </div>
         </div>
 
-        <div *ngIf="!isLoading && jobs.length === 0" class="text-center text-gray-400 py-10">
-          No jobs found.
-        </div>
+        <!-- Jobs List -->
+        <ng-container *ngIf="pagedJobs$ | async as jobs">
+          <div
+            *ngIf="!isLoading && jobs.length === 0"
+            class="text-center text-gray-400 py-10"
+          >
+            No jobs found.
+          </div>
 
-        <div *ngIf="!isLoading && jobs.length > 0" class="flex flex-col gap-8">
-          <app-job-card
-            *ngFor="let job of jobs"
-            [job]="job"
-            [userId]="userId"
-          >
-          </app-job-card>
-        </div>
+          <div *ngIf="!isLoading && jobs.length" class="flex flex-col gap-8">
+            <app-job-card
+              *ngFor="let job of jobs"
+              [job]="job"
+              [userId]="userId"
+            >
+            </app-job-card>
+          </div>
+        </ng-container>
 
-        <div class="flex justify-center items-center mt-10 gap-2">
-          <button class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition">
-            Previous
-          </button>
-          <button
-            class="px-3 py-1 rounded-lg bg-orange-500 text-black text-sm font-semibold hover:bg-orange-600"
-          >
-            1
-          </button>
-          <button
-            class="px-3 py-1 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800"
-          >
-            2
-          </button>
-          <button
-            class="px-3 py-1 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800"
-          >
-            3
-          </button>
-          <button class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition">
-            Next
-          </button>
-        </div>
+        <!-- Pagination (unchanged for now) -->
+        <ng-container *ngIf="totalPages$ | async as totalPages">
+          <div class="flex justify-center items-center mt-10 gap-2">
+            <button
+              (click)="prevPage()"
+              class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition"
+            >
+              Previous
+            </button>
+
+            <button
+              *ngFor="let _ of [].constructor(totalPages); let i = index"
+              (click)="goToPage(i + 1)"
+              class="px-3 py-1 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800"
+              [class.bg-orange-500]="(currentPage$ | async) === i + 1"
+              [class.text-black]="(currentPage$ | async) === i + 1"
+            >
+              {{ i + 1 }}
+            </button>
+
+            <button
+              (click)="nextPage(totalPages)"
+              class="px-4 py-2 text-sm border border-gray-700 rounded-lg text-gray-300 hover:bg-gray-800 transition"
+            >
+              Next
+            </button>
+          </div>
+        </ng-container>
       </section>
     </div>
   </div>

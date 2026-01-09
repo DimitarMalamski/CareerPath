@@ -67,6 +67,17 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "e2e": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.e2e.ts"
+                }
+              ],
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
@@ -79,7 +90,10 @@
             },
             "development": {
               "buildTarget": "careerpath-frontend:build:development"
-              }
+            },
+            "e2e": {
+              "buildTarget": "careerpath-frontend:build:e2e"
+            }
           },
           "defaultConfiguration": "development"
         },

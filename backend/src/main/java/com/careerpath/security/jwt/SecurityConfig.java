@@ -33,10 +33,12 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
 
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ws/**").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/api/auth/sync").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("/api/jobs/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/api/jobs/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/jobs").permitAll()
                         .requestMatchers("/api/profile/**").authenticated()
                         .anyRequest().authenticated()
                 )

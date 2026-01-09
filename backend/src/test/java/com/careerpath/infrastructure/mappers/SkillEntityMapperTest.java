@@ -33,4 +33,20 @@ class SkillEntityMapperTest {
         assertThat(domain.getId()).isEqualTo(5);
         assertThat(domain.getName()).isEqualTo("Java");
     }
+
+    @Test
+    void toEntity_shouldMapDomainToEntityCorrectly() {
+        // Arrange
+        Skill domain = Skill.builder()
+                .id(10)
+                .name("Spring Boot")
+                .build();
+
+        // Act
+        SkillEntity entity = SkillEntityMapper.toEntity(domain);
+
+        // Assert
+        assertThat(entity.getId()).isEqualTo(10);
+        assertThat(entity.getName()).isEqualTo("Spring Boot");
+    }
 }

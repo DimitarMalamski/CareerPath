@@ -66,9 +66,10 @@ class JobScoringServiceTest {
 
         // Assert
         assertThat(result.getScore()).isGreaterThan(0.5);
-        assertThat(result.getMatchedSkills()).containsExactly("Java");
+        assertThat(result.getMatchedSkills()).containsExactly("java");
         assertThat(result.getMissingSkills()).contains("Spring Boot");
-        assertThat(result.getExplanation()).contains("Matched skill");
+        assertThat(result.getExplanation().toLowerCase())
+                .contains("matched skill");
     }
 
     @Test

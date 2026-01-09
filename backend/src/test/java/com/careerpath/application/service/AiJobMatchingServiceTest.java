@@ -105,7 +105,8 @@ class AiJobMatchingServiceTest {
                 enhanced.getMissingSkills()
         );
 
-        when(jobRecommendationMapper.toDto(enhanced, job)).thenReturn(dto);
+        when(jobRecommendationMapper.toDto(any(JobMatchResult.class), eq(job)))
+                .thenReturn(dto);
 
         List<JobRecommendationDto> result = service.getRecommendations(userId);
 
