@@ -27,7 +27,7 @@ export class JobWebsocketService {
     const SockJS = (await import('sockjs-client')).default;
 
     this.client = new Client({
-      webSocketFactory: () => new SockJS('http://localhost:8080/ws'),
+      webSocketFactory: () => new SockJS('https://careerpath-ip.com/ws'),
       reconnectDelay: 5000,
       debug: (msg) => console.log('[STOMP]', msg)
     });
