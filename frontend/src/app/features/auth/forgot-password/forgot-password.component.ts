@@ -24,7 +24,7 @@ export class ForgotPasswordComponent {
     const { error } = await this.supabase.getClient().auth.resetPasswordForEmail(
       this.email,
       {
-        redirectTo: 'http://localhost:4200/auth/reset-password'
+        redirectTo: 'https://careerpath-ip.com/auth/reset-password'
       }
     );
 
