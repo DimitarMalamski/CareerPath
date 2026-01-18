@@ -76,3 +76,4 @@ container-security-scan:
   allow_failure: true
   only:
     - dev
+
