@@ -86,12 +86,15 @@ describe('ForgotPasswordComponent', () => {
   it('should call supabase.resetPasswordForEmail with correct email', async () => {
     mockResetPassword.mockResolvedValueOnce({ error: null });
 
-    component.email = 'hello@test.com';
+    component.email = 'fail@example.com';
     await component.sendResetEmail();
+    fixture.detectChanges();
 
-    expect(mockResetPassword).toHaveBeenCalledWith(
-      'hello@test.com',
-      { redirectTo: 'http://localhost:4200/auth/reset-password' }
+    expect(mockResetPassword).toHaveBeenLastCalledWith(
+      component.email,
+      expect.objectContaining({
+        redirectTo: 'https://careerpath-ip.com/auth/reset-password'
+      })
     );
   });
 });

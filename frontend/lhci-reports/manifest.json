@@ -1,0 +1,14 @@
+[
+  {
+    "url": "http://localhost:4200/",
+    "isRepresentativeRun": true,
+    "htmlPath": "D:\\Fontys\\Year 2\\Semester 3\\Individual project\\CareerPath\\careerpath\\frontend\\lhci-reports\\localhost--2026_01_18_16_55_19.report.html",
+    "jsonPath": "D:\\Fontys\\Year 2\\Semester 3\\Individual project\\CareerPath\\careerpath\\frontend\\lhci-reports\\localhost--2026_01_18_16_55_19.report.json",
+    "summary": {
+      "performance": 0.54,
+      "accessibility": 0.9,
+      "best-practices": 0.79,
+      "seo": 0.91
+    }
+  }
+]
