@@ -3,8 +3,14 @@
     "collect": {
       "url": ["http://localhost:4200/"],
       "startServerCommand": "npm run start",
-      "startServerReadyPattern": "Compiled successfully",
-      "numberOfRuns": 1
+      "startServerReadyPattern": "Local:",
+      "numberOfRuns": 1,
+      "settings": {
+        "chromeFlags": [
+          "--no-sandbox",
+          "--disable-dev-shm-usage"
+        ]
+      }
     },
     "assert": {
       "assertions": {
