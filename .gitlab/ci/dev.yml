@@ -65,3 +65,14 @@ integration-test:
   allow_failure: false
   only:
     - dev
+
+# ---------------- CONTAINER SECURITY SCAN ----------------
+container-security-scan:
+  stage: analyze
+  image: aquasec/trivy:latest
+  script:
+    - trivy image node:20
+    - trivy image gradle:8.5-jdk17
+  allow_failure: true
+  only:
+    - dev
