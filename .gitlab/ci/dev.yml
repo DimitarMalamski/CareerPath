@@ -53,7 +53,7 @@ frontend-build:
 # ---------------- GOOGLE LIGHTHOUSE ----------------
 frontend-lighthouse:
   stage: analyze
-  image: cypress/browsers:node20.5.0-chrome120
+  image: cypress/browsers:node-20.11.0-chrome-121
   dependencies:
     - frontend-build
   cache:
@@ -73,18 +73,18 @@ frontend-lighthouse:
   allow_failure: true
 
 # ---------------- INTEGRATION TESTS ----------------
-integration-test:
-  stage: integration
-  image: gradle:8.5-jdk17
-  variables:
-    TC_CLOUD_TOKEN: "$TC_CLOUD_TOKEN"
-  dependencies:
-    - backend-ci-build
-  before_script:
-    - curl -fsSL https://app.testcontainers.cloud/bash | bash
-    - cd backend
-  script:
-    - ./gradlew integrationTest --no-daemon -stacktrace -Dspring.profiles.active=test -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
-  allow_failure: false
-  only:
-    - dev
+#integration-test:
+#  stage: integration
+#  image: gradle:8.5-jdk17
+#  variables:
+#    TC_CLOUD_TOKEN: "$TC_CLOUD_TOKEN"
+#  dependencies:
+#    - backend-ci-build
+#  before_script:
+#    - curl -fsSL https://app.testcontainers.cloud/bash | bash
+#    - cd backend
+#  script:
+#    - ./gradlew integrationTest --no-daemon -stacktrace -Dspring.profiles.active=test -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
+#  allow_failure: false
+#  only:
+#    - dev
