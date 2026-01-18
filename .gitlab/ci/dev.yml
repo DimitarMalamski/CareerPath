@@ -53,7 +53,7 @@ frontend-build:
 # ---------------- GOOGLE LIGHTHOUSE ----------------
 frontend-lighthouse:
   stage: analyze
-  image: node:20
+  image: cypress/browsers:node20.5.0-chrome120
   dependencies:
     - frontend-build
   cache:
