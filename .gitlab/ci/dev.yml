@@ -53,14 +53,13 @@ frontend-build:
 # ---------------- GOOGLE LIGHTHOUSE ----------------
 frontend-lighthouse:
   stage: analyze
-  image: cypress/browsers:node-20.11.0-chrome-121
+  image: node:20
   dependencies:
     - frontend-build
-  cache:
-    key: ${CI_COMMIT_REF_SLUG}
-    paths:
-      - frontend/node_modules/
   before_script:
+    - apt-get update
+    - apt-get install -y chromium
+    - export CHROME_PATH=/usr/bin/chromium
     - cd frontend
     - npm ci --prefer-offline --no-audit --legacy-peer-deps
   script:
