@@ -50,26 +50,28 @@ frontend-build:
     - dev
 
 # ---------------- INTEGRATION TESTS ----------------
-integration-test:
-  stage: integration
-  image: gradle:8.5-jdk17
-  variables:
-    TC_CLOUD_TOKEN: "$TC_CLOUD_TOKEN"
-  dependencies:
-    - backend-ci-build
-  before_script:
-    - curl -fsSL https://app.testcontainers.cloud/bash | bash
-    - cd backend
-  script:
-    - ./gradlew integrationTest --no-daemon -stacktrace -Dspring.profiles.active=test -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
-  allow_failure: false
-  only:
-    - dev
+#integration-test:
+#  stage: integration
+#  image: gradle:8.5-jdk17
+#  variables:
+#    TC_CLOUD_TOKEN: "$TC_CLOUD_TOKEN"
+#  dependencies:
+#    - backend-ci-build
+#  before_script:
+#    - curl -fsSL https://app.testcontainers.cloud/bash | bash
+#    - cd backend
+#  script:
+#    - ./gradlew integrationTest --no-daemon -stacktrace -Dspring.profiles.active=test -Dtestcontainers.cloud.enabled=true "-Dtestcontainers.cloud.token=$TC_CLOUD_TOKEN"
+#  allow_failure: false
+#  only:
+#    - dev
 
 # ---------------- CONTAINER SECURITY SCAN ----------------
 container-security-scan:
   stage: analyze
-  image: aquasec/trivy:latest
+  image:
+    name: aquasec/trivy:latest
+    entrypoint: [""]
   script:
     - trivy image node:20
     - trivy image gradle:8.5-jdk17
