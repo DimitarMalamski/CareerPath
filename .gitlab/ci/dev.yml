@@ -60,6 +60,7 @@ frontend-lighthouse:
     - apt-get update
     - apt-get install -y chromium
     - export CHROME_PATH=/usr/bin/chromium
+    - export LHCI_CHROME_FLAGS="--no-sandbox --disable-dev-shm-usage"
     - cd frontend
     - npm ci --prefer-offline --no-audit --legacy-peer-deps
   script:
