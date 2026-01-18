@@ -50,6 +50,27 @@ frontend-build:
     - dev
 
 
+# ---------------- GOOGLE LIGHTHOUSE ----------------
+frontend-lighthouse:
+  stage: analyze
+  image: node:20
+  dependencies:
+    - frontend-build
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - frontend/node_modules/
+  before_script:
+    - cd frontend
+    - npm ci --prefer-offline --no-audit --legacy-peer-deps
+  script:
+    - npm run lighthouse
+  artifacts:
+    when: always
+    paths:
+      - frontend/lhci-reports/
+    expire_in: 1 week
+  allow_failure: true
 
 # ---------------- INTEGRATION TESTS ----------------
 integration-test:
