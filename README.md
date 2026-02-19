@@ -2,7 +2,7 @@
 
 A production-ready full-stack job platform built with Angular and Spring Boot, focusing on clean architecture, CI/CD automation, and AI-assisted job matching.
   
-📦 Repository: https://github.com/DimitarMalamski/CareerPath  
+📦 Repository: [Here](https://github.com/DimitarMalamski/CareerPath)  
 
 ---
 
@@ -158,5 +158,5 @@ Backend: http://localhost:8080
 
 Dimitar Malamski  
 Software Engineering Student, Eindhoven, Netherlands  
-GitHub: https://github.com/DimitarMalamski  
-LinkedIn: [https://www.linkedin.com/in/dimitar-malamski-a00253238/](https://www.linkedin.com/in/dimitar-malamski-a00253238/)
+GitHub: [Here](https://github.com/DimitarMalamski)  
+LinkedIn: [Here](https://www.linkedin.com/in/dimitar-malamski-a00253238/)
