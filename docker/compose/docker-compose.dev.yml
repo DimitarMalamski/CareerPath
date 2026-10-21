@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_DB: careerpath_dev
       POSTGRES_USER: cp_user
-      POSTGRES_PASSWORD: cp_pass
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "25432:5432"
     volumes:
@@ -30,7 +30,7 @@ services:
       SPRING_PROFILES_ACTIVE: dev
       SPRING_DATASOURCE_URL: jdbc:postgresql://cp-db-dev:5432/careerpath_dev
       SPRING_DATASOURCE_USERNAME: cp_user
-      SPRING_DATASOURCE_PASSWORD: cp_pass
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
       TESTCONTAINERS_DOCKER_SOCKET_OVERRIDE: /var/run/docker.sock

@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: careerpath_test
       POSTGRES_USER: cp_user
-      POSTGRES_PASSWORD: cp_pass
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     healthcheck:
@@ -27,7 +27,7 @@ services:
       SPRING_PROFILES_ACTIVE: test
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/careerpath_test
       SPRING_DATASOURCE_USERNAME: cp_user
-      SPRING_DATASOURCE_PASSWORD: cp_pass
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       TESTCONTAINERS_LOG_LEVEL: DEBUG
 
       TC_CLOUD_TOKEN: ${TC_CLOUD_TOKEN}

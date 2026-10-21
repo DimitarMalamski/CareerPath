@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: careerpath_prod
       POSTGRES_USER: cp_user
-      POSTGRES_PASSWORD: cp_pass
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - cp_pg_data_prod:/var/lib/postgresql/data
     networks:
@@ -23,7 +23,7 @@ services:
       SPRING_PROFILES_ACTIVE: prod
       SPRING_DATASOURCE_URL: jdbc:postgresql://db-prod:5432/careerpath_prod
       SPRING_DATASOURCE_USERNAME: cp_user
-      SPRING_DATASOURCE_PASSWORD: cp_pass
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: none
     depends_on:
       - db-prod
@@ -47,7 +47,7 @@ services:
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "5050:80"
     networks:
